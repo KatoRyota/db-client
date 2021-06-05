@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# PyCharm
+/.idea/
+
+# Visual Stadio Code
+/.vscode/
+
+# db-client
+/log/*.log*
