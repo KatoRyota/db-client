@@ -21,7 +21,7 @@ WSL 2 (Ubuntu 20.04 LTS)上には、以下のソフトウェアがインスト�
 
 ```text
 # [Windows]
-https://www.oracle.com/database/technologies/oracle-database-software-downloads.html
+http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html
     -> Oracle Database 19c
     -> 19.3 - Enterprise Edition (also includes Standard Edition 2)
     -> Linux x86-64
