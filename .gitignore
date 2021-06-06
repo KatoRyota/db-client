@@ -137,3 +137,4 @@ dmypy.json
 # db-client
 /log/*.log*
 /docker/local/oracle-db/oradata/
+/docker/local/stdout
