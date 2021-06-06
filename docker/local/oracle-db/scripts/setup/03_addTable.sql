@@ -1,6 +1,6 @@
 CONNECT test/test@//localhost:1521/testPdb;
 
-CREATE TABLE any_artifact (
+CREATE TABLE employee (
     id VARCHAR2(20),
     name VARCHAR2(20),
     type VARCHAR2(20)

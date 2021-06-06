@@ -17,33 +17,37 @@ WSL 2 (Ubuntu 20.04 LTS)上には、以下のソフトウェアがインスト�
 
 * Git
 
-## Oracle Database 12c Release 2をダウンロード
+## Oracle Database 19cをダウンロード
 
 ```text
 # [Windows]
-http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html  
-    -> Linux x86-64  
+https://www.oracle.com/database/technologies/oracle-database-software-downloads.html
+    -> Oracle Database 19c
+    -> 19.3 - Enterprise Edition (also includes Standard Edition 2)
+    -> Linux x86-64
+    -> ZIP  
 ```
 
 ## Dockerイメージをビルドする為の、関連ファイルをダウンロード
 
 ```shell
 # [Ubuntu]
+mkdir -vp ~/repo
 cd ~/repo
 git clone https://github.com/oracle/docker-images
 ```
 
 ## バイナリファイルの配置
 
-前手順でダウンロードした、Oracle Database 12c Release 2のバイナリファイルを、  
+前手順でダウンロードした、Oracle Database 19cのバイナリファイルを、  
 Dockerイメージのビルド用ディレクトリに配置。  
 パスは環境に応じて変更すること。
 
 ```shell
 # [Ubuntu]
 cd `wslpath -u 'C:\Users\kator\Downloads'`
-cp -vip linuxx64_12201_database.zip \
-    ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/12.2.0.1
+cp -vip LINUX.X64_193000_db_home.zip \
+    ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0
 ```
 
 ## db-clientをダウンロード
@@ -78,7 +82,7 @@ tail -f stdout
 docker container exec -it oracle-db bash
 
 sqlplus -s 'test/test@//localhost:1521/testPdb' <<EOF
-SELECT * FROM any_artifact;
+SELECT * FROM employee;
 EOF
 
 exit
