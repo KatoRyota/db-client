@@ -25,8 +25,8 @@ services:
       - ORACLE_EDITION=enterprise
     volumes:
       - ./oracle-db/oradata:/opt/oracle/oradata
-      - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
-      - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
+      - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup
+      - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup
   #    links:
   #      - <CONTAINER_NAME>
 #  db-client:
