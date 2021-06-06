@@ -6,9 +6,9 @@ CREATE TABLE employee (
     type VARCHAR2(20)
 );
 
-INSERT INTO any_artifact (id, name, type)
+INSERT INTO employee (id, name, type)
     VALUES ('ID-000-0000', 'NAME-000-0000', 'TYPE-000-0000');
-INSERT INTO any_artifact (id, name, type)
+INSERT INTO employee (id, name, type)
     VALUES ('ID-111-1111', 'NAME-111-1111', 'TYPE-111-1111');
 
 COMMIT;
