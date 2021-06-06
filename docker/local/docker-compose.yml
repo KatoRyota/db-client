@@ -1,0 +1,52 @@
+version: "3"
+services:
+  oracle-db:
+    build:
+      context: ../../../docker-images/OracleDatabase/SingleInstance/dockerfiles/12.2.0.1
+      args:
+        DB_EDITION: ee
+    image: oracle-db
+    container_name: oracle-db
+    hostname: oracle-db
+    dns: 8.8.8.8
+    privileged: true
+    tty: true
+    stdin_open: true
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      - TZ=Asia/Tokyo
+      - LANG=ja_JP.utf8
+      - ORACLE_SID=testSid
+      - ORACLE_PDB=testPdb
+      - ORACLE_PWD=!EZe8Ngz
+      - ORACLE_CHARACTERSET=AL32UTF8
+    volumes:
+      - ./oracle-db/oradata:/opt/oracle/oradata
+      - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup
+      - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup
+  #    links:
+  #      - <CONTAINER_NAME>
+  db-client:
+    build:
+      context: ./db-client
+    image: db-client
+    container_name: db-client
+    hostname: db-client
+    dns: 8.8.8.8
+    privileged: true
+    tty: true
+    stdin_open: true
+    ports:
+      - "50000:50000"
+    environment:
+      - TZ=Asia/Tokyo
+      - LANG=ja_JP.utf8
+    volumes:
+      - ./db-client/config:/app/config/:ro
+      - ./db-client/data:/app/data/:ro
+      - ./db-client/log:/app/log/
+      - ../../db-client:/app/db-client/:ro
+    links:
+      - oracle-db:oracle-db
