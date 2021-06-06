@@ -22,6 +22,7 @@ services:
       - ORACLE_PDB=testPdb
       - ORACLE_PWD=!EZe8Ngz
       - ORACLE_CHARACTERSET=AL32UTF8
+      - ORACLE_EDITION=enterprise
     volumes:
       - ./oracle-db/oradata:/opt/oracle/oradata
       - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
