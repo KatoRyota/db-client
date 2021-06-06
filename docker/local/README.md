@@ -79,7 +79,7 @@ tail -f stdout
 
 ```shell
 # [Ubuntu]
-docker container exec -it oracle-db bash
+docker container exec -it oracle-db /bin/bash
 
 sqlplus -s 'test/test@//localhost:1521/testPdb' <<EOF
 SELECT * FROM employee;
@@ -126,7 +126,7 @@ docker system prune -a --volumes
 
 ```shell
 # [Ubuntu]
-docker container exec -it ${CONTAINER_NAME} bash
+docker container exec -it ${CONTAINER_NAME} /bin/bash
 ```
 
 ## Dockerコンテナの一覧を確認したい
@@ -174,4 +174,40 @@ The Oracle Database inside the container also has Oracle Enterprise Manager Expr
 To access OEM Express, start your browser and follow the URL:
 
 	https://192.168.99.100:5500/em/
+```
+
+## Dockerfile作成手順
+
+### for ubuntu
+
+```shell
+docker container run --dns=8.8.8.8 --rm \
+  --name=ubuntu18-04 --hostname=ubuntu18-04 \
+  -itd ubuntu:18.04
+
+# コンテナに入って、手動で環境構築（インストール）を行っていき、その手順をDockerfileに記載する。
+docker container exec -it ubuntu18-04 /bin/bash
+```
+
+### for centos
+
+```shell
+docker container run --dns=8.8.8.8 --rm \
+  --name=centos7 --hostname=centos7 \
+  -itd centos:7 /sbin/init
+  
+# コンテナに入って、手動で環境構築（インストール）を行っていき、その手順をDockerfileに記載する。
+docker container exec -it centos7 /bin/bash
+```
+
+## Dockerfileからイメージをビルドして起動したい
+
+```shell
+cd ${DOCKERFILE_DIR}
+docker image build -t ${IMAGE_NAME}:${VERSION} .
+docker container run --dns=8.8.8.8 --rm \
+  --name=${CONTAINER_NAME} --hostname=${HOST_NAME} \
+  -itd ${IMAGE_NAME}:${VERSION}
+
+docker container exec -it ${CONTAINER_NAME} /bin/bash
 ```
