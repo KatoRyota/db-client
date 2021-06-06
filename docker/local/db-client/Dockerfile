@@ -28,6 +28,7 @@ RUN apt install -y less
 RUN apt install -y wget
 
 # Python 2.7のインストール
+RUN apt install -y python2.7
 
 # sqlplusのインストール
 
