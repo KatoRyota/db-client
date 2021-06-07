@@ -52,7 +52,7 @@ https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloa
 ```shell
 # [Ubuntu]
 mkdir -vp ~/repo
-cd ~/repo
+cd ~/repo/
 git clone https://github.com/oracle/docker-images
 ```
 
@@ -72,7 +72,7 @@ cp -vip LINUX.X64_193000_db_home.zip \
 
 ```shell
 # [Ubuntu]
-cd ~/repo
+cd ~/repo/
 git clone https://github.com/KatoRyota/db-client.git
 ```
 
@@ -106,7 +106,7 @@ Oracle DBの起動に20分程度かかる。
 
 ```shell
 # [Ubuntu]
-cd ~/repo/db-client/docker/local
+cd ~/repo/db-client/docker/local/
 docker-compose up --build > stdout 2>&1 < /dev/null &
 tail -f stdout
 ```
@@ -129,7 +129,7 @@ exit
 docker container exec -it db-client /bin/bash
 
 export PYTHONIOENCODING=utf-8
-cd /app
+cd /app/
 
 python2.7 -m db-client 2>&1 <<EOF | less -S
 select * from employee;
@@ -142,7 +142,7 @@ exit
 
 ```shell
 # [Ubuntu]
-cd ~/repo/db-client/docker/local
+cd ~/repo/db-client/docker/local/
 docker-compose down
 ```
 
