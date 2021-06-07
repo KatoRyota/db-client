@@ -102,6 +102,8 @@ docker system prune -a --volumes
 
 ## Dockerコンテナの起動
 
+Oracle DBの起動に20分程度かかる。
+
 ```shell
 # [Ubuntu]
 cd ~/repo/db-client/docker/local
