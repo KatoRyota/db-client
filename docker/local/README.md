@@ -115,8 +115,8 @@ tail -f stdout
 # [Ubuntu]
 docker container exec -it oracle-db /bin/bash
 
-sqlplus -s 'test/test@//localhost:1521/testPdb' <<EOF
-SELECT * FROM employee;
+sqlplus -s 'test/test@//localhost:1521/testPdb' <<EOF | less -S
+select * from employee;
 EOF
 
 exit
@@ -130,9 +130,7 @@ export PYTHONIOENCODING=utf-8
 cd /app
 
 python2.7 -m db-client 2>&1 <<EOF | less -S
-select *
-from employee
-;
+select * from employee;
 EOF
 
 exit
