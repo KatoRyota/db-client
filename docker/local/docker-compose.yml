@@ -24,6 +24,7 @@ services:
       - ORACLE_CHARACTERSET=AL32UTF8
       - ORACLE_EDITION=standard
     volumes:
+      - /opt/oracle/oradata
       - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
       - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
   db-client:
