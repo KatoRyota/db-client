@@ -122,6 +122,19 @@ EOF
 exit
 ```
 
+```shell
+# [Ubuntu]
+export PYTHONIOENCODING=utf-8
+cd /app
+python2.7 -m db-client 2>&1 <<EOF | less -S
+select *
+from employee
+;
+EOF
+
+exit
+```
+
 ## Dockerコンテナの停止
 
 ```shell
