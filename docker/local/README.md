@@ -13,7 +13,7 @@
 * WSL 2 (Ubuntu 20.04 LTS)
 * Docker Desktop 3
 
-WSL 2 (Ubuntu 20.04 LTS)上には、以下のソフトウェアがインストールされてる必要があります。
+WSL 2 (Ubuntu 20.04 LTS) には、以下のソフトウェアがインストールされてる必要があります。
 
 * Git
 
