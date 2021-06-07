@@ -100,7 +100,7 @@ docker stop `docker ps -q`
 docker system prune -a --volumes
 ```
 
-## Dockerコンテナの起動
+## Dockerコンテナの作成/起動
 
 Oracle DBの起動に20分程度かかる。
 
@@ -138,7 +138,7 @@ EOF
 exit
 ```
 
-## Dockerコンテナの停止
+## Dockerコンテナの停止/削除
 
 ```shell
 # [Ubuntu]
@@ -148,7 +148,7 @@ docker-compose down
 
 # Tips
 
-## Dockerコンテナを一括起動したい
+## Dockerコンテナを一括で作成/起動したい
 
 ```shell
 # [Ubuntu]
@@ -156,7 +156,7 @@ cd ${DOCKER_COMPOSE_YML_DIR}
 docker-compose up --build > stdout 2>&1 < /dev/null &
 ```
 
-## Dockerコンテナを一括停止したい
+## Dockerコンテナを一括で停止/削除したい
 
 ```shell
 # [Ubuntu]
@@ -164,7 +164,7 @@ cd ${DOCKER_COMPOSE_YML_DIR}
 docker-compose down
 ```
 
-## Docker上のリソースを一括削除したい
+## Docker上のリソースを一括で削除したい
 
 ```shell
 # [Ubuntu]
