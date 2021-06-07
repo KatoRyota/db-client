@@ -78,6 +78,9 @@ git clone https://github.com/KatoRyota/db-client.git
 
 ## sqlplusのzipファイルの配置
 
+前手順でダウンロードした、sqlplusのzipファイルを、  
+ホストとDockerコンテナの共有ディレクトリに配置。
+
 ```shell
 # [Ubuntu]
 cd `wslpath -u 'C:\Users\kator\Downloads'`
