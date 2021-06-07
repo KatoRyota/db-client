@@ -152,7 +152,7 @@ docker-compose down
 
 ```shell
 # [Ubuntu]
-cd ${APP_ROOT_DIR}
+cd ${DOCKER_COMPOSE_YML_DIR}
 docker-compose up --build > stdout 2>&1 < /dev/null &
 ```
 
@@ -160,7 +160,7 @@ docker-compose up --build > stdout 2>&1 < /dev/null &
 
 ```shell
 # [Ubuntu]
-cd ${APP_ROOT_DIR}
+cd ${DOCKER_COMPOSE_YML_DIR}
 docker-compose down
 ```
 
@@ -231,6 +231,7 @@ To access OEM Express, start your browser and follow the URL:
 ### for ubuntu
 
 ```shell
+# [Ubuntu]
 docker container run --dns=8.8.8.8 --rm \
   --name=ubuntu18-04 --hostname=ubuntu18-04 \
   -itd ubuntu:18.04
@@ -242,6 +243,7 @@ docker container exec -it ubuntu18-04 /bin/bash
 ### for centos
 
 ```shell
+# [Ubuntu]
 docker container run --dns=8.8.8.8 --rm \
   --name=centos7 --hostname=centos7 \
   -itd centos:7 /sbin/init
@@ -253,6 +255,7 @@ docker container exec -it centos7 /bin/bash
 ## Dockerfileからイメージをビルドして起動したい
 
 ```shell
+# [Ubuntu]
 cd ${DOCKERFILE_DIR}
 docker image build -t ${IMAGE_NAME}:${VERSION} .
 docker container run --dns=8.8.8.8 --rm \
