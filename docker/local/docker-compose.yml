@@ -2,7 +2,7 @@ version: "3"
 services:
   oracle-db:
     build:
-      context: ../../../docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0
+      context: ../../../docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0/
       args:
         DB_EDITION: se2
     image: oracle/database:19.3.0-se2
@@ -29,7 +29,7 @@ services:
       - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
   db-client:
     build:
-      context: ./db-client
+      context: ./db-client/
     image: db-client
     container_name: db-client
     hostname: db-client
