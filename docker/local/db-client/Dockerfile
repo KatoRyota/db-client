@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 VOLUME ["/sys/fs/cgroup"]
 
-WORKDIR /root
+WORKDIR /root/
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -36,11 +36,13 @@ RUN apt install -y python2.7
 # ---- sqlplusのインストール ----
 COPY ./sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
 COPY ./sqlplus/instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
-WORKDIR /opt/oracle
+WORKDIR /opt/oracle/
 RUN unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
 RUN unzip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip
 RUN apt install -y libaio1
 RUN echo "/opt/oracle/instantclient_19_11" > /etc/ld.so.conf.d/oracle-instantclient.conf
 RUN ldconfig
+
+WORKDIR /app/
 
 CMD ["/bin/bash"]
