@@ -4,8 +4,8 @@ services:
     build:
       context: ../../../docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0
       args:
-        DB_EDITION: ee
-    image: oracle/database:19.3.0-ee
+        DB_EDITION: se2
+    image: oracle/database:19.3.0-se2
     container_name: oracle-db
     hostname: oracle-db
     dns: 8.8.8.8
@@ -22,7 +22,7 @@ services:
       - ORACLE_PDB=testPdb
       - ORACLE_PWD=!EZe8Ngz
       - ORACLE_CHARACTERSET=AL32UTF8
-      - ORACLE_EDITION=enterprise
+      - ORACLE_EDITION=standard
     volumes:
       - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
       - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
