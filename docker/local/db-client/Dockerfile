@@ -8,28 +8,39 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
 
-# タイムゾーンの設定
+# ---- タイムゾーンの設定 ----
 RUN apt install -y tzdata
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 ENV TZ="Asia/Tokyo"
 
-# ロケールの設定
+# ---- ロケールの設定 ----
 RUN apt install -y locales
 RUN locale-gen ja_JP.UTF-8
 ENV LANG="ja_JP.UTF-8"
 ENV LANGUAGE="ja_JP:ja"
 ENV LC_ALL="ja_JP.UTF-8"
 
-# lessのインストール
+# ---- lessのインストール ----
 RUN apt install -y less
 
-# wgetのインストール
+# ---- wgetのインストール ----
 RUN apt install -y wget
 
-# Python 2.7のインストール
+# ---- unzipのインストール ----
+RUN apt install -y unzip
+
+# ---- Python 2.7のインストール ----
 RUN apt install -y python2.7
 
-# sqlplusのインストール
+# ---- sqlplusのインストール ----
+COPY ./sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
+COPY ./sqlplus/instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
+WORKDIR /opt/oracle
+RUN unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
+RUN unzip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip
+RUN apt install -y libaio1
+RUN echo "/opt/oracle/instantclient_19_11" > /etc/ld.so.conf.d/oracle-instantclient.conf
+RUN ldconfig
 
 CMD ["/bin/bash"]

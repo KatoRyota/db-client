@@ -32,21 +32,15 @@ class OracleRunner(object):
         # type: () -> None
 
         # ---- 環境変数の設定 ----
-        os.environ["ORACLE_BASE"] = self.__config.get("oracle_environment_variable", "oracle_base")
-        os.environ["ORACLE_HOME"] = self.__config.get("oracle_environment_variable", "oracle_home")
-        os.environ["LD_LIBRARY_PATH"] = self.__config.get("oracle_environment_variable", "ld_library_path")
+        os.environ["LD_LIBRARY_PATH"] = self.__config.get("oracle_environment_variable",
+                                                          "ld_library_path") + ":" + os.environ.get("LD_LIBRARY_PATH")
+        os.environ["PATH"] = self.__config.get("oracle_environment_variable", "sqlplus_path") + ":" + os.environ.get(
+            "PATH")
         os.environ["NLS_LANG"] = self.__config.get("oracle_environment_variable", "nls_lang")
         os.environ["NLS_DATE_FORMAT"] = self.__config.get("oracle_environment_variable", "nls_date_format")
         os.environ["NLS_TIMESTAMP_FORMAT"] = self.__config.get("oracle_environment_variable", "nls_timestamp_format")
-        os.environ["PATH"] = os.environ.get("ORACLE_HOME") + "/bin:" + os.environ.get("PATH") + ":" + "/usr/local/bin"
 
         # ---- 環境変数のチェック ----
-        if not os.environ["ORACLE_BASE"]:
-            raise StandardError(u"環境変数[ORACLE_BASE]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
-
-        if not os.environ["ORACLE_HOME"]:
-            raise StandardError(u"環境変数[ORACLE_HOME]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
-
         if not os.environ["LD_LIBRARY_PATH"]:
             raise StandardError(u"環境変数[LD_LIBRARY_PATH]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 

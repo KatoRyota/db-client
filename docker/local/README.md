@@ -19,6 +19,10 @@ WSL 2 (Ubuntu 20.04 LTS)上には、以下のソフトウェアがインスト�
 
 ## Oracle Database 19cをダウンロード
 
+以下のファイルをダウンロード。
+
+* Linux x86-64
+
 ```text
 # [Windows]
 http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html
@@ -26,6 +30,21 @@ http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.ht
     -> 19.3 - Enterprise Edition (also includes Standard Edition 2)
     -> Linux x86-64
     -> ZIP  
+```
+
+## sqlplusをダウンロード
+
+以下のファイルをダウンロード。
+
+* Basic Package (ZIP)
+* SQL*Plus Package (ZIP)
+
+```text
+# [Windows]
+https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+    -> Version 19.11.0.0.0 (Requires glibc 2.14)
+    -> Basic Package (ZIP)
+    -> SQL*Plus Package (ZIP)
 ```
 
 ## Dockerイメージをビルドする為の、関連ファイルをダウンロード
@@ -37,17 +56,16 @@ cd ~/repo
 git clone https://github.com/oracle/docker-images
 ```
 
-## バイナリファイルの配置
+## Oracle Database 19cのzipファイルの配置
 
-前手順でダウンロードした、Oracle Database 19cのバイナリファイルを、  
-Dockerイメージのビルド用ディレクトリに配置。  
-パスは環境に応じて変更すること。
+前手順でダウンロードした、Oracle Database 19cのzipファイルを、  
+Dockerイメージのビルド用ディレクトリに配置。
 
 ```shell
 # [Ubuntu]
 cd `wslpath -u 'C:\Users\kator\Downloads'`
 cp -vip LINUX.X64_193000_db_home.zip \
-    ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0
+    ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0/
 ```
 
 ## db-clientをダウンロード
@@ -56,6 +74,19 @@ cp -vip LINUX.X64_193000_db_home.zip \
 # [Ubuntu]
 cd ~/repo
 git clone https://github.com/KatoRyota/db-client.git
+```
+
+## sqlplusのzipファイルの配置
+
+```shell
+# [Ubuntu]
+cd `wslpath -u 'C:\Users\kator\Downloads'`
+
+cp -vip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip \
+    ~/repo/db-client/docker/local/db-client/sqlplus/
+
+cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
+    ~/repo/db-client/docker/local/db-client/sqlplus/
 ```
 
 ## Docker上のリソースを全て削除
