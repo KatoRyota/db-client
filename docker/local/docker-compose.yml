@@ -1,31 +1,31 @@
 version: "3"
 services:
-  #  oracle-db:
-  #    build:
-  #      context: ../../../docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0
-  #      args:
-  #        DB_EDITION: ee
-  #    image: oracle/database:19.3.0-ee
-  #    container_name: oracle-db
-  #    hostname: oracle-db
-  #    dns: 8.8.8.8
-  #    privileged: false
-  #    tty: true
-  #    stdin_open: true
-  #    ports:
-  #      - "1521:1521"
-  #      - "5500:5500"
-  #    environment:
-  #      - TZ=Asia/Tokyo
-  #      - LANG=ja_JP.utf8
-  #      - ORACLE_SID=testSid
-  #      - ORACLE_PDB=testPdb
-  #      - ORACLE_PWD=!EZe8Ngz
-  #      - ORACLE_CHARACTERSET=AL32UTF8
-  #      - ORACLE_EDITION=enterprise
-  #    volumes:
-  #      - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
-  #      - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
+  oracle-db:
+    build:
+      context: ../../../docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0
+      args:
+        DB_EDITION: ee
+    image: oracle/database:19.3.0-ee
+    container_name: oracle-db
+    hostname: oracle-db
+    dns: 8.8.8.8
+    privileged: false
+    tty: true
+    stdin_open: true
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      - TZ=Asia/Tokyo
+      - LANG=ja_JP.utf8
+      - ORACLE_SID=testSid
+      - ORACLE_PDB=testPdb
+      - ORACLE_PWD=!EZe8Ngz
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - ORACLE_EDITION=enterprise
+    volumes:
+      - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
+      - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
   db-client:
     build:
       context: ./db-client
@@ -45,5 +45,5 @@ services:
       - ./db-client/config:/app/config:ro
       - ./db-client/log:/app/log
       - ../../db-client:/app/db-client:ro
-#    links:
-#      - oracle-db:oracle-db
+    links:
+      - oracle-db:oracle-db
