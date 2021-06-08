@@ -214,32 +214,6 @@ docker volume ls
 docker container inspect ${CONTAINER_NAME}
 ```
 
-## sqlplusでOracle DBに接続したい
-
-```shell
-# [Ubuntu]
-#1
-sqlplus / as sysdba
-#2
-sqlplus 'sys/!EZe8Ngz@//localhost:1521/testSid' as sysdba
-#3
-sqlplus 'system/!EZe8Ngz@//localhost:1521/testSid'
-#4
-sqlplus 'pdbadmin/!EZe8Ngz@//localhost:1521/testPdb'
-#5
-sqlplus -s 'test/test@//localhost:1521/testPdb'
-```
-
-## Oracle Enterprise Manager Expressにアクセスしたい
-
-```text
-[Windows]
-The Oracle Database inside the container also has Oracle Enterprise Manager Express configured. 
-To access OEM Express, start your browser and follow the URL:
-
-	https://192.168.99.100:5500/em/
-```
-
 ## Dockerfile作成手順
 
 ### for ubuntu
@@ -277,4 +251,30 @@ docker container run --dns=8.8.8.8 --rm \
   -itd ${IMAGE_NAME}:${VERSION}
 
 docker container exec -it ${CONTAINER_NAME} /bin/bash
+```
+
+## sqlplusでOracle DBに接続したい
+
+```shell
+# [Ubuntu]
+#1
+sqlplus / as sysdba
+#2
+sqlplus 'sys/!EZe8Ngz@//localhost:1521/testSid' as sysdba
+#3
+sqlplus 'system/!EZe8Ngz@//localhost:1521/testSid'
+#4
+sqlplus 'pdbadmin/!EZe8Ngz@//localhost:1521/testPdb'
+#5
+sqlplus -s 'test/test@//localhost:1521/testPdb'
+```
+
+## Oracle Enterprise Manager Expressにアクセスしたい
+
+```text
+[Windows]
+The Oracle Database inside the container also has Oracle Enterprise Manager Express configured. 
+To access OEM Express, start your browser and follow the URL:
+
+	https://192.168.99.100:5500/em/
 ```
