@@ -96,7 +96,7 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
 
 ```shell
 # [Ubuntu]
-docker stop `docker ps -q`
+docker container stop `docker ps -q`
 docker system prune -a --volumes
 ```
 
@@ -168,7 +168,7 @@ docker-compose down
 
 ```shell
 # [Ubuntu]
-docker stop `docker ps -q`
+docker container stop `docker ps -q`
 docker system prune -a --volumes
 ```
 
