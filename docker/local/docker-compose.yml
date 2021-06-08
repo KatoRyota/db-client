@@ -9,7 +9,6 @@ services:
     container_name: oracle-db
     hostname: oracle-db
     dns: 8.8.8.8
-    privileged: false
     tty: true
     stdin_open: true
     ports:
@@ -23,8 +22,9 @@ services:
       - ORACLE_PWD=!EZe8Ngz
       - ORACLE_CHARACTERSET=AL32UTF8
       - ORACLE_EDITION=standard
+    networks:
+      - db-client
     volumes:
-      - /opt/oracle/oradata
       - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
       - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
   db-client:
@@ -34,7 +34,6 @@ services:
     container_name: db-client
     hostname: db-client
     dns: 8.8.8.8
-    privileged: false
     tty: true
     stdin_open: true
     ports:
@@ -42,9 +41,12 @@ services:
     environment:
       - TZ=Asia/Tokyo
       - LANG=ja_JP.utf8
+    networks:
+      - db-client
     volumes:
       - ./db-client/config:/app/config:ro
       - ./db-client/log:/app/log
       - ../../db-client:/app/db-client:ro
-    links:
-      - oracle-db:oracle-db
+networks:
+  db-client:
+

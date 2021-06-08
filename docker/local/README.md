@@ -193,6 +193,20 @@ docker container ls -a
 docker image ls -a
 ```
 
+## Dockerネットワークの一覧を確認したい
+
+```shell
+# [Ubuntu]
+docker network ls
+```
+
+## Dockerボリュームの一覧を確認したい
+
+```shell
+# [Ubuntu]
+docker volume ls
+```
+
 ## Dockerコンテナの状態を確認したい
 
 ```shell
