@@ -2,8 +2,6 @@ FROM ubuntu:18.04
 
 WORKDIR /root/
 
-ENV DEBIAN_FRONTEND=noninteractive
-
 # ---- パッケージのインストール ----
 RUN apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -y \
