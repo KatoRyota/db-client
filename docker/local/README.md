@@ -226,7 +226,7 @@ docker container run --dns=8.8.8.8 --rm \
   --name=ubuntu18-04 --hostname=ubuntu18-04 \
   -itd ubuntu:18.04
 
-# コンテナに入って、手動で環境構築（インストール）を行っていき、その手順をDockerfileに記載する。
+# コンテナに入って、手動で環境構築（インストールなど）を行っていき、その手順をDockerfileに記載する。
 docker container exec -it ubuntu18-04 /bin/bash
 ```
 
@@ -238,7 +238,7 @@ docker container run --dns=8.8.8.8 --rm \
   --name=centos7 --hostname=centos7 \
   -itd centos:7 /sbin/init
   
-# コンテナに入って、手動で環境構築（インストール）を行っていき、その手順をDockerfileに記載する。
+# コンテナに入って、手動で環境構築（インストールなど）を行っていき、その手順をDockerfileに記載する。
 docker container exec -it centos7 /bin/bash
 ```
 
