@@ -94,6 +94,8 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
 
 ## Docker上のリソースを全て削除
 
+以下のコマンドを実行すると、Docker Compose管理外のものも削除されるので注意。
+
 ```shell
 # [Ubuntu]
 docker container stop `docker ps -q`
