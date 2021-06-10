@@ -111,7 +111,7 @@ docker-compose up --build > stdout 2>&1 < /dev/null &
 tail -f stdout
 ```
 
-Oracle DBのセットアップから起動に、20～30分程度かかります。  
+Oracle DBのセットアップと起動に、20～30分程度かかります。  
 この問題に対する解決策は、以下のページで紹介されていますが、ここでは取り上げません。
 
 * [Drop DB startup time from 45 to 3 minutes in dockerized Oracle 19.3.0](https://medium.com/@ggajos/drop-db-startup-time-from-45-to-3-minutes-in-dockerized-oracle-19-3-0-552068593deb)
