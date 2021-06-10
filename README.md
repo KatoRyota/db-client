@@ -44,6 +44,7 @@ TODO
 
 ```shell
 cd ${APP_ROOT_DIR}
+
 python -m db-client 2>&1 <<EOF | less -S
 select * from employee;
 EOF
