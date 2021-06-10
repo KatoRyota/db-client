@@ -25,7 +25,6 @@ services:
     networks:
       - db-client
     volumes:
-      - /opt/oracle/oradata
       - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
       - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
   db-client:
