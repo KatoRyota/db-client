@@ -1,5 +1,4 @@
 # coding: utf-8
-
 import HTMLParser
 import logging
 from logging import Logger
