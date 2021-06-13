@@ -70,7 +70,7 @@ cp -vip LINUX.X64_193000_db_home.zip \
 
 ## oracle-dbイメージを作成
 
-マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。  
+マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。
 
 ```shell
 cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
@@ -78,7 +78,8 @@ cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
 
 cd ~/repo/db-client/docker/local/
 
-docker run --dns=8.8.8.8 --rm --name=oracle-db --hostname=oracle-db -d \
+docker container run --dns=8.8.8.8 --rm \
+    --name=oracle-db --hostname=oracle-db \
     -p 1521:1521 -p 5500:5500 \
     -e ORACLE_SID=testSid \
     -e ORACLE_PDB=testPdb \
@@ -90,11 +91,15 @@ docker run --dns=8.8.8.8 --rm --name=oracle-db --hostname=oracle-db -d \
     -e ENABLE_ARCHIVELOG=true \
     -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
     -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
-    oracle/database:19.3.0-se2
+    -d oracle/database:19.3.0-se2
 
-docker container logs oracle-db -f
-docker commit oracle-db oracle-db
+docker container logs -f oracle-db
+docker container commit oracle-db oracle-db
 ```
+
+ここで作成した、oracle-dbイメージには、Oracle Database 19c本体が含まれている為、  
+イメージの取り扱いにはお気を付けください。  
+Docker Hubなどにアップロードすると、ライセンス違反になる可能性があります。
 
 ## db-clientをダウンロード
 
@@ -125,14 +130,9 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
 ```shell
 # [Ubuntu]
 cd ~/repo/db-client/docker/local/
-docker-compose up --build > stdout 2>&1 < /dev/null &
-tail -f stdout
+docker-compose up --build -d
+docker-compose logs -f
 ```
-
-Oracle DBのセットアップと起動に、20～30分程度かかります。  
-この問題に対する解決策は、以下のページで紹介されていますが、ここでは取り上げません。
-
-* [Drop DB startup time from 45 to 3 minutes in dockerized Oracle 19.3.0](https://medium.com/@ggajos/drop-db-startup-time-from-45-to-3-minutes-in-dockerized-oracle-19-3-0-552068593deb)
 
 ## 動作確認
 
@@ -140,7 +140,7 @@ Oracle DBのセットアップと起動に、20～30分程度かかります。
 # [Ubuntu]
 docker container exec -it oracle-db /bin/bash
 
-sqlplus -s 'test/test@//localhost:1521/testPdb' <<EOF | less -S
+sqlplus -s 'test/test@//localhost:1521/testPdb' <<EOF
 select * from employee;
 EOF
 
@@ -176,7 +176,8 @@ docker-compose down
 ```shell
 # [Ubuntu]
 cd ${DOCKER_COMPOSE_YML_DIR}
-docker-compose up --build > stdout 2>&1 < /dev/null &
+docker-compose up --build -d
+docker-compose logs -f
 ```
 
 ## Dockerコンテナを一括で停止/削除したい
@@ -193,13 +194,6 @@ docker-compose down
 # [Ubuntu]
 docker container stop `docker ps -q`
 docker system prune -a --volumes
-```
-
-## Dockerコンテナにログインしたい
-
-```shell
-# [Ubuntu]
-docker container exec -it ${CONTAINER_NAME} /bin/bash
 ```
 
 ## Dockerコンテナの一覧を確認したい
@@ -230,7 +224,21 @@ docker network ls
 docker volume ls
 ```
 
-## Dockerコンテナの状態を確認したい
+## Dockerコンテナにログインしたい
+
+```shell
+# [Ubuntu]
+docker container exec -it ${CONTAINER_NAME} /bin/bash
+```
+
+## Dockerコンテナのログを確認したい
+
+```shell
+# [Ubuntu]
+docker container logs -f ${CONTAINER_NAME}
+```
+
+## Dockerコンテナの詳細を確認したい
 
 ```shell
 # [Ubuntu]
@@ -245,7 +253,7 @@ docker container inspect ${CONTAINER_NAME}
 # [Ubuntu]
 docker container run --dns=8.8.8.8 --rm \
   --name=ubuntu18-04 --hostname=ubuntu18-04 \
-  -itd ubuntu:18.04
+   -d ubuntu:18.04
 
 # コンテナに入って、手動で環境構築（インストールなど）を行っていき、その手順をDockerfileに記載する。
 docker container exec -it ubuntu18-04 /bin/bash
@@ -257,7 +265,7 @@ docker container exec -it ubuntu18-04 /bin/bash
 # [Ubuntu]
 docker container run --dns=8.8.8.8 --rm \
   --name=centos7 --hostname=centos7 \
-  -itd centos:7 /sbin/init
+  -d centos:7 /sbin/init
   
 # コンテナに入って、手動で環境構築（インストールなど）を行っていき、その手順をDockerfileに記載する。
 docker container exec -it centos7 /bin/bash
@@ -271,7 +279,7 @@ cd ${DOCKERFILE_DIR}
 docker image build -t ${IMAGE_NAME}:${VERSION} .
 docker container run --dns=8.8.8.8 --rm \
   --name=${CONTAINER_NAME} --hostname=${HOST_NAME} \
-  -itd ${IMAGE_NAME}:${VERSION}
+  -d ${IMAGE_NAME}:${VERSION}
 
 docker container exec -it ${CONTAINER_NAME} /bin/bash
 ```
