@@ -2,8 +2,9 @@ FROM ubuntu:18.04
 
 WORKDIR /root/
 
-# ---- パッケージのインストール ----
-RUN apt update && \
+RUN \
+    # ---- パッケージのインストール ----
+    apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -y \
         tzdata \
         locales \
@@ -12,10 +13,9 @@ RUN apt update && \
         python2.7 \
         libaio1 && \
     apt clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# ---- タイムゾーンとロケールの設定 ----
-RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    rm -rf /var/lib/apt/lists/* && \
+    # ---- タイムゾーンとロケールの設定 ----
+    ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
     locale-gen ja_JP.UTF-8
 
