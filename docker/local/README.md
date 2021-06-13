@@ -88,8 +88,8 @@ docker run --name oracle-db \
     -e ORACLE_EDITION=standard \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
     -e ENABLE_ARCHIVELOG=true \
-    -v ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
-    -v ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
+    -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
+    -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
     oracle/database:19.3.0-se2
 ```
 
