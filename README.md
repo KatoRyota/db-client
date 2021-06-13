@@ -41,7 +41,14 @@ ID-111-1111,NAME-111-1111,TYPE-111-1111
 
 # Installation
 
-TODO
+以下のようにdb-clientをダウンロードして下さい。
+
+```shell
+cd ~/repo/
+git clone https://github.com/KatoRyota/db-client.git
+```
+
+以上です。
 
 # Usage
 
