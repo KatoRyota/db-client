@@ -68,6 +68,35 @@ cp -vip LINUX.X64_193000_db_home.zip \
     ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0/
 ```
 
+## oracle-dbイメージを作成
+
+```shell
+cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
+./buildContainerImage.sh -s -i -v 19.3.0
+```
+
+```shell
+cd ~/repo/db-client/docker/local/
+
+docker run --name oracle-db \
+    -p 1521:1521 -p 5500:5500 \
+    -e ORACLE_SID=testSid \
+    -e ORACLE_PDB=testPdb \
+    -e ORACLE_PWD='!EZe8Ngz' \
+    -e INIT_SGA_SIZE=64 \
+    -e INIT_PGA_SIZE=64 \
+    -e ORACLE_EDITION=standard \
+    -e ORACLE_CHARACTERSET=AL32UTF8 \
+    -e ENABLE_ARCHIVELOG=true \
+    -v ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
+    -v ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
+    oracle/database:19.3.0-se2
+```
+
+```shell
+docker commit oracle-db oracle-db
+```
+
 ## db-clientをダウンロード
 
 ```shell
@@ -90,16 +119,6 @@ cp -vip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip \
 
 cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
     ~/repo/db-client/docker/local/db-client/sqlplus/
-```
-
-## Docker上のリソースを全て削除
-
-以下のコマンドを実行すると、Docker Compose管理外のものも削除されるので注意。
-
-```shell
-# [Ubuntu]
-docker container stop `docker ps -q`
-docker system prune -a --volumes
 ```
 
 ## Dockerコンテナの作成/起動
