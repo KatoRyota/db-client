@@ -95,6 +95,7 @@ docker container run --dns=8.8.8.8 --rm \
 
 docker container logs -f oracle-db
 docker container commit oracle-db oracle-db
+docker container stop oracle-db
 ```
 
 ここで作成した、oracle-dbイメージには、Oracle Database 19c本体が含まれている為、  
