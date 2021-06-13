@@ -5,8 +5,6 @@ services:
     container_name: oracle-db
     hostname: oracle-db
     dns: 8.8.8.8
-    tty: true
-    stdin_open: true
     ports:
       - "1521:1521"
       - "5500:5500"
@@ -22,8 +20,6 @@ services:
     container_name: db-client
     hostname: db-client
     dns: 8.8.8.8
-    tty: true
-    stdin_open: true
     ports:
       - "50000:50000"
     environment:
