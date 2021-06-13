@@ -70,30 +70,29 @@ cp -vip LINUX.X64_193000_db_home.zip \
 
 ## oracle-dbイメージを作成
 
+マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。  
+
 ```shell
 cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
 ./buildContainerImage.sh -s -i -v 19.3.0
-```
 
-```shell
 cd ~/repo/db-client/docker/local/
 
-docker run --name oracle-db \
+docker run --dns=8.8.8.8 --rm --name=oracle-db --hostname=oracle-db -d \
     -p 1521:1521 -p 5500:5500 \
     -e ORACLE_SID=testSid \
     -e ORACLE_PDB=testPdb \
     -e ORACLE_PWD='!EZe8Ngz' \
-    -e INIT_SGA_SIZE=64 \
-    -e INIT_PGA_SIZE=64 \
+    -e INIT_SGA_SIZE=756 \
+    -e INIT_PGA_SIZE=756 \
     -e ORACLE_EDITION=standard \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
     -e ENABLE_ARCHIVELOG=true \
     -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
     -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
     oracle/database:19.3.0-se2
-```
 
-```shell
+docker container logs oracle-db -f
 docker commit oracle-db oracle-db
 ```
 
@@ -188,7 +187,7 @@ cd ${DOCKER_COMPOSE_YML_DIR}
 docker-compose down
 ```
 
-## Docker上のリソースを一括で削除したい
+## Dockerリソースを一括で削除したい
 
 ```shell
 # [Ubuntu]
