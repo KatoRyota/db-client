@@ -226,7 +226,7 @@ docker network ls
 docker volume ls
 ```
 
-## Dockerコンテナにログインしたい
+## Dockerコンテナでインタラクティブシェルを起動したい
 
 ```shell
 # [Ubuntu]
