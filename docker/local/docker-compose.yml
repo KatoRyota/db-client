@@ -37,4 +37,3 @@ services:
       - ../../db-client:/app/db-client:ro
 networks:
   db-client:
-
