@@ -73,6 +73,7 @@ cp -vip LINUX.X64_193000_db_home.zip \
 マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。
 
 ```shell
+# [Ubuntu]
 cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
 ./buildContainerImage.sh -s -i -v 19.3.0
 
@@ -91,7 +92,7 @@ docker container run --dns=8.8.8.8 --rm \
     -e ENABLE_ARCHIVELOG=true \
     -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
     -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
-    -d oracle/database:19.3.0-se2
+    -itd oracle/database:19.3.0-se2
 
 docker container logs -f oracle-db
 docker container commit oracle-db oracle-db
@@ -254,7 +255,7 @@ docker container inspect ${CONTAINER_NAME}
 # [Ubuntu]
 docker container run --dns=8.8.8.8 --rm \
   --name=ubuntu18-04 --hostname=ubuntu18-04 \
-   -d ubuntu:18.04
+   -itd ubuntu:18.04
 
 # コンテナに入って、手動で環境構築（インストールなど）を行っていき、その手順をDockerfileに記載する。
 docker container exec -it ubuntu18-04 /bin/bash
@@ -266,7 +267,7 @@ docker container exec -it ubuntu18-04 /bin/bash
 # [Ubuntu]
 docker container run --dns=8.8.8.8 --rm \
   --name=centos7 --hostname=centos7 \
-  -d centos:7 /sbin/init
+  -itd centos:7 /sbin/init
   
 # コンテナに入って、手動で環境構築（インストールなど）を行っていき、その手順をDockerfileに記載する。
 docker container exec -it centos7 /bin/bash
@@ -280,7 +281,7 @@ cd ${DOCKERFILE_DIR}
 docker image build -t ${IMAGE_NAME}:${VERSION} .
 docker container run --dns=8.8.8.8 --rm \
   --name=${CONTAINER_NAME} --hostname=${HOST_NAME} \
-  -d ${IMAGE_NAME}:${VERSION}
+  -itd ${IMAGE_NAME}:${VERSION}
 
 docker container exec -it ${CONTAINER_NAME} /bin/bash
 ```
