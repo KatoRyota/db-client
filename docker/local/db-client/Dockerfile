@@ -20,16 +20,9 @@ RUN \
     groupadd -r docker && \
     useradd -r -g docker docker
 
-USER docker
-
-ENV TZ="Asia/Tokyo" \
-    LANG="ja_JP.UTF-8" \
-    LANGUAGE="ja_JP:ja" \
-    LC_ALL="ja_JP.UTF-8"
-
 # ---- sqlplusのインストール ----
-COPY --chown=docker:docker ./docker/local/db-client/sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
-COPY --chown=docker:docker ./docker/local/db-client/sqlplus/instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
+COPY ./docker/local/db-client/sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
+COPY ./docker/local/db-client/sqlplus/instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
 
 WORKDIR /opt/oracle/
 
@@ -37,6 +30,13 @@ RUN unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip && \
     unzip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip && \
     echo "/opt/oracle/instantclient_19_11" > /etc/ld.so.conf.d/oracle-instantclient.conf && \
     ldconfig
+
+USER docker
+
+ENV TZ="Asia/Tokyo" \
+    LANG="ja_JP.UTF-8" \
+    LANGUAGE="ja_JP:ja" \
+    LC_ALL="ja_JP.UTF-8"
 
 # ---- アプリケーションの配置 ----
 COPY --chown=docker:docker docker/local/db-client/config /app/config
