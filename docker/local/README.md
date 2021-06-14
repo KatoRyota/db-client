@@ -17,19 +17,19 @@ WSL 2 (Ubuntu 20.04 LTS) には、以下のソフトウェアがインストー�
 
 * Git
 
-## Oracle Database 19cをダウンロード
+## Oracle Database 18c Express Editionをダウンロード
 
 以下のファイルをダウンロード。
 
-* Linux x86-64
+* Oracle Database 18c Express Edition for Linux x64
 
 ```text
 # [Windows]
 http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html
-    -> Oracle Database 19c
-    -> 19.3 - Enterprise Edition (also includes Standard Edition 2)
-    -> Linux x86-64
-    -> ZIP  
+    -> Oracle Database Express Edition
+    -> Oracle Database 18c Express Edition
+    -> Oracle Database Express Edition (XE) Release 18.4.0.0.0 (18c)
+    -> Oracle Database 18c Express Edition for Linux x64
 ```
 
 ## sqlplusをダウンロード
@@ -47,7 +47,7 @@ https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloa
     -> SQL*Plus Package (ZIP)
 ```
 
-## Dockerイメージをビルドする為の、関連ファイルをダウンロード
+## Oracle DatabaseのDockerイメージをビルドする為の、関連ファイルをダウンロード
 
 ```shell
 # [Ubuntu]
@@ -56,16 +56,16 @@ cd ~/repo/
 git clone https://github.com/oracle/docker-images
 ```
 
-## Oracle Database 19cのzipファイルの配置
+## Oracle Database 18c Express Editionの配置
 
-前手順でダウンロードした、Oracle Database 19cのzipファイルを、  
+前手順でダウンロードした、Oracle Database 18c Express Editionのrpmファイルを、  
 Dockerイメージのビルド用ディレクトリに配置。
 
 ```shell
 # [Ubuntu]
-cd `wslpath -u 'C:\Users\kator\Downloads'`
-cp -vip LINUX.X64_193000_db_home.zip \
-    ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0/
+cd `wslpath -u "C:\Users\kator\Downloads"`
+cp -vip oracle-database-xe-18c-1.0-1.x86_64.rpm \
+    ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 ```
 
 ## db-clientをダウンロード
@@ -99,31 +99,27 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
 ```shell
 # [Ubuntu]
 cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
-./buildContainerImage.sh -s -v 19.3.0
+./buildContainerImage.sh -x -v 18.4.0
 
 cd ~/repo/db-client/docker/local/
 
 docker container run --dns=8.8.8.8 --rm \
-    --name=oracle-db --hostname=oracle-db \
+    --name=oracle-db-18.4.0-xe --hostname=oracle-db-18.4.0-xe \
     -p 1521:1521 -p 5500:5500 \
-    -e ORACLE_SID=testSid \
-    -e ORACLE_PDB=testPdb \
-    -e ORACLE_PWD='!EZe8Ngz' \
-    -e INIT_SGA_SIZE=756 \
-    -e INIT_PGA_SIZE=756 \
-    -e ORACLE_EDITION=standard \
+    -e ORACLE_PWD=testPdb \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
-    -e ENABLE_ARCHIVELOG=true \
     -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
     -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
-    -itd oracle/database:19.3.0-se2
+    -itd oracle/database:18.4.0-xe
 
-docker container logs -f oracle-db
-docker container commit oracle-db oracle-db
-docker container stop oracle-db
+docker container logs -f oracle-db-18.4.0-xe
+
+docker container commit oracle-db-18.4.0-xe oracle-db-18.4.0-xe
+
+docker container stop oracle-db-18.4.0-xe
 ```
 
-ここで作成した、oracle-dbイメージには、Oracle Database 19c本体が含まれている為、  
+ここで作成した、oracle-dbイメージには、Oracle Database本体が含まれている為、  
 イメージの取り扱いにはお気を付けください。  
 Docker Hubなどにアップロードすると、ライセンス違反になる可能性があります。
 
@@ -142,7 +138,7 @@ tail -f stdout
 # [Ubuntu]
 docker container exec -it oracle-db /bin/bash
 
-sqlplus -s 'test/test@//localhost:1521/testPdb' <<EOF
+sqlplus -s 'test/test@//localhost:1521/XE' <<EOF
 select * from employee;
 EOF
 
@@ -290,24 +286,16 @@ docker container exec -it ${CONTAINER_NAME} /bin/bash
 
 ```shell
 # [Ubuntu]
-#1
-sqlplus / as sysdba
-#2
-sqlplus 'sys/!EZe8Ngz@//localhost:1521/testSid' as sysdba
-#3
-sqlplus 'system/!EZe8Ngz@//localhost:1521/testSid'
-#4
-sqlplus 'pdbadmin/!EZe8Ngz@//localhost:1521/testPdb'
-#5
-sqlplus -s 'test/test@//localhost:1521/testPdb'
+sqlplus sys/<your password>@//localhost:1521/XE as sysdba
+sqlplus system/<your password>@//localhost:1521/XE
+sqlplus pdbadmin/<your password>@//localhost:1521/XEPDB1
 ```
 
 ## Oracle Enterprise Manager Expressにアクセスしたい
 
 ```text
 [Windows]
-The Oracle Database inside the container also has Oracle Enterprise Manager Express configured. 
-To access OEM Express, start your browser and follow the URL:
+The Oracle Database inside the container also has Oracle Enterprise Manager Express configured. To access OEM Express, start your browser and follow the URL:
 
-	https://192.168.99.100:5500/em/
+    https://localhost:5500/em/
 ```

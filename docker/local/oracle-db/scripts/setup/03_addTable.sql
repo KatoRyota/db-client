@@ -1,4 +1,4 @@
-CONNECT test/test@//localhost:1521/testPdb;
+CONNECT test/test@//localhost:1521/XE;
 
 CREATE TABLE employee (
     id VARCHAR2(20),
