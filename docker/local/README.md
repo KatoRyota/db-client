@@ -106,7 +106,7 @@ cd ~/repo/db-client/docker/local/
 docker container run --dns=8.8.8.8 --rm \
     --name=oracle-db-18.4.0-xe --hostname=oracle-db-18.4.0-xe \
     -p 1521:1521 -p 5500:5500 \
-    -e ORACLE_PWD=testPdb \
+    -e ORACLE_PWD=sys \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
     -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
     -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
