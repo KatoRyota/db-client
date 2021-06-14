@@ -21,6 +21,9 @@ sys.setdefaultencoding("utf-8")
 config = SafeConfigParser()
 config.read("config/application.conf")
 
+if not os.path.isdir("./log"):
+    os.makedirs("./log")
+
 logging.config.fileConfig("config/logging.conf")
 logger = logging.getLogger(__name__)
 
