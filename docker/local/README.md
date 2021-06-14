@@ -136,9 +136,9 @@ tail -f stdout
 
 ```shell
 # [Ubuntu]
-docker container exec -it oracle-db /bin/bash
+docker container exec -it oracle-db-18.4.0-xe /bin/bash
 
-sqlplus -s 'test/test@//localhost:1521/XE' <<EOF
+sqlplus -s 'docker/docker@//localhost:1521/XEPDB1' <<EOF
 select * from employee;
 EOF
 

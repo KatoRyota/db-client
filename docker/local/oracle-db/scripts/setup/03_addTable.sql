@@ -1,4 +1,4 @@
-CONNECT test/test@//localhost:1521/XE;
+CONNECT docker/docker@//localhost:1521/XEPDB1;
 
 CREATE TABLE employee (
     id VARCHAR2(20),
