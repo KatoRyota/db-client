@@ -68,6 +68,30 @@ cp -vip LINUX.X64_193000_db_home.zip \
     ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/19.3.0/
 ```
 
+## db-clientをダウンロード
+
+```shell
+# [Ubuntu]
+cd ~/repo/
+git clone https://github.com/KatoRyota/db-client.git
+```
+
+## sqlplusのzipファイルの配置
+
+前手順でダウンロードした、sqlplusのzipファイルを、  
+DockerホストとDockerコンテナ間の、共有ディレクトリに配置。
+
+```shell
+# [Ubuntu]
+cd `wslpath -u 'C:\Users\kator\Downloads'`
+
+cp -vip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip \
+    ~/repo/db-client/docker/local/db-client/sqlplus/
+
+cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
+    ~/repo/db-client/docker/local/db-client/sqlplus/
+```
+
 ## oracle-dbイメージを作成
 
 マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。
@@ -102,30 +126,6 @@ docker container stop oracle-db
 ここで作成した、oracle-dbイメージには、Oracle Database 19c本体が含まれている為、  
 イメージの取り扱いにはお気を付けください。  
 Docker Hubなどにアップロードすると、ライセンス違反になる可能性があります。
-
-## db-clientをダウンロード
-
-```shell
-# [Ubuntu]
-cd ~/repo/
-git clone https://github.com/KatoRyota/db-client.git
-```
-
-## sqlplusのzipファイルの配置
-
-前手順でダウンロードした、sqlplusのzipファイルを、  
-DockerホストとDockerコンテナ間の、共有ディレクトリに配置。
-
-```shell
-# [Ubuntu]
-cd `wslpath -u 'C:\Users\kator\Downloads'`
-
-cp -vip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip \
-    ~/repo/db-client/docker/local/db-client/sqlplus/
-
-cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
-    ~/repo/db-client/docker/local/db-client/sqlplus/
-```
 
 ## Dockerコンテナの作成/起動
 
