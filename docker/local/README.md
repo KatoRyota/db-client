@@ -99,7 +99,7 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
 ```shell
 # [Ubuntu]
 cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
-./buildContainerImage.sh -s -i -v 19.3.0
+./buildContainerImage.sh -s -v 19.3.0
 
 cd ~/repo/db-client/docker/local/
 
