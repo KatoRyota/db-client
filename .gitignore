@@ -131,10 +131,6 @@ dmypy.json
 # PyCharm
 /.idea/
 
-# Visual Stadio Code
-/.vscode/
-
 # db-client
-/log/*.log*
-/docker/local/db-client/log/*.log*
+/docker/local/stdout
 /docker/local/db-client/sqlplus/*.zip

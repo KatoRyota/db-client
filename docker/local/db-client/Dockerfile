@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
 
-WORKDIR /root/
-
 RUN \
     # ---- パッケージのインストール ----
     apt update && \
@@ -17,7 +15,12 @@ RUN \
     # ---- タイムゾーンとロケールの設定 ----
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
-    locale-gen ja_JP.UTF-8
+    locale-gen ja_JP.UTF-8 && \
+    # ---- ユーザーとグループの追加 ----
+    groupadd -r docker && \
+    useradd -r -g docker docker
+
+USER docker
 
 ENV TZ="Asia/Tokyo" \
     LANG="ja_JP.UTF-8" \
@@ -25,8 +28,8 @@ ENV TZ="Asia/Tokyo" \
     LC_ALL="ja_JP.UTF-8"
 
 # ---- sqlplusのインストール ----
-COPY ./sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
-COPY ./sqlplus/instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
+COPY --chown=docker:docker ./docker/local/db-client/sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
+COPY --chown=docker:docker ./docker/local/db-client/sqlplus/instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
 
 WORKDIR /opt/oracle/
 
@@ -34,6 +37,10 @@ RUN unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip && \
     unzip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip && \
     echo "/opt/oracle/instantclient_19_11" > /etc/ld.so.conf.d/oracle-instantclient.conf && \
     ldconfig
+
+# ---- アプリケーションの配置 ----
+COPY --chown=docker:docker docker/local/db-client/config /app/config
+COPY --chown=docker:docker db-client /app/db-client
 
 WORKDIR /app/
 

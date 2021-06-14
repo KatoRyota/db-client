@@ -132,8 +132,8 @@ Docker Hubなどにアップロードすると、ライセンス違反になる�
 ```shell
 # [Ubuntu]
 cd ~/repo/db-client/docker/local/
-docker-compose up --build -d
-docker-compose logs -f
+docker-compose up --build > stdout 2>&1 < /dev/null &
+tail -f stdout
 ```
 
 ## 動作確認

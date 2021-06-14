@@ -17,7 +17,8 @@ services:
       - db-client
   db-client:
     build:
-      context: ./db-client/
+      context: ../../
+      dockerfile: ./docker/local/db-client/Dockerfile
     image: db-client
     container_name: db-client
     hostname: db-client
@@ -31,9 +32,5 @@ services:
       - LANG=ja_JP.utf8
     networks:
       - db-client
-    volumes:
-      - ./db-client/config:/app/config:ro
-      - ./db-client/log:/app/log
-      - ../../db-client:/app/db-client:ro
 networks:
   db-client:
