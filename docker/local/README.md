@@ -76,7 +76,7 @@ cd ~/repo/
 git clone https://github.com/KatoRyota/db-client.git
 ```
 
-## sqlplusのzipファイルの配置
+## sqlplusの配置
 
 前手順でダウンロードした、sqlplusのzipファイルを、  
 DockerホストとDockerコンテナ間の、共有ディレクトリに配置。
@@ -92,7 +92,7 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
     ~/repo/db-client/docker/local/db-client/sqlplus/
 ```
 
-## oracle-dbイメージを作成
+## oracle-db-18.4.0-xeイメージを作成
 
 マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。
 
@@ -119,7 +119,7 @@ docker container commit oracle-db-18.4.0-xe oracle-db-18.4.0-xe
 docker container stop oracle-db-18.4.0-xe
 ```
 
-ここで作成した、oracle-dbイメージには、Oracle Database本体が含まれている為、  
+ここで作成した、Oracle DBのイメージには、Oracle Database本体が含まれている為、  
 イメージの取り扱いにはお気を付けください。  
 Docker Hubなどにアップロードすると、ライセンス違反になる可能性があります。
 
