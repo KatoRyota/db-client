@@ -17,21 +17,6 @@ WSL 2 (Ubuntu 20.04 LTS) には、以下のソフトウェアがインストー�
 
 * Git
 
-## Oracle Database 18c Express Editionをダウンロード
-
-以下のファイルをダウンロード。
-
-* Oracle Database 18c Express Edition for Linux x64
-
-```text
-# [Windows]
-http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html
-    -> Oracle Database Express Edition
-    -> Oracle Database 18c Express Edition
-    -> Oracle Database Express Edition (XE) Release 18.4.0.0.0 (18c)
-    -> Oracle Database 18c Express Edition for Linux x64
-```
-
 ## sqlplusをダウンロード
 
 以下のファイルをダウンロード。
@@ -47,25 +32,13 @@ https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloa
     -> SQL*Plus Package (ZIP)
 ```
 
-## Oracle DatabaseのDockerイメージをビルドする為の、関連ファイルをダウンロード
+## Oracle DatabaseのDockerイメージを、ビルドする為のスクリプトをダウンロード
 
 ```shell
 # [Ubuntu]
 mkdir -vp ~/repo
 cd ~/repo/
 git clone https://github.com/oracle/docker-images
-```
-
-## Oracle Database 18c Express Editionの配置
-
-前手順でダウンロードした、Oracle Database 18c Express Editionのrpmファイルを、  
-Dockerイメージのビルド用ディレクトリに配置。
-
-```shell
-# [Ubuntu]
-cd `wslpath -u "C:\Users\kator\Downloads"`
-cp -vip oracle-database-xe-18c-1.0-1.x86_64.rpm \
-    ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 ```
 
 ## db-clientをダウンロード
