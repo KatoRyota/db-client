@@ -114,6 +114,7 @@ docker container run --dns=8.8.8.8 --rm \
 
 docker container logs -f oracle-db-18.4.0-xe
 
+# 正常起動したことを確認してから、次のコマンドを実行する。
 docker container commit oracle-db-18.4.0-xe oracle-db-18.4.0-xe
 
 docker container stop oracle-db-18.4.0-xe
