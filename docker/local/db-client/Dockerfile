@@ -42,6 +42,6 @@ ENV TZ="Asia/Tokyo" \
 COPY --chown=docker:docker docker/local/db-client/config /app/config
 COPY --chown=docker:docker db-client /app/db-client
 
+# ---- アプリケーションの起動 ----
 WORKDIR /app/
-
 CMD ["/bin/bash"]
