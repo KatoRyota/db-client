@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS employee (
     id VARCHAR(20),
     name VARCHAR(20),
     type VARCHAR(20)
-)
+);
 
 INSERT INTO employee (id, name, type)
     VALUES ('ID-000-0000', 'NAME-000-0000', 'TYPE-000-0000');
