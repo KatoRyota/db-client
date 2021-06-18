@@ -31,8 +31,8 @@ services:
     networks:
       - db-client
     volumes:
-      - ./docker/local/mysql-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
-      - ./docker/local/mysql-db/conf.d:/etc/mysql/conf.d:ro
+      - ./mysql-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - ./mysql-db/conf.d:/etc/mysql/conf.d:ro
   db-client:
     build:
       context: ../../
