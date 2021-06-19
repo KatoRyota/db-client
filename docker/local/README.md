@@ -130,6 +130,10 @@ python2.7 -m db-client 2>&1 <<EOF | less -S
 select * from employee;
 EOF
 
+python2.7 -m db-client -t customer 2>&1 <<EOF | less -S
+select * from customer;
+EOF
+
 exit
 ```
 
