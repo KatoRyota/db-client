@@ -26,4 +26,5 @@ ENV TZ="Asia/Tokyo" \
     LANGUAGE="ja_JP:ja" \
     LC_ALL="ja_JP.UTF-8"
 
+# ---- アプリケーションの起動 ----
 CMD ["mysqld"]
