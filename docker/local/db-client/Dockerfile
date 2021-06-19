@@ -9,6 +9,7 @@ RUN \
         less \
         unzip \
         python2.7 \
+        mysql-client \
         libaio1 && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
