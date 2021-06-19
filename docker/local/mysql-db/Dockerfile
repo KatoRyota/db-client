@@ -12,7 +12,8 @@ RUN \
     # ---- タイムゾーンとロケールの設定1 ----
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
-    locale-gen ja_JP.UTF-8 && \
+    sed -i -E 's/# (ja_JP.UTF-8)/\1/' /etc/locale.gen && \
+    locale-gen && \
     # ---- ユーザーとグループの追加 ----
     groupadd -r docker && \
     useradd -r -g docker docker
