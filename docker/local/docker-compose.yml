@@ -18,7 +18,7 @@ services:
   mysql-8.0.25:
     build:
       context: ../../
-      dockerfile: ./docker/local/mysql-db/Dockerfile
+      dockerfile: docker/local/mysql-db/Dockerfile
     image: mysql-8.0.25
     container_name: mysql-8.0.25
     hostname: mysql-8.0.25
@@ -39,7 +39,7 @@ services:
   db-client:
     build:
       context: ../../
-      dockerfile: ./docker/local/db-client/Dockerfile
+      dockerfile: docker/local/db-client/Dockerfile
     image: db-client
     container_name: db-client
     hostname: db-client

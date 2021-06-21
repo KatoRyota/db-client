@@ -15,8 +15,8 @@ RUN \
     sed -i -E 's/# (ja_JP.UTF-8)/\1/' /etc/locale.gen && \
     locale-gen && \
     # ---- ユーザーとグループの追加 ----
-    groupadd -r docker && \
-    useradd -r -g docker docker
+    groupadd -g 61000 docker && \
+    useradd -m -g docker -u 61000 docker
 
 # ---- ユーザーの変更 ----
 USER docker
@@ -26,5 +26,5 @@ ENV TZ="Asia/Tokyo" \
     LANGUAGE="ja_JP:ja" \
     LC_ALL="ja_JP.UTF-8"
 
-# ---- アプリケーションの起動 ----
+# ---- アプリケーションの配置と起動 ----
 CMD ["mysqld"]
