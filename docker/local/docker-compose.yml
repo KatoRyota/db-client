@@ -15,13 +15,13 @@ services:
       - LANG=ja_JP.utf8
     networks:
       - db-client
-  mysql-8.0.25:
+  mysql-db-8.0.25:
     build:
       context: ../../
       dockerfile: docker/local/mysql-db/Dockerfile
-    image: mysql-8.0.25
-    container_name: mysql-8.0.25
-    hostname: mysql-8.0.25
+    image: mysql-db-8.0.25
+    container_name: mysql-db-8.0.25
+    hostname: mysql-db-8.0.25
     dns: 8.8.8.8
     tty: true
     stdin_open: true
