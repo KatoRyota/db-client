@@ -2,18 +2,14 @@ FROM oracle-database-18.4.0-xe
 
 RUN \
     # ---- パッケージのインストール ----
-    apt update && \
-    DEBIAN_FRONTEND=noninteractive apt install -y \
-        tzdata \
-        locales \
-        less  && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    # ---- タイムゾーンとロケールの設定1 ----
+    rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
+    yum update -y && \
+    yum install -y \
+        less && \
+    yum clean all && \
+    # ---- タイムゾーンとロケールの設定 ----
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    dpkg-reconfigure --frontend noninteractive tzdata && \
-    sed -i -E 's/# (ja_JP.UTF-8)/\1/' /etc/locale.gen && \
-    locale-gen && \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
     # ---- ユーザーとグループの追加 ----
     groupadd -g 61000 docker && \
     useradd -m -g docker -u 61000 docker
@@ -27,4 +23,4 @@ ENV TZ="Asia/Tokyo" \
     LC_ALL="ja_JP.UTF-8"
 
 # ---- アプリケーションの配置と起動 ----
-# CMD ["/bin/bash"]
+CMD ["/bin/bash"]
