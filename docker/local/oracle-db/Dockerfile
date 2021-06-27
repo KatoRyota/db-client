@@ -2,7 +2,7 @@ FROM oracle-database-18.4.0-xe
 
 RUN \
     # ---- パッケージのインストール ----
-    rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
+#     rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
     yum update -y && \
     yum install -y \
         less && \
