@@ -65,7 +65,7 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
     ~/repo/db-client/docker/local/db-client/sqlplus/
 ```
 
-## oracle-db-18.4.0-xeイメージを作成
+## oracle-database-18.4.0-xeイメージを作成
 
 マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。
 
@@ -77,7 +77,7 @@ cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
 cd ~/repo/db-client/docker/local/
 
 docker container run --dns=8.8.8.8 --rm \
-    --name=oracle-db-18.4.0-xe --hostname=oracle-db-18.4.0-xe \
+    --name=oracle-database-18.4.0-xe --hostname=oracle-database-18.4.0-xe \
     -p 1521:1521 -p 5500:5500 \
     -e ORACLE_PWD=sys \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
@@ -85,12 +85,12 @@ docker container run --dns=8.8.8.8 --rm \
     -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
     -itd oracle/database:18.4.0-xe
 
-docker container logs -f oracle-db-18.4.0-xe
+docker container logs -f oracle-database-18.4.0-xe
 
 # 正常起動したことを確認してから、次のコマンドを実行する。
-docker container commit oracle-db-18.4.0-xe oracle-db-18.4.0-xe
+docker container commit oracle-database-18.4.0-xe oracle-database-18.4.0-xe
 
-docker container stop oracle-db-18.4.0-xe
+docker container stop oracle-database-18.4.0-xe
 ```
 
 ここで作成した、Oracle DBのイメージには、Oracle Database本体が含まれている為、  
