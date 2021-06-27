@@ -6,10 +6,11 @@ RUN \
     yum update -y && \
     yum install -y \
         less && \
+    yum reinstall -y glibc-common && \
     yum clean all && \
     # ---- タイムゾーンとロケールの設定 ----
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-#     localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
     # ---- ユーザーとグループの追加 ----
     groupadd -g 61000 docker && \
     useradd -m -g docker -u 61000 docker
