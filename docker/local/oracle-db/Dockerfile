@@ -24,4 +24,4 @@ ENV TZ="Asia/Tokyo" \
 
 # ---- アプリケーションの配置と起動 ----
 CMD exec $ORACLE_BASE/$RUN_FILE
-CMD ["/bin/bash"]
+# CMD ["/bin/bash"]
