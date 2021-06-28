@@ -41,7 +41,7 @@ class TablePrinter(object):
                 if self.__column_width_list[index] < display_column_length:
                     self.__column_width_list[index] = display_column_length
 
-        if self._is_display_heading():
+        if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
             for index, column in enumerate(self.__context.result_headings):  # type: (int, unicode)
                 display_column = self._display_of(column)
                 display_column_length = self._length_of(display_column)
@@ -53,12 +53,11 @@ class TablePrinter(object):
         for index, record in enumerate(self.__context.result_sets):  # type: (int, list)
 
             if index == 0:
-                if self._is_display_heading():
+                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
                     self._print_table_border()
                     self._print_table_row(self.__context.result_headings)
                     self._print_table_border()
-
-                if not self._is_display_heading():
+                else:
                     self._print_table_border()
 
             if index != 0 and \
@@ -67,12 +66,11 @@ class TablePrinter(object):
 
                 print
 
-                if self._is_display_heading():
+                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
                     self._print_table_border()
                     self._print_table_row(self.__context.result_headings)
                     self._print_table_border()
-
-                if not self._is_display_heading():
+                else:
                     self._print_table_border()
 
             self._print_table_row(record)
@@ -82,11 +80,6 @@ class TablePrinter(object):
             print
             print "---- Result Message ----"
             print self.__context.result_message.strip().encode("utf-8")
-
-    def _is_display_heading(self):
-        # type: () -> bool
-
-        return self.__context.heading == Context.Heading.ON and self.__context.result_headings
 
     def _print_table_row(self, record):
         # type: (list) -> None
