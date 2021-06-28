@@ -84,25 +84,35 @@ class TablePrinter(object):
     def _print_table_row(self, record):
         # type: (list) -> None
 
-        row = u"|"
+        row = u""
 
         for index, column in enumerate(record):  # type: (int, unicode)
+
+            if index == 0:
+                row = u"|"
+
             display_column = self._display_of(column)
             display_column_length = self._length_of(display_column)
             space = u" " * (self.__column_width_list[index] - display_column_length)
             row += display_column + space + u"|"
 
-        print row.encode("utf-8")
+        if row:
+            print row.encode("utf-8")
 
     def _print_table_border(self):
         # type: () -> None
 
-        border = u"+"
+        border = u""
 
-        for column_width in self.__column_width_list:  # type: int
+        for index, column_width in enumerate(self.__column_width_list):  # type: int
+
+            if index == 0:
+                border = u"+"
+
             border += u"-" * column_width + u"+"
 
-        print border.encode("utf-8")
+        if border:
+            print border.encode("utf-8")
 
     def _display_of(self, column):
         # type: (unicode) -> unicode
