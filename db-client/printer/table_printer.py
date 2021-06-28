@@ -52,25 +52,32 @@ class TablePrinter(object):
                     self.__column_width_list[index] = display_column_length
 
         # ---- テーブル形式で標準出力に出力 ----
-        if self._is_display_heading() and self.__context.result_sets:
-            self._print_table_border()
-            self._print_table_row(self.__context.result_headings)
+        for index, record in enumerate(self.__context.result_sets):  # type: (int, list)
 
-        for record in self.__context.result_sets:  # type: list
-            if self._is_next_page():
-                self.__record_count = 0
-                self._print_table_border()
+            if index == 0:
+                if self._is_display_heading():
+                    self._print_table_border()
+                    self._print_table_row(self.__context.result_headings)
+                    self._print_table_border()
+
+                if not self._is_display_heading():
+                    self._print_table_border()
+
+            if index != 0 and \
+                    self.__context.pagesize != 0 and \
+                    index % self.__context.pagesize == 0:
+
                 print
 
                 if self._is_display_heading():
                     self._print_table_border()
                     self._print_table_row(self.__context.result_headings)
+                    self._print_table_border()
 
-            self.__record_count += 1
-            self._print_table_border()
+                if not self._is_display_heading():
+                    self._print_table_border()
+
             self._print_table_row(record)
-
-        if self.__context.result_sets:
             self._print_table_border()
 
         if self.__context.feedback == Context.Feedback.ON and self.__context.result_message:
@@ -82,17 +89,6 @@ class TablePrinter(object):
         # type: () -> bool
 
         return self.__context.heading == Context.Heading.ON and self.__context.result_headings
-
-    def _is_next_page(self):
-        # type: () -> bool
-
-        if self.__context.pagesize == 0:
-            return False
-        if self.__record_count == 0:
-            return False
-        if self.__record_count % self.__context.pagesize == 0:
-            return True
-        return False
 
     def _print_table_row(self, record):
         # type: (list) -> None
