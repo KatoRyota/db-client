@@ -11,8 +11,7 @@ class TablePrinter(object):
     __slots__ = (
         "__logger",
         "__context",
-        "__column_width_list",
-        "__record_count"
+        "__column_width_list"
     )
 
     def __init__(self, context):
@@ -22,7 +21,6 @@ class TablePrinter(object):
         self.__logger = logging.getLogger(__name__)  # type: Logger
         self.__context = context  # type: Context
         self.__column_width_list = []  # type: list
-        self.__record_count = 0  # type: int
 
     def execute(self):
         # type: () -> None
