@@ -9,7 +9,7 @@ RUN \
         less  && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
-    # ---- タイムゾーンとロケールの設定1 ----
+    # ---- タイムゾーンとロケールの設定 ----
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
     sed -i -E 's/# (ja_JP.UTF-8)/\1/' /etc/locale.gen && \
