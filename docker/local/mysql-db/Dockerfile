@@ -28,3 +28,4 @@ ENV TZ="Asia/Tokyo" \
 
 # ---- アプリケーションの配置と起動 ----
 CMD ["mysqld"]
+# CMD ["/bin/bash"]
