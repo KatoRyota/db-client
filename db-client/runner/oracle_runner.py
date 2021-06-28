@@ -68,6 +68,11 @@ class OracleRunner(object):
             sid=self.__config.get(self.__context.connection_target, "sid")
         )
 
+        privilege = self.__config.get(self.__context.connection_target, "privilege")
+
+        if privilege:
+            dsn += " AS " + privilege
+
         echo_command = ["echo", sql]
         sqlplus_command = ["sqlplus", "-s", "-M", "HTML ON", dsn]
 
