@@ -27,7 +27,7 @@ class CsvPrinter(object):
             return
 
         # ---- CSV形式で標準出力に出力 ----
-        for index, record in enumerate(self.__context.result_sets):  # type: list
+        for index, record in enumerate(self.__context.result_sets):  # type: (int, list)
 
             if index == 0:
                 if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
