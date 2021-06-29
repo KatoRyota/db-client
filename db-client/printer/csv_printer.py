@@ -9,8 +9,7 @@ from ..context.context import Context
 class CsvPrinter(object):
     __slots__ = (
         "__logger",
-        "__context",
-        "__record_count"
+        "__context"
     )
 
     def __init__(self, context):
@@ -19,7 +18,6 @@ class CsvPrinter(object):
         super(CsvPrinter, self).__init__()
         self.__logger = logging.getLogger(__name__)  # type: Logger
         self.__context = context  # type: Context
-        self.__record_count = 0  # type: int
 
     def execute(self):
         # type: () -> None
@@ -29,40 +27,27 @@ class CsvPrinter(object):
             return
 
         # ---- CSV形式で標準出力に出力 ----
-        if self._is_display_heading():
-            self._print_csv_row(self.__context.result_headings)
+        for index, record in enumerate(self.__context.result_sets):  # type: list
 
-        for record in self.__context.result_sets:  # type: list
-            if self._is_next_page():
-                self.__record_count = 0
-                print
-
-                if self._is_display_heading():
+            if index == 0:
+                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
                     self._print_csv_row(self.__context.result_headings)
 
-            self.__record_count += 1
+            if index != 0 and \
+                    self.__context.pagesize != 0 and \
+                    index % self.__context.pagesize == 0:
+
+                print
+
+                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
+                    self._print_csv_row(self.__context.result_headings)
+
             self._print_csv_row(record)
 
         if self.__context.feedback == Context.Feedback.ON and self.__context.result_message:
             print
             print "---- Result Message ----"
             print self.__context.result_message.strip().encode("utf-8")
-
-    def _is_display_heading(self):
-        # type: () -> bool
-
-        return self.__context.heading == Context.Heading.ON and self.__context.result_headings
-
-    def _is_next_page(self):
-        # type: () -> bool
-
-        if self.__context.pagesize == 0:
-            return False
-        if self.__record_count == 0:
-            return False
-        if self.__record_count % self.__context.pagesize == 0:
-            return True
-        return False
 
     def _print_csv_row(self, record):
         # type: (list) -> None
