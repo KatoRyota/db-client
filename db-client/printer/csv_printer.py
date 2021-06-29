@@ -64,4 +64,5 @@ class CsvPrinter(object):
             elif index + 1 == len(record):
                 row += display_column
 
-        print row.encode("utf-8")
+        if row:
+            print row.encode("utf-8")
