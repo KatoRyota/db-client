@@ -12,7 +12,7 @@ setup(
     install_requires=install_requirements,
     entry_points={
         "console_scripts": [
-            "db-client=db-client",
+            "db-client=db-client.__main__",
         ]
     },
     classifiers=[
