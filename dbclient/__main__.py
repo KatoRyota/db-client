@@ -61,7 +61,7 @@ try:
     logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
 
     # ---- 起動オプションのパース ----
-    option_parser.set_usage("python -m db-client [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")
+    option_parser.set_usage("python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")
 
     option_parser.add_option("-t", "--connection_target",
                              help="Database connection target name (e.g. employee, customer).", metavar="ARG")

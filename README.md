@@ -62,7 +62,7 @@ git clone https://github.com/KatoRyota/db-client.git
 ```shell
 cd ${APP_ROOT_DIR}
 
-python -m db-client 2>&1 <<EOF | less -S
+python -m dbclient 2>&1 <<EOF | less -S
 select * from employee;
 EOF
 ```
@@ -70,5 +70,5 @@ EOF
 指定可能なオプションは、以下のコマンドでご確認下さい。
 
 ```shell
-python -m db-client -h
+python -m dbclient -h
 ```
