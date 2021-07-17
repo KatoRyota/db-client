@@ -16,9 +16,12 @@ class TestTablePrinter(TestCase):
         # type: () -> None
 
         # ---- パターン1 ----
-        context = self._default_context()
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            context = self._default_context()
 
-        expected = u'''\
+            TablePrinter(context).execute()
+
+            expected = u'''\
 +-----------+-------------+-------------+
 |ID         |NAME         |TYPE         |
 +-----------+-------------+-------------+
@@ -37,25 +40,26 @@ class TestTablePrinter(TestCase):
 
 4行が選択されました。
 '''
-
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
-            TablePrinter(context).execute()
-            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+            actual = stdout.getvalue().decode("utf-8")
+            self.assertEqual(expected, actual)
 
         # ---- パターン2 ----
-        context = self._default_context()
-        context.result_sets = []
-        context.result_sets.append([
-            u'あ\nいうえお',
-            u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表',
-            u'<input type="text" value="<font color="red">&lt;&copy;&amp;'])
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            context = self._default_context()
+            context.result_sets = []
+            context.result_sets.append([
+                u'あ\nいうえお',
+                u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表',
+                u'<input type="text" value="<font color="red">&lt;&copy;&amp;'])
 
-        context.result_message = \
-            u'あ\nいうえお' \
-            u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表' \
-            u'<input type="text" value="<font color="red">&lt;&copy;&amp;'
+            context.result_message = \
+                u'あ\nいうえお' \
+                u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表' \
+                u'<input type="text" value="<font color="red">&lt;&copy;&amp;'
 
-        expected = u'''\
+            TablePrinter(context).execute()
+
+            expected = u'''\
 +------------+--------------------------------------------------------------------------------------+-----------------------------------------------------------+
 |ID          |NAME                                                                                  |TYPE                                                       |
 +------------+--------------------------------------------------------------------------------------+-----------------------------------------------------------+
@@ -65,16 +69,17 @@ class TestTablePrinter(TestCase):
 あ
 いうえお," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表<input type="text" value="<font color="red">&lt;&copy;&amp;
 '''
-
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
-            TablePrinter(context).execute()
-            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+            actual = stdout.getvalue().decode("utf-8")
+            self.assertEqual(expected, actual)
 
         # ---- パターン3 ----
-        context = self._default_context()
-        context.heading = "off"
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            context = self._default_context()
+            context.heading = "off"
 
-        expected = u'''\
+            TablePrinter(context).execute()
+
+            expected = u'''\
 +-----------+-------------+-------------+
 |ID-000-0000|NAME-000-0000|TYPE-000-0000|
 +-----------+-------------+-------------+
@@ -89,16 +94,17 @@ class TestTablePrinter(TestCase):
 
 4行が選択されました。
 '''
-
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
-            TablePrinter(context).execute()
-            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+            actual = stdout.getvalue().decode("utf-8")
+            self.assertEqual(expected, actual)
 
         # ---- パターン4 ----
-        context = self._default_context()
-        context.feedback = "off"
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            context = self._default_context()
+            context.feedback = "off"
 
-        expected = u'''\
+            TablePrinter(context).execute()
+
+            expected = u'''\
 +-----------+-------------+-------------+
 |ID         |NAME         |TYPE         |
 +-----------+-------------+-------------+
@@ -115,23 +121,22 @@ class TestTablePrinter(TestCase):
 |ID-333-3333|NAME-333-3333|TYPE-333-3333|
 +-----------+-------------+-------------+
 '''
-
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
-            TablePrinter(context).execute()
-            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+            actual = stdout.getvalue().decode("utf-8")
+            self.assertEqual(expected, actual)
 
         # ---- パターン5 ----
-        context = self._default_context()
-        context.sql_client_return_code = 1
-        context.result_message = u"予期せぬ例外が発生しました。"
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            context = self._default_context()
+            context.sql_client_return_code = 1
+            context.result_message = u"予期せぬ例外が発生しました。"
 
-        expected = u'''\
+            TablePrinter(context).execute()
+
+            expected = u'''\
 予期せぬ例外が発生しました。
 '''
-
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
-            TablePrinter(context).execute()
-            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+            actual = stdout.getvalue().decode("utf-8")
+            self.assertEqual(expected, actual)
 
     def test__display_of(self):
         # type: () -> None
