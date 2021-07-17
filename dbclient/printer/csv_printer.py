@@ -55,8 +55,7 @@ class CsvPrinter(object):
 
         for index, column in enumerate(record):  # type: (int, unicode)
             display_column = column.strip()
-            display_column = re.sub(r"\\".decode("utf-8"), r"\\\\".decode("utf-8"), display_column)
-            display_column = re.sub(r"\n".decode("utf-8"), r"\\n".decode("utf-8"), display_column)
+            display_column = re.sub(u"\n", u"\\\\n", display_column)
 
             if index + 1 < len(record):
                 row += display_column + self.__context.field_delimiter
