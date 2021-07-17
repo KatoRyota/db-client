@@ -35,8 +35,7 @@ class TestTablePrinter(TestCase):
 |ID-333-3333|NAME-333-3333|TYPE-333-3333|
 +-----------+-------------+-------------+
 
----- Result Message ----
-4件のレコードが選択されました。
+4行が選択されました。
 '''
 
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
@@ -63,9 +62,71 @@ class TestTablePrinter(TestCase):
 |あ\\nいうえお|," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表|<input type="text" value="<font color="red">&lt;&copy;&amp;|
 +------------+--------------------------------------------------------------------------------------+-----------------------------------------------------------+
 
----- Result Message ----
 あ
 いうえお," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表<input type="text" value="<font color="red">&lt;&copy;&amp;
+'''
+
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            TablePrinter(context).execute()
+            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+
+        # ---- パターン3 ----
+        context = self._default_context()
+        context.heading = "off"
+
+        expected = u'''\
++-----------+-------------+-------------+
+|ID-000-0000|NAME-000-0000|TYPE-000-0000|
++-----------+-------------+-------------+
+|ID-111-1111|NAME-111-1111|TYPE-111-1111|
++-----------+-------------+-------------+
+|ID-222-2222|NAME-222-2222|TYPE-222-2222|
++-----------+-------------+-------------+
+
++-----------+-------------+-------------+
+|ID-333-3333|NAME-333-3333|TYPE-333-3333|
++-----------+-------------+-------------+
+
+4行が選択されました。
+'''
+
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            TablePrinter(context).execute()
+            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+
+        # ---- パターン4 ----
+        context = self._default_context()
+        context.feedback = "off"
+
+        expected = u'''\
++-----------+-------------+-------------+
+|ID         |NAME         |TYPE         |
++-----------+-------------+-------------+
+|ID-000-0000|NAME-000-0000|TYPE-000-0000|
++-----------+-------------+-------------+
+|ID-111-1111|NAME-111-1111|TYPE-111-1111|
++-----------+-------------+-------------+
+|ID-222-2222|NAME-222-2222|TYPE-222-2222|
++-----------+-------------+-------------+
+
++-----------+-------------+-------------+
+|ID         |NAME         |TYPE         |
++-----------+-------------+-------------+
+|ID-333-3333|NAME-333-3333|TYPE-333-3333|
++-----------+-------------+-------------+
+'''
+
+        with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
+            TablePrinter(context).execute()
+            self.assertEqual(expected, stdout.getvalue().decode("utf-8"))
+
+        # ---- パターン5 ----
+        context = self._default_context()
+        context.sql_client_return_code = 1
+        context.result_message = u"予期せぬ例外が発生しました。"
+
+        expected = u'''\
+予期せぬ例外が発生しました。
 '''
 
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
@@ -220,7 +281,7 @@ class TestTablePrinter(TestCase):
         context.result_sets.append(["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"])
         context.result_sets.append(["ID-222-2222", "NAME-222-2222", "TYPE-222-2222"])
         context.result_sets.append(["ID-333-3333", "NAME-333-3333", "TYPE-333-3333"])
-        context.result_message = u"4件のレコードが選択されました。"
+        context.result_message = u"4行が選択されました。"
         return context
 
 
