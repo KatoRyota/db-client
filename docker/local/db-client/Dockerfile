@@ -42,7 +42,7 @@ ENV TZ="Asia/Tokyo" \
     LC_ALL="ja_JP.UTF-8"
 
 # ---- アプリケーションの配置と起動 ----
-COPY --chown=docker:docker db-client                     /app/db-client
+COPY --chown=docker:docker dbclient                     /app/dbclient
 COPY --chown=docker:docker docker/local/db-client/config /app/config
 
 WORKDIR /app/
