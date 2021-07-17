@@ -25,7 +25,6 @@ class TestOracleParser(TestCase):
         # type: () -> Context
 
         context = Context()
-        context.sql_client_return_code = 0
         context.result_set_html = u'''\
 '''
         return context
