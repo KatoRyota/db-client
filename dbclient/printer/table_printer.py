@@ -78,7 +78,6 @@ class TablePrinter(object):
 
         if self.__context.feedback == Context.Feedback.ON and self.__context.result_message:
             print
-            print "---- Result Message ----"
             print self.__context.result_message.strip().encode("utf-8")
 
     def _print_table_row(self, record):
