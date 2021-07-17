@@ -118,7 +118,7 @@ class TablePrinter(object):
         # type: (unicode) -> unicode
 
         display_column = column.strip()
-        display_column = re.sub(r"\\".decode("utf-8"), r"\\\\".decode("utf-8"), display_column)
+        # display_column = re.sub(r"\\".decode("utf-8"), r"\\\\".decode("utf-8"), display_column)
         display_column = re.sub(r"\n".decode("utf-8"), r"\\n".decode("utf-8"), display_column)
         display_column_length = self._length_of(display_column)
 
