@@ -15,7 +15,7 @@ class TestCsvPrinter(TestCase):
     def test_execute(self):
         # type: () -> None
 
-        # ---- パターン1 ----
+        # ---- ケース1 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
 
@@ -35,7 +35,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン2 ----
+        # ---- ケース2 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.result_sets = []
@@ -61,7 +61,7 @@ ID,NAME,TYPE
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン3 ----
+        # ---- ケース3 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.heading = "off"
@@ -80,7 +80,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン4 ----
+        # ---- ケース4 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.feedback = "off"
@@ -99,7 +99,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン5 ----
+        # ---- ケース5 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.sql_client_return_code = 1

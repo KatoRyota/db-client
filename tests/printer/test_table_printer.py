@@ -15,7 +15,7 @@ class TestTablePrinter(TestCase):
     def test_execute(self):
         # type: () -> None
 
-        # ---- パターン1 ----
+        # ---- ケース1 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
 
@@ -43,7 +43,7 @@ class TestTablePrinter(TestCase):
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン2 ----
+        # ---- ケース2 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.result_sets = []
@@ -72,7 +72,7 @@ class TestTablePrinter(TestCase):
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン3 ----
+        # ---- ケース3 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.heading = "off"
@@ -97,7 +97,7 @@ class TestTablePrinter(TestCase):
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン4 ----
+        # ---- ケース4 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.feedback = "off"
@@ -124,7 +124,7 @@ class TestTablePrinter(TestCase):
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- パターン5 ----
+        # ---- ケース5 ----
         with mock.patch("sys.stdout", new=StringIO()) as stdout:  # type: StringIO
             context = self._default_context()
             context.sql_client_return_code = 1
@@ -141,74 +141,74 @@ class TestTablePrinter(TestCase):
     def test__display_of(self):
         # type: () -> None
 
-        # ---- パターン1 ----
+        # ---- ケース1 ----
         context = self._default_context()
         expected = u"\u005c"
         actual = TablePrinter(context)._display_of(u"\\")
         self.assertEqual(expected, actual)
 
-        # ---- パターン2 ----
+        # ---- ケース2 ----
         context = self._default_context()
         expected = r"a\nb\nc\nd\ne"
         actual = TablePrinter(context)._display_of(u"a\nb\nc\nd\ne")
         self.assertEqual(expected, actual)
 
-        # ---- パターン3 ----
+        # ---- ケース3 ----
         context = self._default_context()
         expected = r"abcde"
         actual = TablePrinter(context)._display_of(u"\nabcde\n")
         self.assertEqual(expected, actual)
 
-        # ---- パターン4 ----
+        # ---- ケース4 ----
         context = self._default_context()
         context.column_max_length = 3
         expected = r"abc"
         actual = TablePrinter(context)._display_of(u"abc")
         self.assertEqual(expected, actual)
 
-        # ---- パターン5 ----
+        # ---- ケース5 ----
         context = self._default_context()
         context.column_max_length = 3
         expected = r"a...d"
         actual = TablePrinter(context)._display_of(u"abcd")
         self.assertEqual(expected, actual)
 
-        # ---- パターン6 ----
+        # ---- ケース6 ----
         context = self._default_context()
         context.column_max_length = 3
         expected = r"a...e"
         actual = TablePrinter(context)._display_of(u"abcde")
         self.assertEqual(expected, actual)
 
-        # ---- パターン7 ----
+        # ---- ケース7 ----
         context = self._default_context()
         context.column_max_length = 3
         expected = r"a...f"
         actual = TablePrinter(context)._display_of(u"abcdef")
         self.assertEqual(expected, actual)
 
-        # ---- パターン8 ----
+        # ---- ケース8 ----
         context = self._default_context()
         context.column_max_length = 3
         expected = r"a...g"
         actual = TablePrinter(context)._display_of(u"abcdefg")
         self.assertEqual(expected, actual)
 
-        # ---- パターン9 ----
+        # ---- ケース9 ----
         context = self._default_context()
         context.column_max_length = 5
         expected = r"ab...mn"
         actual = TablePrinter(context)._display_of(u"abcdefghijklmn")
         self.assertEqual(expected, actual)
 
-        # ---- パターン10 ----
+        # ---- ケース10 ----
         context = self._default_context()
         context.column_max_length = 5
         expected = u"あい...せそ"
         actual = TablePrinter(context)._display_of(u"あいうえおかきくけこさしすせそ")
         self.assertEqual(expected, actual)
 
-        # ---- パターン11 ----
+        # ---- ケース11 ----
         context = self._default_context()
         context.column_max_length = 5
         expected = u"𠀋...𣗄"
