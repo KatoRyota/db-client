@@ -20,20 +20,20 @@ class TestOracleRunner(TestCase):
         with mock.patch("sys.stdin", new=StringIO("")), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context.Context.check_state_after_execute_sql_client",
-                           return_value=True) as mock_context_check_state_after_execute_sql_client, \
-                mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as mock_oracle_parser_execute, \
+                           return_value=True) as context_check_state_after_execute_sql_client, \
+                mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
                 mock.patch("dbclient.context.context.Context.check_state_after_parse_sql_client_result",
-                           return_value=True) as mock_context_check_state_after_parse_sql_client_result, \
-                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as mock_table_printer_execute:
+                           return_value=True) as context_check_state_after_parse_sql_client_result, \
+                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute:
             config = self._default_config()
             context = self._default_context()
 
             OracleRunner(config, context).execute()
 
-            mock_context_check_state_after_execute_sql_client.assert_called_once()
-            mock_oracle_parser_execute.assert_called_once()
-            mock_context_check_state_after_parse_sql_client_result.assert_called_once()
-            mock_table_printer_execute.assert_called_once()
+            context_check_state_after_execute_sql_client.assert_called_once()
+            oracle_parser_execute.assert_called_once()
+            context_check_state_after_parse_sql_client_result.assert_called_once()
+            table_printer_execute.assert_called_once()
 
     @staticmethod
     def _default_config():
