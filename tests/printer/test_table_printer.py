@@ -220,52 +220,37 @@ class TestTablePrinter(TestCase):
 
         context = mock.MagicMock()
 
-        # ---- パターン1 ----
-        expected = 1
-        actual = TablePrinter(context)._length_of(u"\\")
-        self.assertEqual(expected, actual)
-
-        # ---- パターン2 ----
-        expected = 1
-        actual = TablePrinter(context)._length_of(u"\u005c")  # \u005c = \
-        self.assertEqual(expected, actual)
-
-        # ---- パターン3 ----
-        expected = 2
-        actual = TablePrinter(context)._length_of(u"あ")
-        self.assertEqual(expected, actual)
-
-        # ---- パターン4 ----
+        # ---- ケース1 ----
         expected = 11
         actual = TablePrinter(context)._length_of(u'," ./\\=?!:;')
         self.assertEqual(expected, actual)
 
-        # ---- パターン5 ----
+        # ---- ケース2 ----
         expected = 16
         actual = TablePrinter(context)._length_of(u'ヲンヰヱヴーヾ・')
         self.assertEqual(expected, actual)
 
-        # ---- パターン6 ----
+        # ---- ケース3 ----
         expected = 7
         actual = TablePrinter(context)._length_of(u'ｧｰｭｿﾏﾞﾟ')
         self.assertEqual(expected, actual)
 
-        # ---- パターン7 ----
+        # ---- ケース4 ----
         expected = 16
         actual = TablePrinter(context)._length_of(u'㌶Ⅲ⑳㏾☎㈱髙﨑')
         self.assertEqual(expected, actual)
 
-        # ---- パターン8 ----
+        # ---- ケース5 ----
         expected = 10
         actual = TablePrinter(context)._length_of(u'¢£¬‖−〜―')
         self.assertEqual(expected, actual)
 
-        # ---- パターン9 ----
+        # ---- ケース6 ----
         expected = 20
         actual = TablePrinter(context)._length_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
         self.assertEqual(expected, actual)
 
-        # ---- パターン10 ----
+        # ---- ケース7 ----
         expected = 6
         actual = TablePrinter(context)._length_of(u'ソ能表')
         self.assertEqual(expected, actual)
