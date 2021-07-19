@@ -17,7 +17,7 @@ class TestOracleRunner(TestCase):
         # type: () -> None
 
         # ---- ケース1 ----
-        with mock.patch("sys.stdin", new=StringIO("")), \
+        with mock.patch("sys.stdin", new=StringIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context.Context.check_state_after_execute_sql_client",
                            return_value=True) as context_check_state_after_execute_sql_client, \
