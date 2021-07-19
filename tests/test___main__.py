@@ -15,6 +15,10 @@ class TestMain(TestCase):
         # ---- ケース1 ----
         with mock.patch("sys.stdout"), \
                 mock.patch("sys.stderr"), \
+                mock.patch("ConfigParser.ConfigParser"), \
+                mock.patch("ConfigParser.ConfigParser.get", side_effect=self.config_parser_get_side_effect), \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
                 mock.patch("os.makedirs"), \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
@@ -54,6 +58,15 @@ class TestMain(TestCase):
 
         oracle_runner_execute.assert_called_once()
         mysql_runner_execute.assert_not_called()
+
+    @staticmethod
+    def config_parser_get_side_effect(section, option):
+        # type: (str, str) -> str
+
+        if section == "default" and option == "db_type":
+            return "oracle"
+        else:
+            return ""
 
 
 if __name__ == "__main__":
