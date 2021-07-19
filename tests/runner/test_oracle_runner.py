@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import os
 import unittest
 from ConfigParser import SafeConfigParser
 from StringIO import StringIO
@@ -30,6 +31,22 @@ class TestOracleRunner(TestCase):
 
             OracleRunner(config, context).execute()
 
+            expected = "ld_library_path"
+            actual = os.environ.get("LD_LIBRARY_PATH")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_lang"
+            actual = os.environ.get("NLS_LANG")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_date_format"
+            actual = os.environ.get("NLS_DATE_FORMAT")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_timestamp_format"
+            actual = os.environ.get("NLS_TIMESTAMP_FORMAT")
+            self.assertEqual(expected, actual)
+
             context_check_state_after_execute_sql_client.assert_called_once()
             oracle_parser_execute.assert_called_once()
             context_check_state_after_parse_sql_client_result.assert_called_once()
@@ -49,6 +66,22 @@ class TestOracleRunner(TestCase):
             context.display_format = "csv"
 
             OracleRunner(config, context).execute()
+
+            expected = "ld_library_path"
+            actual = os.environ.get("LD_LIBRARY_PATH")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_lang"
+            actual = os.environ.get("NLS_LANG")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_date_format"
+            actual = os.environ.get("NLS_DATE_FORMAT")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_timestamp_format"
+            actual = os.environ.get("NLS_TIMESTAMP_FORMAT")
+            self.assertEqual(expected, actual)
 
             context_check_state_after_execute_sql_client.assert_called_once()
             oracle_parser_execute.assert_called_once()
