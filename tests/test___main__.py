@@ -1,4 +1,6 @@
 # coding: utf-8
+
+import os
 import unittest
 from unittest import TestCase
 
@@ -16,6 +18,10 @@ class TestMain(TestCase):
                 mock.patch("os.makedirs"), \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute:
             from dbclient import __main__
+
+        expected = "utf-8"
+        actual = os.environ.get("PYTHONIOENCODING").lower()
+        self.assertEqual(expected, actual)
 
         expected = "table"
         actual = __main__.context.display_format
