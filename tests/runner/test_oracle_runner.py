@@ -89,13 +89,13 @@ class TestOracleRunner(TestCase):
         config.set("oracle_environment_variable", "nls_date_format", "nls_date_format")
         config.set("oracle_environment_variable", "nls_timestamp_format", "nls_timestamp_format")
 
-        config.add_section("docker")
-        config.set("docker", "user_name", "user_name")
-        config.set("docker", "password", "password")
-        config.set("docker", "host", "host")
-        config.set("docker", "port", "port")
-        config.set("docker", "sid", "sid")
-        config.set("docker", "privilege", "")
+        config.add_section("test")
+        config.set("test", "user_name", "user_name")
+        config.set("test", "password", "password")
+        config.set("test", "host", "host")
+        config.set("test", "port", "port")
+        config.set("test", "sid", "sid")
+        config.set("test", "privilege", "")
         return config
 
     @staticmethod
@@ -104,7 +104,7 @@ class TestOracleRunner(TestCase):
 
         context = Context()
         context.display_format = "table"
-        context.connection_target = "docker"
+        context.connection_target = "test"
         return context
 
 
