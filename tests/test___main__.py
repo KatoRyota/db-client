@@ -16,7 +16,8 @@ class TestMain(TestCase):
         with mock.patch("sys.stdout"), \
                 mock.patch("sys.stderr"), \
                 mock.patch("os.makedirs"), \
-                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute:
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             from dbclient import __main__
 
         expected = "utf-8"
@@ -52,6 +53,7 @@ class TestMain(TestCase):
         self.assertEqual(expected, actual)
 
         oracle_runner_execute.assert_called_once()
+        mysql_runner_execute.assert_not_called()
 
 
 if __name__ == "__main__":
