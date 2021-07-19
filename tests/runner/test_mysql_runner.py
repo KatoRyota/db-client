@@ -139,6 +139,7 @@ class TestMysqlRunner(TestCase):
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
             config = self._default_config()
             context = self._default_context()
+            context.display_format = "csv"
 
             with self.assertRaises(StandardError) as e:
                 MysqlRunner(config, context).execute()
