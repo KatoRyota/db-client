@@ -47,9 +47,10 @@ class TestOracleRunner(TestCase):
             config = self._default_config()
             context = self._default_context()
 
-            with self.assertRaises(StandardError):
+            with self.assertRaises(StandardError) as e:
                 OracleRunner(config, context).execute()
 
+            self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
             context_check_state_after_execute_sql_client.assert_called_once()
             oracle_parser_execute.assert_not_called()
             context_check_state_after_parse_sql_client_result.assert_not_called()
@@ -67,9 +68,10 @@ class TestOracleRunner(TestCase):
             config = self._default_config()
             context = self._default_context()
 
-            with self.assertRaises(StandardError):
+            with self.assertRaises(StandardError) as e:
                 OracleRunner(config, context).execute()
 
+            self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
             context_check_state_after_execute_sql_client.assert_called_once()
             oracle_parser_execute.assert_called_once()
             context_check_state_after_parse_sql_client_result.assert_called_once()
