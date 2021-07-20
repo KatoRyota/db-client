@@ -37,7 +37,7 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
-            config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
+            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
