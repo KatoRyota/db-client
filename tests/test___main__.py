@@ -19,6 +19,8 @@ class TestMain(TestCase):
 
         reload(sys)
         sys.setdefaultencoding("utf-8")
+        sys.stdout = before_stdout
+        sys.stderr = before_stderr
 
         # ---- ケース1 ----
         with mock.patch("__builtin__.reload"), \
@@ -156,9 +158,6 @@ class TestMain(TestCase):
 
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
-
-        sys.stdout = before_stdout
-        sys.stderr = before_stderr
 
     @staticmethod
     def config_parser_get_oracle_side_effect(section, option):
