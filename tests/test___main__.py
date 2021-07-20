@@ -14,11 +14,13 @@ class TestMain(TestCase):
     def test__main__(self):
         # type: () -> None
 
+        before_stdin = sys.stdin
         before_stdout = sys.stdout
         before_stderr = sys.stderr
 
         reload(sys)
         sys.setdefaultencoding("utf-8")
+        sys.stdin = before_stdin
         sys.stdout = before_stdout
         sys.stderr = before_stderr
 
