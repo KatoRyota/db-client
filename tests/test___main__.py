@@ -14,16 +14,18 @@ class TestMain(TestCase):
     def test__main__(self):
         # type: () -> None
 
+        before_stdout = sys.stdout
+        before_stderr = sys.stderr
+
         # ---- ケース1 ----
-        with mock.patch("sys.stdout"), \
-                mock.patch("sys.stderr"), \
-                mock.patch("ConfigParser.RawConfigParser.read"), \
+        with mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.makedirs"), \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
 
             if "dbclient.__main__" in sys.modules:
@@ -67,15 +69,14 @@ class TestMain(TestCase):
             mysql_runner_execute.assert_not_called()
 
         # ---- ケース2 ----
-        with mock.patch("sys.stdout"), \
-                mock.patch("sys.stderr"), \
-                mock.patch("ConfigParser.RawConfigParser.read"), \
+        with mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.makedirs"), \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
             config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
 
             if "dbclient.__main__" in sys.modules:
@@ -149,6 +150,9 @@ class TestMain(TestCase):
 
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
+
+        sys.stdout = before_stdout
+        sys.stderr = before_stderr
 
     @staticmethod
     def config_parser_get_oracle_side_effect(section, option):
