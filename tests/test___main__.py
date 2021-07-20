@@ -17,8 +17,40 @@ class TestMain(TestCase):
         before_stdout = sys.stdout
         before_stderr = sys.stderr
 
+        reload(sys)
+        sys.setdefaultencoding("utf-8")
+
+        # ---- ケース3 ----
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stderr", new=StringIO()) as stderr, \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
+                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
+                mock.patch("os.makedirs"), \
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
+
+            del os.environ["PYTHONIOENCODING"]
+
+            with self.assertRaises(SystemExit) as e:
+                import dbclient.__main__
+
+            expected = u"環境変数\\[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
+            actual = stderr.getvalue().decode("utf-8")
+            self.assertRegexpMatches(actual, expected)
+
+            oracle_runner_execute.assert_not_called()
+            mysql_runner_execute.assert_not_called()
+
         # ---- ケース1 ----
-        with mock.patch("ConfigParser.RawConfigParser.read"), \
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
@@ -31,10 +63,12 @@ class TestMain(TestCase):
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
 
+            os.environ["PYTHONIOENCODING"] = "utf-8"
+
             import dbclient.__main__
 
             expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING").lower()
+            actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
 
             expected = "table"
@@ -69,7 +103,8 @@ class TestMain(TestCase):
             mysql_runner_execute.assert_not_called()
 
         # ---- ケース2 ----
-        with mock.patch("ConfigParser.RawConfigParser.read"), \
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
@@ -82,10 +117,12 @@ class TestMain(TestCase):
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
 
+            os.environ["PYTHONIOENCODING"] = "utf-8"
+
             import dbclient.__main__
 
             expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING").lower()
+            actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
 
             expected = "table"
@@ -118,38 +155,6 @@ class TestMain(TestCase):
 
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
-
-        # ---- ケース3 ----
-        with mock.patch("__builtin__.reload"), \
-                mock.patch("sys.stderr", new=StringIO()) as stderr, \
-                mock.patch("ConfigParser.RawConfigParser.read"), \
-                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
-                mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
-                mock.patch("os.makedirs"), \
-                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
-                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
-            config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
-
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
-            del os.environ["PYTHONIOENCODING"]
-
-            with self.assertRaises(SystemExit) as e:
-                import dbclient.__main__
-
-            expected = u"環境変数\\[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
-            actual = stderr.getvalue().decode("utf-8")
-            self.assertRegexpMatches(actual, expected)
-
-            expected = "mysql"
-            actual = dbclient.__main__.db_type
-            self.assertEqual(expected, actual)
-
-            oracle_runner_execute.assert_not_called()
-            mysql_runner_execute.assert_not_called()
 
         sys.stdout = before_stdout
         sys.stderr = before_stderr
