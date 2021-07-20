@@ -65,10 +65,7 @@ class TestMain(TestCase):
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
-    def test_main2(self):
-        # type: () -> None
-
-        # ---- ケース1 ----
+        # ---- ケース2 ----
         with mock.patch("sys.stdout"), \
                 mock.patch("sys.stderr"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
