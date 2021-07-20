@@ -36,9 +36,10 @@ class TestMain(TestCase):
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
 
-            del os.environ["PYTHONIOENCODING"]
+            if os.environ.get("PYTHONIOENCODING"):
+                del os.environ["PYTHONIOENCODING"]
 
-            with self.assertRaises(SystemExit) as e:
+            with self.assertRaises(SystemExit):
                 import dbclient.__main__
 
             expected = u"環境変数\\[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
