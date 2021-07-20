@@ -3,6 +3,7 @@
 import os
 import sys
 import unittest
+from ConfigParser import SafeConfigParser
 from unittest import TestCase
 
 import mock
@@ -16,7 +17,7 @@ class TestMain(TestCase):
         # ---- ケース1 ----
         with mock.patch("sys.stdout"), \
                 mock.patch("sys.stderr"), \
-                mock.patch("ConfigParser.ConfigParser"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
@@ -68,6 +69,7 @@ class TestMain(TestCase):
         # ---- ケース2 ----
         with mock.patch("sys.stdout"), \
                 mock.patch("sys.stderr"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
