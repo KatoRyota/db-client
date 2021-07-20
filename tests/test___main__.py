@@ -11,7 +11,7 @@ import mock
 
 class TestMain(TestCase):
 
-    def test_main(self):
+    def test__main__(self):
         # type: () -> None
 
         # ---- ケース1 ----
