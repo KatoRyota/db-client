@@ -34,9 +34,12 @@ class TestMain(TestCase):
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.makedirs"), \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
+            context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
 
             if "dbclient.__main__" in sys.modules:
@@ -44,6 +47,7 @@ class TestMain(TestCase):
 
             if os.environ.get("PYTHONIOENCODING"):
                 del os.environ["PYTHONIOENCODING"]
+            sys.argv = sys.argv + []
 
             with self.assertRaises(SystemExit):
                 import dbclient.__main__
@@ -52,9 +56,6 @@ class TestMain(TestCase):
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
-            oracle_runner_execute.assert_not_called()
-            mysql_runner_execute.assert_not_called()
-
         # ---- ケース2 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
@@ -62,15 +63,19 @@ class TestMain(TestCase):
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.makedirs"), \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
+            context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+            sys.argv = sys.argv + []
 
             import dbclient.__main__
 
@@ -116,15 +121,19 @@ class TestMain(TestCase):
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.makedirs"), \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
+            context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+            sys.argv = sys.argv + []
 
             import dbclient.__main__
 
@@ -170,9 +179,12 @@ class TestMain(TestCase):
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.makedirs"), \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
+            context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
 
             if "dbclient.__main__" in sys.modules:
