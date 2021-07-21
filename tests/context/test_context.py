@@ -238,6 +238,14 @@ class TestContext(TestCase):
         actual = context.check_state_after_execute_sql_client()
         self.assertEqual(expected, actual)
 
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.subprocesses = ""
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
         # ---- ケース3 ----
         context = self._default_context()
         context.subprocesses = ()
@@ -262,6 +270,14 @@ class TestContext(TestCase):
         actual = context.check_state_after_execute_sql_client()
         self.assertEqual(expected, actual)
 
+        # ---- ケース5 ----
+        context = self._default_context()
+        context.sql_client_return_code = "0"
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
         # ---- ケース6 ----
         context = self._default_context()
         context.result_set_html = None
@@ -273,6 +289,14 @@ class TestContext(TestCase):
         # ---- ケース7 ----
         context = self._default_context()
         context.result_set_html = ""
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース7 ----
+        context = self._default_context()
+        context.result_set_html = 1
 
         expected = False
         actual = context.check_state_after_execute_sql_client()
