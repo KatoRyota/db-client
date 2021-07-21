@@ -73,7 +73,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース8 ----
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = 0
@@ -82,7 +82,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース9 ----
         context = self._default_context()
         context.heading = "ON"
 
@@ -90,7 +90,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース11 ----
+        # ---- ケース10 ----
         context = self._default_context()
         context.feedback = "OFF"
 
@@ -98,7 +98,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース12 ----
+        # ---- ケース11 ----
         context = self._default_context()
         context.pagesize = ""
 
@@ -106,7 +106,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース13 ----
+        # ---- ケース12 ----
         context = self._default_context()
         context.pagesize = None
 
@@ -114,7 +114,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース14 ----
+        # ---- ケース13 ----
         context = self._default_context()
         context.pagesize = -1
 
