@@ -29,7 +29,6 @@ class TestOracleRunner(TestCase):
                            ) as context_check_state_after_parse_sql_client_result, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = True
 
@@ -72,7 +71,6 @@ class TestOracleRunner(TestCase):
                            ) as context_check_state_after_parse_sql_client_result, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = True
 
@@ -116,7 +114,6 @@ class TestOracleRunner(TestCase):
                            ) as context_check_state_after_parse_sql_client_result, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-
             context_check_state_after_execute_sql_client.return_value = False
             context_check_state_after_parse_sql_client_result.return_value = True
 
@@ -146,7 +143,6 @@ class TestOracleRunner(TestCase):
                            ) as context_check_state_after_parse_sql_client_result, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-
             context_check_state_after_execute_sql_client.return_value = False
             context_check_state_after_parse_sql_client_result.return_value = True
 
@@ -177,7 +173,6 @@ class TestOracleRunner(TestCase):
                            ) as context_check_state_after_parse_sql_client_result, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = False
 
@@ -207,7 +202,6 @@ class TestOracleRunner(TestCase):
                            ) as context_check_state_after_parse_sql_client_result, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = False
 
