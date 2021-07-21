@@ -320,7 +320,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース2 ----
+        # ---- ケース3 ----
         context = self._default_context()
         context.result_headings = ""
 
@@ -328,7 +328,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース3 ----
+        # ---- ケース4 ----
         context = self._default_context()
         context.result_headings = ()
 
@@ -336,7 +336,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース4 ----
+        # ---- ケース5 ----
         context = self._default_context()
         context.result_sets = None
 
@@ -344,7 +344,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース4 ----
+        # ---- ケース6 ----
         context = self._default_context()
         context.result_sets = ""
 
@@ -352,7 +352,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース7 ----
         context = self._default_context()
         context.result_sets = ()
 
@@ -360,7 +360,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース6 ----
+        # ---- ケース8 ----
         context = self._default_context()
         context.result_message = None
 
@@ -368,7 +368,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース7 ----
+        # ---- ケース9 ----
         context = self._default_context()
         context.result_message = ""
 
@@ -376,7 +376,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
-        # ---- ケース7 ----
+        # ---- ケース10 ----
         context = self._default_context()
         context.result_message = 1
 
