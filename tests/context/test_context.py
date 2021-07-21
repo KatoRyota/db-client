@@ -84,9 +84,25 @@ class TestContext(TestCase):
 
         # ---- ケース9 ----
         context = self._default_context()
+        context.heading = "on"
+
+        expected = True
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース9 ----
+        context = self._default_context()
         context.heading = "ON"
 
         expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース10 ----
+        context = self._default_context()
+        context.feedback = "off"
+
+        expected = True
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
