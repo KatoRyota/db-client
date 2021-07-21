@@ -140,12 +140,18 @@ class TestMysqlRunner(TestCase):
         # ---- ケース5 ----
         with mock.patch("sys.stdin", new=StringIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context.Context.check_state_after_execute_sql_client",
-                           return_value=True) as context_check_state_after_execute_sql_client, \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_execute_sql_client"
+                           ) as context_check_state_after_execute_sql_client, \
                 mock.patch("dbclient.parser.mysql_parser.MysqlParser.execute") as mysql_parser_execute, \
-                mock.patch("dbclient.context.context.Context.check_state_after_parse_sql_client_result",
-                           return_value=False) as context_check_state_after_parse_sql_client_result, \
-                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute:
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_sql_client_result"
+                           ) as context_check_state_after_parse_sql_client_result, \
+                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
+                mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            context_check_state_after_execute_sql_client.return_value = True
+            context_check_state_after_parse_sql_client_result.return_value = False
+
             config = self._default_config()
             context = self._default_context()
 
@@ -153,10 +159,12 @@ class TestMysqlRunner(TestCase):
                 MysqlRunner(config, context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
+
             context_check_state_after_execute_sql_client.assert_called_once()
             mysql_parser_execute.assert_called_once()
             context_check_state_after_parse_sql_client_result.assert_called_once()
             table_printer_execute.assert_not_called()
+            csv_printer_execute.assert_not_called()
 
         # ---- ケース6 ----
         with mock.patch("sys.stdin", new=StringIO()), \
