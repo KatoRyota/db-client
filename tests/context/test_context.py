@@ -288,6 +288,54 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_sql_client_result()
         self.assertEqual(expected, actual)
 
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.result_headings = None
+
+        expected = False
+        actual = context.check_state_after_parse_sql_client_result()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3 ----
+        context = self._default_context()
+        context.result_headings = ()
+
+        expected = False
+        actual = context.check_state_after_parse_sql_client_result()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4 ----
+        context = self._default_context()
+        context.result_sets = None
+
+        expected = False
+        actual = context.check_state_after_parse_sql_client_result()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5 ----
+        context = self._default_context()
+        context.result_sets = ()
+
+        expected = False
+        actual = context.check_state_after_parse_sql_client_result()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース6 ----
+        context = self._default_context()
+        context.result_message = None
+
+        expected = False
+        actual = context.check_state_after_parse_sql_client_result()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース7 ----
+        context = self._default_context()
+        context.result_message = ""
+
+        expected = False
+        actual = context.check_state_after_parse_sql_client_result()
+        self.assertEqual(expected, actual)
+
     @staticmethod
     def _default_context():
         # type: () -> Context
