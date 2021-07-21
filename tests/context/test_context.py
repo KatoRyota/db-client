@@ -73,15 +73,6 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース8 ----
-        context = self._default_context()
-        context.display_format = "table"
-        context.column_max_length = u""
-
-        expected = False
-        actual = context.check_state_after_parse_option()
-        self.assertEqual(expected, actual)
-
         # ---- ケース9 ----
         context = self._default_context()
         context.display_format = "table"
