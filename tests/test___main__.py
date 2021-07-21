@@ -26,7 +26,7 @@ class TestMain(TestCase):
         sys.stderr = before_stderr
         sys.argv = before_argv
 
-        # ---- ケース2 ----
+        # ---- ケース1 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -87,7 +87,7 @@ class TestMain(TestCase):
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース3 ----
+        # ---- ケース2 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -145,7 +145,7 @@ class TestMain(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
 
-        # ---- ケース4 ----
+        # ---- ケース3 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -203,7 +203,7 @@ class TestMain(TestCase):
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース1 ----
+        # ---- ケース4 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stderr", new=StringIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
@@ -238,7 +238,7 @@ class TestMain(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース1-2 ----
+        # ---- ケース5 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stderr", new=StringIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
