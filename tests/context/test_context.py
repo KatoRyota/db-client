@@ -22,7 +22,33 @@ class TestContext(TestCase):
 
         # ---- ケース2 ----
         context = self._default_context()
-        context.display_format = "json"
+        context.display_format = "table"
+
+        expected = True
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.display_format = "TABLE"
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.display_format = "csv"
+        context.field_delimiter = ","
+
+        expected = True
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.display_format = "CSV"
+        context.field_delimiter = ","
 
         expected = False
         actual = context.check_state_after_parse_option()
