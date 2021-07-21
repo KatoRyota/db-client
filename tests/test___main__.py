@@ -93,7 +93,8 @@ class TestMain(TestCase):
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
-                mock.patch("os.makedirs"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
@@ -101,6 +102,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
+            isdir.return_value = False
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
@@ -142,6 +144,7 @@ class TestMain(TestCase):
             actual = dbclient.__main__.context.connection_target
             self.assertEqual(expected, actual)
 
+            makedirs.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
 
@@ -151,7 +154,8 @@ class TestMain(TestCase):
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
-                mock.patch("os.makedirs"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
@@ -159,6 +163,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            isdir.return_value = False
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
@@ -200,6 +205,7 @@ class TestMain(TestCase):
             actual = dbclient.__main__.context.connection_target
             self.assertEqual(expected, actual)
 
+            makedirs.assert_called_once()
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
@@ -210,7 +216,8 @@ class TestMain(TestCase):
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
-                mock.patch("os.makedirs"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
@@ -218,6 +225,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            isdir.return_value = False
             stderr.encoding = "utf-8"
 
             if "dbclient.__main__" in sys.modules:
@@ -235,6 +243,7 @@ class TestMain(TestCase):
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
+            makedirs.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
@@ -245,7 +254,8 @@ class TestMain(TestCase):
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
                 mock.patch("logging.getLogger"), \
-                mock.patch("os.makedirs"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
@@ -253,6 +263,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = False
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            isdir.return_value = False
             stderr.encoding = "utf-8"
 
             if "dbclient.__main__" in sys.modules:
@@ -269,6 +280,7 @@ class TestMain(TestCase):
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
+            makedirs.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
