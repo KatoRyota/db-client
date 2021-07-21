@@ -28,36 +28,9 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース2 ----
-        context = self._default_context()
-        context.display_format = "TABLE"
-
-        expected = False
-        actual = context.check_state_after_parse_option()
-        self.assertEqual(expected, actual)
-
-        # ---- ケース2 ----
-        context = self._default_context()
-        context.display_format = "csv"
-        context.field_delimiter = ","
-
-        expected = True
-        actual = context.check_state_after_parse_option()
-        self.assertEqual(expected, actual)
-
-        # ---- ケース2 ----
-        context = self._default_context()
-        context.display_format = "CSV"
-        context.field_delimiter = ","
-
-        expected = False
-        actual = context.check_state_after_parse_option()
-        self.assertEqual(expected, actual)
-
         # ---- ケース3 ----
         context = self._default_context()
-        context.display_format = "csv"
-        context.field_delimiter = ""
+        context.display_format = "TABLE"
 
         expected = False
         actual = context.check_state_after_parse_option()
@@ -66,13 +39,40 @@ class TestContext(TestCase):
         # ---- ケース4 ----
         context = self._default_context()
         context.display_format = "csv"
+        context.field_delimiter = ","
+
+        expected = True
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5 ----
+        context = self._default_context()
+        context.display_format = "CSV"
+        context.field_delimiter = ","
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース6 ----
+        context = self._default_context()
+        context.display_format = "csv"
+        context.field_delimiter = ""
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース7 ----
+        context = self._default_context()
+        context.display_format = "csv"
         context.field_delimiter = None
 
         expected = False
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース8 ----
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = u""
@@ -81,7 +81,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース6 ----
+        # ---- ケース9 ----
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = ""
@@ -90,7 +90,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース7 ----
+        # ---- ケース10 ----
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = None
@@ -99,7 +99,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース8 ----
+        # ---- ケース11 ----
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = 0
@@ -108,7 +108,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース12 ----
         context = self._default_context()
         context.heading = "on"
 
@@ -116,7 +116,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース13 ----
         context = self._default_context()
         context.heading = "ON"
 
@@ -124,7 +124,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース14 ----
         context = self._default_context()
         context.heading = "off"
 
@@ -132,7 +132,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース15 ----
         context = self._default_context()
         context.heading = "OFF"
 
@@ -140,7 +140,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース16 ----
         context = self._default_context()
         context.feedback = "on"
 
@@ -148,7 +148,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース17 ----
         context = self._default_context()
         context.feedback = "ON"
 
@@ -156,7 +156,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース18 ----
         context = self._default_context()
         context.feedback = "off"
 
@@ -164,7 +164,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース19 ----
         context = self._default_context()
         context.feedback = "OFF"
 
@@ -172,7 +172,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース11 ----
+        # ---- ケース20 ----
         context = self._default_context()
         context.pagesize = ""
 
@@ -180,7 +180,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース12 ----
+        # ---- ケース21 ----
         context = self._default_context()
         context.pagesize = None
 
@@ -188,7 +188,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース13 ----
+        # ---- ケース22 ----
         context = self._default_context()
         context.pagesize = -1
 
@@ -196,7 +196,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース14 ----
+        # ---- ケース23 ----
         context = self._default_context()
         context.connection_target = ""
 
@@ -204,7 +204,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース15 ----
+        # ---- ケース24 ----
         context = self._default_context()
         context.connection_target = None
 
@@ -212,7 +212,7 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
-        # ---- ケース16 ----
+        # ---- ケース25 ----
         context = self._default_context()
         context.connection_target = u""
 
