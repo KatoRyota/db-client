@@ -225,7 +225,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            isdir.return_value = False
+            isdir.return_value = True
             stderr.encoding = "utf-8"
 
             if "dbclient.__main__" in sys.modules:
@@ -243,7 +243,7 @@ class TestMain(TestCase):
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
-            makedirs.assert_called_once()
+            makedirs.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
@@ -263,7 +263,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = False
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            isdir.return_value = False
+            isdir.return_value = True
             stderr.encoding = "utf-8"
 
             if "dbclient.__main__" in sys.modules:
@@ -280,7 +280,7 @@ class TestMain(TestCase):
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
-            makedirs.assert_called_once()
+            makedirs.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
