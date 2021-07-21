@@ -20,6 +20,77 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.display_format = "json"
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3 ----
+        context = self._default_context()
+        context.display_format = "csv"
+        context.field_delimiter = ""
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4 ----
+        context = self._default_context()
+        context.display_format = "csv"
+        context.field_delimiter = None
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5 ----
+        context = self._default_context()
+        context.display_format = "csv"
+        context.field_delimiter = u""
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース6 ----
+        context = self._default_context()
+        context.display_format = "table"
+        context.column_max_length = ""
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース7 ----
+        context = self._default_context()
+        context.display_format = "table"
+        context.column_max_length = None
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース8 ----
+        context = self._default_context()
+        context.display_format = "table"
+        context.column_max_length = u""
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース9 ----
+        context = self._default_context()
+        context.display_format = "table"
+        context.column_max_length = 0
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
     def test_check_state_after_execute_sql_client(self):
         # type: () -> None
 
