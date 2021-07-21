@@ -26,74 +26,6 @@ class TestMain(TestCase):
         sys.stderr = before_stderr
         sys.argv = before_argv
 
-        # ---- ケース1 ----
-        with mock.patch("__builtin__.reload"), \
-                mock.patch("sys.stderr", new=StringIO()) as stderr, \
-                mock.patch("ConfigParser.RawConfigParser.read"), \
-                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
-                mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
-                mock.patch("os.makedirs"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
-                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
-                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
-            context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            stderr.encoding = "utf-8"
-
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
-            if os.environ.get("PYTHONIOENCODING"):
-                del os.environ["PYTHONIOENCODING"]
-            sys.argv = sys.argv + []
-
-            with self.assertRaises(SystemExit):
-                import dbclient.__main__
-
-            expected = u"環境変数\\[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
-            actual = stderr.getvalue().decode("utf-8")
-            self.assertRegexpMatches(actual, expected)
-
-            oracle_runner_execute.assert_not_called()
-            mysql_runner_execute.assert_not_called()
-
-        # ---- ケース1-2 ----
-        with mock.patch("__builtin__.reload"), \
-                mock.patch("sys.stderr", new=StringIO()) as stderr, \
-                mock.patch("ConfigParser.RawConfigParser.read"), \
-                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
-                mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
-                mock.patch("os.makedirs"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
-                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
-                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
-            context_check_state_after_parse_option.return_value = False
-            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            stderr.encoding = "utf-8"
-
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
-            os.environ["PYTHONIOENCODING"] = "utf-8"
-            sys.argv = sys.argv + []
-
-            with self.assertRaises(SystemExit):
-                # noinspection PyUnresolvedReferences
-                import dbclient.__main__
-
-            expected = u"起動オプションが不正です。"
-            actual = stderr.getvalue().decode("utf-8")
-            self.assertRegexpMatches(actual, expected)
-
-            oracle_runner_execute.assert_not_called()
-            mysql_runner_execute.assert_not_called()
-
         # ---- ケース2 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
@@ -266,6 +198,75 @@ class TestMain(TestCase):
             self.assertEqual(expected, actual)
 
             oracle_runner_execute.assert_called_once()
+            mysql_runner_execute.assert_not_called()
+
+        # ---- ケース1 ----
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stderr", new=StringIO()) as stderr, \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
+                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
+                mock.patch("os.makedirs"), \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            context_check_state_after_parse_option.return_value = True
+            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            stderr.encoding = "utf-8"
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
+
+            if os.environ.get("PYTHONIOENCODING"):
+                del os.environ["PYTHONIOENCODING"]
+            sys.argv = sys.argv + []
+
+            with self.assertRaises(SystemExit):
+                # noinspection PyUnresolvedReferences
+                import dbclient.__main__
+
+            expected = u"環境変数\\[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
+            actual = stderr.getvalue().decode("utf-8")
+            self.assertRegexpMatches(actual, expected)
+
+            oracle_runner_execute.assert_not_called()
+            mysql_runner_execute.assert_not_called()
+
+        # ---- ケース1-2 ----
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stderr", new=StringIO()) as stderr, \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
+                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
+                mock.patch("os.makedirs"), \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            context_check_state_after_parse_option.return_value = False
+            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            stderr.encoding = "utf-8"
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
+
+            os.environ["PYTHONIOENCODING"] = "utf-8"
+            sys.argv = sys.argv + []
+
+            with self.assertRaises(SystemExit):
+                # noinspection PyUnresolvedReferences
+                import dbclient.__main__
+
+            expected = u"起動オプションが不正です。"
+            actual = stderr.getvalue().decode("utf-8")
+            self.assertRegexpMatches(actual, expected)
+
+            oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
     @staticmethod
