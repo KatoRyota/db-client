@@ -122,6 +122,30 @@ class TestContext(TestCase):
         actual = context.check_state_after_parse_option()
         self.assertEqual(expected, actual)
 
+        # ---- ケース14 ----
+        context = self._default_context()
+        context.connection_target = ""
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース15 ----
+        context = self._default_context()
+        context.connection_target = None
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース16 ----
+        context = self._default_context()
+        context.connection_target = u""
+
+        expected = False
+        actual = context.check_state_after_parse_option()
+        self.assertEqual(expected, actual)
+
     def test_check_state_after_execute_sql_client(self):
         # type: () -> None
 
