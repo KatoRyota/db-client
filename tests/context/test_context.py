@@ -230,6 +230,54 @@ class TestContext(TestCase):
         actual = context.check_state_after_execute_sql_client()
         self.assertEqual(expected, actual)
 
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.subprocesses = None
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3 ----
+        context = self._default_context()
+        context.subprocesses = ()
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4 ----
+        context = self._default_context()
+        context.sql_client_return_code = None
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5 ----
+        context = self._default_context()
+        context.sql_client_return_code = ""
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース6 ----
+        context = self._default_context()
+        context.result_set_html = None
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース7 ----
+        context = self._default_context()
+        context.result_set_html = ""
+
+        expected = False
+        actual = context.check_state_after_execute_sql_client()
+        self.assertEqual(expected, actual)
+
     def test_check_state_after_parse_sql_client_result(self):
         # type: () -> None
 
