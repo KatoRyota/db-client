@@ -138,7 +138,7 @@ class TablePrinter(object):
         #   * https://ja.wikipedia.org/wiki/Unicode%E4%B8%80%E8%A6%A7_0000-0FFF
         #   * https://ja.wikipedia.org/wiki/Unicode%E4%B8%80%E8%A6%A7_F000-FFFF
 
-        chars = re.sub(u"[𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄]", u"?", chars)
+        chars = re.sub(u"𠀋|𡈽|𡌛|𡑮|𡢽|𠮟|𡚴|𡸴|𣇄|𣗄", u"？", chars)
 
         character_length = 0
 
