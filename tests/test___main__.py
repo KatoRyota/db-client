@@ -84,6 +84,7 @@ class TestMain(TestCase):
             self.assertEqual(expected, actual)
 
             makedirs.assert_called_once()
+            context_check_state_after_parse_option.assert_called_once()
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
@@ -145,6 +146,7 @@ class TestMain(TestCase):
             self.assertEqual(expected, actual)
 
             makedirs.assert_called_once()
+            context_check_state_after_parse_option.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
 
@@ -206,6 +208,7 @@ class TestMain(TestCase):
             self.assertEqual(expected, actual)
 
             makedirs.assert_called_once()
+            context_check_state_after_parse_option.assert_called_once()
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
@@ -244,6 +247,7 @@ class TestMain(TestCase):
             self.assertRegexpMatches(actual, expected)
 
             makedirs.assert_not_called()
+            context_check_state_after_parse_option.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
@@ -281,6 +285,7 @@ class TestMain(TestCase):
             self.assertRegexpMatches(actual, expected)
 
             makedirs.assert_not_called()
+            context_check_state_after_parse_option.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
