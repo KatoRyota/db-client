@@ -34,6 +34,7 @@ class TestMysqlRunner(TestCase):
 
             config = self._default_config()
             context = self._default_context()
+            context.display_format = "table"
 
             MysqlRunner(config, context).execute()
 
@@ -95,6 +96,7 @@ class TestMysqlRunner(TestCase):
 
             config = self._default_config()
             context = self._default_context()
+            context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
                 MysqlRunner(config, context).execute()
@@ -154,6 +156,7 @@ class TestMysqlRunner(TestCase):
 
             config = self._default_config()
             context = self._default_context()
+            context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
                 MysqlRunner(config, context).execute()
