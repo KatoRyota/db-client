@@ -85,6 +85,25 @@ ID,NAME,TYPE
         # ---- ケース4 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
+            context.result_message = u''
+
+            CsvPrinter(context).execute()
+
+            expected = u'''\
+ID,NAME,TYPE
+ID-000-0000,NAME-000-0000,TYPE-000-0000
+ID-111-1111,NAME-111-1111,TYPE-111-1111
+ID-222-2222,NAME-222-2222,TYPE-222-2222
+
+ID,NAME,TYPE
+ID-333-3333,NAME-333-3333,TYPE-333-3333
+'''
+            actual = stdout.getvalue().decode("utf-8")
+            self.assertEqual(expected, actual)
+
+        # ---- ケース5 ----
+        with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            context = self._default_context()
             context.heading = "off"
 
             CsvPrinter(context).execute()
@@ -101,7 +120,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース6 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.feedback = "off"
@@ -120,7 +139,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- ケース6 ----
+        # ---- ケース7 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.sql_client_return_code = 1
