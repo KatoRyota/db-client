@@ -40,7 +40,7 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self.isdir_side_effect("./log", False)
 
             if "dbclient.__main__" in sys.modules:
@@ -102,7 +102,7 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
+            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "mysql")
             isdir.side_effect = self.isdir_side_effect("./log", False)
 
             if "dbclient.__main__" in sys.modules:
@@ -164,7 +164,7 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self.isdir_side_effect("./log", False)
 
             if "dbclient.__main__" in sys.modules:
@@ -227,7 +227,7 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self.isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
@@ -266,7 +266,7 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = False
-            config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
+            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self.isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
@@ -303,22 +303,18 @@ class TestMain(TestCase):
         return isdir
 
     @staticmethod
-    def config_parser_get_oracle_side_effect(section, option):
-        # type: (str, str) -> str
+    def config_parser_get_side_effect(section, option, return_value):
+        # type: (str, str, str) -> object
 
-        if section == "default" and option == "db_type":
-            return "oracle"
-        else:
-            return ""
+        def config_parser_get(inner_section, inner_option):
+            # type: (str, str) -> str
 
-    @staticmethod
-    def config_parser_get_mysql_side_effect(section, option):
-        # type: (str, str) -> str
+            if inner_section == section and inner_option == option:
+                return return_value
+            else:
+                raise StandardError(u"引数が不正です。")
 
-        if section == "default" and option == "db_type":
-            return "mysql"
-        else:
-            return ""
+        return config_parser_get
 
 
 if __name__ == "__main__":
