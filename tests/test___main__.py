@@ -40,8 +40,8 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self.isdir_side_effect("./log", False)
+            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            isdir.side_effect = self._isdir_side_effect("./log", False)
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = sys.argv + []
@@ -102,8 +102,8 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "mysql")
-            isdir.side_effect = self.isdir_side_effect("./log", False)
+            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "mysql")
+            isdir.side_effect = self._isdir_side_effect("./log", False)
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = sys.argv + []
@@ -164,8 +164,8 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self.isdir_side_effect("./log", False)
+            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            isdir.side_effect = self._isdir_side_effect("./log", False)
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = sys.argv + ["--display_format", "csv"]
@@ -227,8 +227,8 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = True
-            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self.isdir_side_effect("./log", True)
+            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            isdir.side_effect = self._isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
             if os.environ.get("PYTHONIOENCODING"):
@@ -266,8 +266,8 @@ class TestMain(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
 
             context_check_state_after_parse_option.return_value = False
-            config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self.isdir_side_effect("./log", True)
+            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            isdir.side_effect = self._isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -290,7 +290,7 @@ class TestMain(TestCase):
             mysql_runner_execute.assert_not_called()
 
     @staticmethod
-    def isdir_side_effect(path, return_value):
+    def _isdir_side_effect(path, return_value):
         # type: (str, bool) -> object
 
         def isdir(inner_path):
@@ -303,7 +303,7 @@ class TestMain(TestCase):
         return isdir
 
     @staticmethod
-    def config_parser_get_side_effect(section, option, return_value):
+    def _config_parser_get_side_effect(section, option, return_value):
         # type: (str, str, str) -> object
 
         def config_parser_get(inner_section, inner_option):
