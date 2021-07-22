@@ -34,6 +34,7 @@ class TestOracleRunner(TestCase):
 
             config = self._default_config()
             context = self._default_context()
+            context.display_format = "table"
 
             OracleRunner(config, context).execute()
 
@@ -119,6 +120,7 @@ class TestOracleRunner(TestCase):
 
             config = self._default_config()
             context = self._default_context()
+            context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
                 OracleRunner(config, context).execute()
@@ -178,6 +180,7 @@ class TestOracleRunner(TestCase):
 
             config = self._default_config()
             context = self._default_context()
+            context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
                 OracleRunner(config, context).execute()
