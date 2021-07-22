@@ -43,11 +43,11 @@ class TestMain(TestCase):
             config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self.isdir_side_effect("./log", False)
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = sys.argv + []
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
 
             import dbclient.__main__
 
@@ -105,11 +105,11 @@ class TestMain(TestCase):
             config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "mysql")
             isdir.side_effect = self.isdir_side_effect("./log", False)
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = sys.argv + []
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
 
             import dbclient.__main__
 
@@ -167,11 +167,11 @@ class TestMain(TestCase):
             config_parser_get.side_effect = self.config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self.isdir_side_effect("./log", False)
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = sys.argv + ["--display_format", "csv"]
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
 
             import dbclient.__main__
 
@@ -231,12 +231,12 @@ class TestMain(TestCase):
             isdir.side_effect = self.isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
             if os.environ.get("PYTHONIOENCODING"):
                 del os.environ["PYTHONIOENCODING"]
             sys.argv = sys.argv + []
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
 
             with self.assertRaises(SystemExit):
                 # noinspection PyUnresolvedReferences
@@ -270,11 +270,11 @@ class TestMain(TestCase):
             isdir.side_effect = self.isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = sys.argv + []
+
+            if "dbclient.__main__" in sys.modules:
+                del sys.modules["dbclient.__main__"]
 
             with self.assertRaises(SystemExit):
                 # noinspection PyUnresolvedReferences
