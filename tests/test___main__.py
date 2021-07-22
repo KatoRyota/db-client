@@ -294,6 +294,7 @@ class TestMain(TestCase):
         # type: (str, bool) -> object
 
         def isdir(inner_path):
+            # type: (str) -> bool
 
             if inner_path == path:
                 return return_value
