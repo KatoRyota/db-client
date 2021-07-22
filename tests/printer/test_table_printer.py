@@ -75,6 +75,27 @@ class TestTablePrinter(TestCase):
         # ---- ケース3 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
+            context.result_headings = []
+            context.result_sets = []
+
+            context.result_message = \
+                u'あ\nいうえお' \
+                u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表' \
+                u'<input type="text" value="<font color="red">&lt;&copy;&amp;'
+
+            TablePrinter(context).execute()
+
+            expected = u'''\
+
+あ
+いうえお," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表<input type="text" value="<font color="red">&lt;&copy;&amp;
+'''
+            actual = stdout.getvalue().decode("utf-8")
+            self.assertEqual(expected, actual)
+
+        # ---- ケース4 ----
+        with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            context = self._default_context()
             context.heading = "off"
 
             TablePrinter(context).execute()
@@ -97,7 +118,7 @@ class TestTablePrinter(TestCase):
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- ケース4 ----
+        # ---- ケース5 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.feedback = "off"
@@ -124,7 +145,7 @@ class TestTablePrinter(TestCase):
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース6 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.sql_client_return_code = 1
