@@ -3,7 +3,7 @@
 import os
 import unittest
 from ConfigParser import SafeConfigParser
-from StringIO import StringIO
+from io import BytesIO
 from unittest import TestCase
 
 import mock
@@ -18,7 +18,7 @@ class TestMysqlRunner(TestCase):
         # type: () -> None
 
         # ---- ケース1 ----
-        with mock.patch("sys.stdin", new=StringIO()), \
+        with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_execute_sql_client"
@@ -48,7 +48,7 @@ class TestMysqlRunner(TestCase):
             csv_printer_execute.assert_not_called()
 
         # ---- ケース2 ----
-        with mock.patch("sys.stdin", new=StringIO()), \
+        with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_execute_sql_client"
@@ -79,7 +79,7 @@ class TestMysqlRunner(TestCase):
             csv_printer_execute.assert_called_once()
 
         # ---- ケース3 ----
-        with mock.patch("sys.stdin", new=StringIO()), \
+        with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_execute_sql_client"
@@ -108,7 +108,7 @@ class TestMysqlRunner(TestCase):
             csv_printer_execute.assert_not_called()
 
         # ---- ケース4 ----
-        with mock.patch("sys.stdin", new=StringIO()), \
+        with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_execute_sql_client"
@@ -138,7 +138,7 @@ class TestMysqlRunner(TestCase):
             csv_printer_execute.assert_not_called()
 
         # ---- ケース5 ----
-        with mock.patch("sys.stdin", new=StringIO()), \
+        with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_execute_sql_client"
@@ -167,7 +167,7 @@ class TestMysqlRunner(TestCase):
             csv_printer_execute.assert_not_called()
 
         # ---- ケース6 ----
-        with mock.patch("sys.stdin", new=StringIO()), \
+        with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context."
                            "Context.check_state_after_execute_sql_client"

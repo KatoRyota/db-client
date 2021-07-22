@@ -3,7 +3,7 @@
 import os
 import sys
 import unittest
-from StringIO import StringIO
+from io import BytesIO
 from unittest import TestCase
 
 import mock
@@ -211,7 +211,7 @@ class TestMain(TestCase):
 
         # ---- ケース4 ----
         with mock.patch("__builtin__.reload"), \
-                mock.patch("sys.stderr", new=StringIO()) as stderr, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
@@ -249,7 +249,7 @@ class TestMain(TestCase):
 
         # ---- ケース5 ----
         with mock.patch("__builtin__.reload"), \
-                mock.patch("sys.stderr", new=StringIO()) as stderr, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \

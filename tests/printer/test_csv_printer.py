@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-from StringIO import StringIO
+from io import BytesIO
 from unittest import TestCase
 
 import mock
@@ -16,7 +16,7 @@ class TestCsvPrinter(TestCase):
         # type: () -> None
 
         # ---- ケース1 ----
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:
+        with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
 
             CsvPrinter(context).execute()
@@ -36,7 +36,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:
+        with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.result_sets = []
             context.result_sets.append([
@@ -62,7 +62,7 @@ ID,NAME,TYPE
             self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:
+        with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.heading = "off"
 
@@ -81,7 +81,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:
+        with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.feedback = "off"
 
@@ -100,7 +100,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
-        with mock.patch("sys.stdout", new=StringIO()) as stdout:
+        with mock.patch("sys.stdout", new=BytesIO()) as stdout:
             context = self._default_context()
             context.sql_client_return_code = 1
             context.result_message = u"予期せぬ例外が発生しました。"
