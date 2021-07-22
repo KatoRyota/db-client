@@ -67,17 +67,11 @@ ID,NAME,TYPE
             context.result_headings = []
             context.result_sets = []
 
-            context.result_message = \
-                u'あ\nいうえお' \
-                u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表' \
-                u'<input type="text" value="<font color="red">&lt;&copy;&amp;'
-
             CsvPrinter(context).execute()
 
             expected = u'''\
 
-あ
-いうえお," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表<input type="text" value="<font color="red">&lt;&copy;&amp;
+4行が選択されました。
 '''
             actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
