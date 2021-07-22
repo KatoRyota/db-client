@@ -41,7 +41,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            isdir.return_value = False
+            isdir.side_effect = self.isdir_side_effect("./log", False)
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
@@ -103,7 +103,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_mysql_side_effect
-            isdir.return_value = False
+            isdir.side_effect = self.isdir_side_effect("./log", False)
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
@@ -165,7 +165,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            isdir.return_value = False
+            isdir.side_effect = self.isdir_side_effect("./log", False)
 
             if "dbclient.__main__" in sys.modules:
                 del sys.modules["dbclient.__main__"]
@@ -228,7 +228,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            isdir.return_value = True
+            isdir.side_effect = self.isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
             if "dbclient.__main__" in sys.modules:
@@ -267,7 +267,7 @@ class TestMain(TestCase):
 
             context_check_state_after_parse_option.return_value = False
             config_parser_get.side_effect = self.config_parser_get_oracle_side_effect
-            isdir.return_value = True
+            isdir.side_effect = self.isdir_side_effect("./log", True)
             stderr.encoding = "utf-8"
 
             if "dbclient.__main__" in sys.modules:
@@ -288,6 +288,19 @@ class TestMain(TestCase):
             context_check_state_after_parse_option.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
+
+    @staticmethod
+    def isdir_side_effect(path, return_value):
+        # type: (str, bool) -> object
+
+        def isdir(inner_path):
+
+            if inner_path == path:
+                return return_value
+            else:
+                raise StandardError(u"引数が不正です。")
+
+        return isdir
 
     @staticmethod
     def config_parser_get_oracle_side_effect(section, option):
