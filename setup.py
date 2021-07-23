@@ -18,6 +18,7 @@ setup(
     author_email="",
     packages=find_packages(),
     include_package_data=True,
+    zip_safe=False,
     install_requires=install_requirements,
     tests_require="",
     entry_points={
