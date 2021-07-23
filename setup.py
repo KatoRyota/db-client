@@ -17,10 +17,13 @@ setup(
     author="Kato Ryota",
     author_email="",
     packages=find_packages(),
+    data_files=[
+        ("config", ["config/*"]),
+    ],
     include_package_data=True,
     zip_safe=False,
     install_requires=install_requirements,
-    tests_require="",
+    tests_require=[],
     entry_points={
         "console_scripts": [
             "dbclient=dbclient.__main__",
