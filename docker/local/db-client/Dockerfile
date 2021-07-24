@@ -23,7 +23,7 @@ RUN \
     groupadd -g 61000 docker && \
     useradd -m -g docker -u 61000 docker && \
     curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && \
-    python get-pip.py
+    python2.7 get-pip.py
 
 # ---- sqlplusのインストール ----
 COPY docker/local/db-client/sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip   /opt/oracle/
