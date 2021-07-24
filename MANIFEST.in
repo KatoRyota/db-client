@@ -1,3 +1,5 @@
 include requirements.txt
 include README.md
 graft config
+graft dbclient
+graft tests
