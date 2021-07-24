@@ -18,9 +18,9 @@ setup(
     author_email="example@com",
     packages=find_packages(),
     include_package_data=True,
-    data_files=[
-        ("config", ["config/application.conf", "config/logging.conf"]),
-    ],
+    package_data={
+        "config": ["config/application.conf", "config/logging.conf"],
+    },
     zip_safe=False,
     install_requires=install_requirements,
     tests_require=[],
