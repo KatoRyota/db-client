@@ -22,12 +22,10 @@ Pygments==2.2.0
 pylint==1.9.5
 pyodbc==4.0.14
 pyparsing==2.2.0
-pythonnet==2.4.0.dev0
 singledispatch==3.6.2
 six==1.10.0
 sqlite-bro==0.8.11
 synchronizer==2.0.2
 toml==0.10.2
 wcwidth==0.1.7
-winpython==1.7.20170128
 wrapt==1.12.1

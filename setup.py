@@ -19,7 +19,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     data_files=[
-        ("config", ["config/*"]),
+        ("config", ["config/application.conf", "config/logging.conf"]),
     ],
     zip_safe=False,
     install_requires=install_requirements,
