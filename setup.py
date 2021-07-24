@@ -14,7 +14,7 @@ setup(
     classifiers=[
         'Programming Language :: Python :: 2.7',
     ],
-    author="Kato Ryota",
+    author="",
     author_email="",
     packages=find_packages(),
     data_files=[
