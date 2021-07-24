@@ -26,7 +26,7 @@ setup(
     tests_require=[],
     entry_points={
         "console_scripts": [
-            "dbclient=dbclient.__main__",
+            "dbclient=dbclient",
         ]
     },
 )
