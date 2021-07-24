@@ -25,7 +25,6 @@ RUN \
 # ---- sqlplusのインストール ----
 COPY docker/local/db-client/sqlplus/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip   /opt/oracle/
 COPY docker/local/db-client/sqlplus/instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip /opt/oracle/
-COPY . ~/
 
 WORKDIR /opt/oracle/
 
@@ -45,6 +44,7 @@ ENV TZ="Asia/Tokyo" \
 # ---- アプリケーションの配置と起動 ----
 COPY --chown=docker:docker dbclient                      /app/dbclient
 COPY --chown=docker:docker docker/local/db-client/config /app/config
+COPY . /home/docker
 
 WORKDIR /app/
 CMD ["/bin/bash"]
