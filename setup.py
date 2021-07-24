@@ -14,13 +14,13 @@ setup(
     classifiers=[
         'Programming Language :: Python :: 2.7',
     ],
-    author="",
-    author_email="",
+    author="Kato Ryota",
+    author_email="example@com",
     packages=find_packages(),
+    include_package_data=True,
     data_files=[
         ("config", ["config/*"]),
     ],
-    include_package_data=True,
     zip_safe=False,
     install_requires=install_requirements,
     tests_require=[],
