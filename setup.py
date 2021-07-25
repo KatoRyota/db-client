@@ -19,7 +19,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        "dbclient.config": ["dbclient/config/application.conf", "dbclient/config/logging.conf"],
+        "dbclient.config": ["application.conf", "logging.conf"],
     },
     data_files=[
         ("", ["requirements.txt", "README.md"]),
