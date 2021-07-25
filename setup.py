@@ -22,10 +22,10 @@ setup(
     #     "": ["requirements.txt", "README.md"],
     #     "config": ["config/application.conf", "config/logging.conf"],
     # },
-    data_files=[
-        ("", ["requirements.txt", "README.md"]),
-        ("config", ["config/application.conf", "config/logging.conf"])
-    ],
+    # data_files=[
+    #     ("", ["requirements.txt", "README.md"]),
+    #     ("config", ["config/application.conf", "config/logging.conf"])
+    # ],
     zip_safe=False,
     install_requires=install_requirements,
     tests_require=[],

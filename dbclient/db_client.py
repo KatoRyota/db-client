@@ -18,13 +18,15 @@ from runner.oracle_runner import OracleRunner
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+APP_ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 config = SafeConfigParser()
-config.read("config/application.conf")
+config.read(APP_ROOT_DIR + "/config/application.conf")
 
 if not os.path.isdir("./log"):
     os.makedirs("./log")
 
-logging.config.fileConfig("config/logging.conf")
+logging.config.fileConfig(APP_ROOT_DIR + "/config/logging.conf")
 logger = logging.getLogger(__name__)
 
 option_parser = OptionParser()
