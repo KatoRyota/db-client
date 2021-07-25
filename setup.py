@@ -18,10 +18,9 @@ setup(
     author_email="example@com",
     packages=find_packages(),
     include_package_data=True,
-    # package_data={
-    #     "": ["requirements.txt", "README.md"],
-    #     "config": ["config/application.conf", "config/logging.conf"],
-    # },
+    package_data={
+        "dbclient/config": ["dbclient/config/application.conf", "dbclient/config/logging.conf"],
+    },
     data_files=[
         ("", ["requirements.txt", "README.md"]),
     ],
