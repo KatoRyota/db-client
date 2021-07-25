@@ -37,7 +37,7 @@ RUN unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip && \
     ldconfig
 
 # ---- ユーザーの変更 ----
-USER docker
+#USER docker
 
 ENV TZ="Asia/Tokyo" \
     LANG="ja_JP.UTF-8" \
@@ -47,7 +47,7 @@ ENV TZ="Asia/Tokyo" \
 # ---- アプリケーションの配置と起動 ----
 COPY --chown=docker:docker dbclient                      /app/dbclient
 COPY --chown=docker:docker docker/local/db-client/config /app/config
-COPY --chown=docker:docker . /home/docker/db-client
+COPY --chown=docker:docker .                             /home/docker/db-client
 
 WORKDIR /app/
 CMD ["/bin/bash"]
