@@ -18,7 +18,7 @@ from runner.oracle_runner import OracleRunner
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-APP_ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 context = Context()
 option_parser = OptionParser()
 
@@ -28,17 +28,19 @@ profile = os.environ.get("DBCLIENT_PROFILE")
 if not profile:
     profile = "local"
 
-if not os.path.isdir(APP_ROOT_DIR + "/config/" + os.environ.get("DBCLIENT_PROFILE")):
+CONFIG_DIR = ROOT_DIR + "/config/" + profile
+
+if not os.path.isdir(CONFIG_DIR):
     raise StandardError(u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" %
-                        APP_ROOT_DIR + "/config/")
+                        ROOT_DIR + "/config/")
 
 config = SafeConfigParser()
-config.read(APP_ROOT_DIR + "/config/" + os.environ.get("DBCLIENT_PROFILE") + "/application.conf")
+config.read(CONFIG_DIR + "/application.conf")
 
 if not os.path.isdir("./log"):
     os.makedirs("./log")
 
-logging.config.fileConfig(APP_ROOT_DIR + "/config/" + os.environ.get("DBCLIENT_PROFILE") + "/logging.conf")
+logging.config.fileConfig(CONFIG_DIR + "/logging.conf")
 logger = logging.getLogger(__name__)
 
 
