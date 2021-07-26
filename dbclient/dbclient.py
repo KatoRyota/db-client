@@ -32,7 +32,7 @@ CONFIG_DIR = ROOT_DIR + "/config/" + profile
 
 if not os.path.isdir(CONFIG_DIR):
     raise StandardError(u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" %
-                        ROOT_DIR + "/config/")
+                        (ROOT_DIR + "/config/"))
 
 config = SafeConfigParser()
 config.read(CONFIG_DIR + "/application.conf")
