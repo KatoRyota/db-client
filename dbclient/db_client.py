@@ -76,8 +76,11 @@ class DbClient(object):
             self.__logger.debug("[encoding] locale -> " + locale.getpreferredencoding())
             self.__logger.debug("[encoding] default -> " + sys.getdefaultencoding())
             self.__logger.debug("[encoding] filesystem -> " + sys.getfilesystemencoding())
+            # noinspection PyUnresolvedReferences
             self.__logger.debug("[encoding] stdin -> " + sys.stdin.encoding)
+            # noinspection PyUnresolvedReferences
             self.__logger.debug("[encoding] stdout -> " + sys.stdout.encoding)
+            # noinspection PyUnresolvedReferences
             self.__logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
 
             # ---- 起動オプションのパース ----
@@ -174,13 +177,13 @@ class DbClient(object):
 
             self.__logger.info("[End] " + os.path.abspath(__file__))
 
-        except OptParseError as e:
+        except OptParseError:
             self.__logger.exception(u"起動オプションが不正です。")
             traceback.print_exc()
             option_parser.print_help()
             sys.exit(1)
 
-        except Exception as e:
+        except Exception:
             self.__logger.exception(u"想定外のエラーが発生しました。")
             traceback.print_exc()
             sys.exit(1)
