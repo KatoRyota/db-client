@@ -18,13 +18,6 @@ setup(
     author_email="example@com",
     packages=find_packages(include=('dbclient', 'dbclient.*')),
     include_package_data=True,
-    # package_data={
-    #     "dbclient.config": ["application.conf", "logging.conf"],
-    # },
-    # data_files=[
-    #     ("", ["requirements.txt", "README.md"]),
-    # ],
-    # zip_safe=True,
     install_requires=install_requirements,
     entry_points={
         "console_scripts": [
