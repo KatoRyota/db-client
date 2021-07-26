@@ -16,7 +16,7 @@ setup(
     ],
     author="Kato Ryota",
     author_email="example@com",
-    packages=find_packages("dbclient"),
+    packages=find_packages(),
     include_package_data=True,
     # package_data={
     #     "dbclient.config": ["application.conf", "logging.conf"],
