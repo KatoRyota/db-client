@@ -52,9 +52,13 @@ class DbClient(object):
 
     @staticmethod
     def main():
+        # type: () -> None
+
         DbClient().execute()
 
     def execute(self):
+        # type: () -> None
+
         option_parser = OptionParser()
 
         # noinspection PyBroadException
