@@ -7,7 +7,7 @@ setup(
     name="db-client",
     version="0.0.1",
     description="db-client",
-    url="",
+    url="https://github.com/KatoRyota/db-client",
     license="",
     long_description="",
     keywords="",
