@@ -8,10 +8,12 @@ from unittest import TestCase
 
 import mock
 
+from dbclient.db_client import DbClient
 
-class TestMain(TestCase):
 
-    def test__main__(self):
+class TestDbClient(TestCase):
+
+    def test_execute(self):
         # type: () -> None
 
         before_stdin = sys.stdin
@@ -38,49 +40,46 @@ class TestMain(TestCase):
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self._isdir_side_effect("./log", False)
+            isdir.side_effect = self._isdir_side_effect((("./log", False), ("dbclient/config/local", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
-            sys.argv = sys.argv + []
+            sys.argv = ["db_client.py"]
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
-            import dbclient.__main__
+            db_client = DbClient()
+            db_client.execute()
 
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
 
             expected = "table"
-            actual = dbclient.__main__.context.display_format
+            actual = db_client._DbClient__context.display_format
             self.assertEqual(expected, actual)
 
             expected = ""
-            actual = dbclient.__main__.context.field_delimiter
+            actual = db_client._DbClient__context.field_delimiter
             self.assertEqual(expected, actual)
 
             expected = 1000
-            actual = dbclient.__main__.context.column_max_length
+            actual = db_client._DbClient__context.column_max_length
             self.assertEqual(expected, actual)
 
             expected = "on"
-            actual = dbclient.__main__.context.heading
+            actual = db_client._DbClient__context.heading
             self.assertEqual(expected, actual)
 
             expected = "on"
-            actual = dbclient.__main__.context.feedback
+            actual = db_client._DbClient__context.feedback
             self.assertEqual(expected, actual)
 
             expected = 10
-            actual = dbclient.__main__.context.pagesize
+            actual = db_client._DbClient__context.pagesize
             self.assertEqual(expected, actual)
 
             expected = "default"
-            actual = dbclient.__main__.context.connection_target
+            actual = db_client._DbClient__context.connection_target
             self.assertEqual(expected, actual)
 
             makedirs.assert_called_once()
@@ -100,49 +99,46 @@ class TestMain(TestCase):
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "mysql")
-            isdir.side_effect = self._isdir_side_effect("./log", False)
+            isdir.side_effect = self._isdir_side_effect((("./log", False), ("dbclient/config/local", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
-            sys.argv = sys.argv + []
+            sys.argv = ["db_client.py"]
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
-            import dbclient.__main__
+            db_client = DbClient()
+            db_client.execute()
 
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
 
             expected = "table"
-            actual = dbclient.__main__.context.display_format
+            actual = db_client._DbClient__context.display_format
             self.assertEqual(expected, actual)
 
             expected = ""
-            actual = dbclient.__main__.context.field_delimiter
+            actual = db_client._DbClient__context.field_delimiter
             self.assertEqual(expected, actual)
 
             expected = 1000
-            actual = dbclient.__main__.context.column_max_length
+            actual = db_client._DbClient__context.column_max_length
             self.assertEqual(expected, actual)
 
             expected = "on"
-            actual = dbclient.__main__.context.heading
+            actual = db_client._DbClient__context.heading
             self.assertEqual(expected, actual)
 
             expected = "on"
-            actual = dbclient.__main__.context.feedback
+            actual = db_client._DbClient__context.feedback
             self.assertEqual(expected, actual)
 
             expected = 10
-            actual = dbclient.__main__.context.pagesize
+            actual = db_client._DbClient__context.pagesize
             self.assertEqual(expected, actual)
 
             expected = "default"
-            actual = dbclient.__main__.context.connection_target
+            actual = db_client._DbClient__context.connection_target
             self.assertEqual(expected, actual)
 
             makedirs.assert_called_once()
@@ -162,49 +158,46 @@ class TestMain(TestCase):
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self._isdir_side_effect("./log", False)
+            isdir.side_effect = self._isdir_side_effect((("./log", False), ("dbclient/config/local", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
-            sys.argv = sys.argv + ["--display_format", "csv"]
+            sys.argv = ["db_client.py", "--display_format", "csv"]
 
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
-
-            import dbclient.__main__
+            db_client = DbClient()
+            db_client.execute()
 
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
 
             expected = "csv"
-            actual = dbclient.__main__.context.display_format
+            actual = db_client._DbClient__context.display_format
             self.assertEqual(expected, actual)
 
             expected = ","
-            actual = dbclient.__main__.context.field_delimiter
+            actual = db_client._DbClient__context.field_delimiter
             self.assertEqual(expected, actual)
 
             expected = 0
-            actual = dbclient.__main__.context.column_max_length
+            actual = db_client._DbClient__context.column_max_length
             self.assertEqual(expected, actual)
 
             expected = "off"
-            actual = dbclient.__main__.context.heading
+            actual = db_client._DbClient__context.heading
             self.assertEqual(expected, actual)
 
             expected = "off"
-            actual = dbclient.__main__.context.feedback
+            actual = db_client._DbClient__context.feedback
             self.assertEqual(expected, actual)
 
             expected = 0
-            actual = dbclient.__main__.context.pagesize
+            actual = db_client._DbClient__context.pagesize
             self.assertEqual(expected, actual)
 
             expected = "default"
-            actual = dbclient.__main__.context.connection_target
+            actual = db_client._DbClient__context.connection_target
             self.assertEqual(expected, actual)
 
             makedirs.assert_called_once()
@@ -225,22 +218,18 @@ class TestMain(TestCase):
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
             context_check_state_after_parse_option.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self._isdir_side_effect("./log", True)
+            isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", True)))
             stderr.encoding = "utf-8"
 
             if os.environ.get("PYTHONIOENCODING"):
                 del os.environ["PYTHONIOENCODING"]
-            sys.argv = sys.argv + []
-
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
+            sys.argv = ["db_client.py"]
 
             with self.assertRaises(SystemExit):
-                # noinspection PyUnresolvedReferences
-                import dbclient.__main__
+                db_client = DbClient()
+                db_client.execute()
 
             expected = u"環境変数\\[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             actual = stderr.getvalue().decode("utf-8")
@@ -264,21 +253,17 @@ class TestMain(TestCase):
                            "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
             context_check_state_after_parse_option.return_value = False
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
-            isdir.side_effect = self._isdir_side_effect("./log", True)
+            isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", True)))
             stderr.encoding = "utf-8"
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
-            sys.argv = sys.argv + []
-
-            if "dbclient.__main__" in sys.modules:
-                del sys.modules["dbclient.__main__"]
+            sys.argv = ["db_client.py"]
 
             with self.assertRaises(SystemExit):
-                # noinspection PyUnresolvedReferences
-                import dbclient.__main__
+                db_client = DbClient()
+                db_client.execute()
 
             expected = u"起動オプションが不正です。"
             actual = stderr.getvalue().decode("utf-8")
@@ -290,16 +275,17 @@ class TestMain(TestCase):
             mysql_runner_execute.assert_not_called()
 
     @staticmethod
-    def _isdir_side_effect(path, return_value):
-        # type: (str, bool) -> object
+    def _isdir_side_effect(return_values):
+        # type: (tuple) -> object
 
         def isdir(inner_path):
             # type: (str) -> bool
 
-            if inner_path == path:
-                return return_value
-            else:
-                raise StandardError(u"引数が不正です。")
+            for return_value_tuple in return_values:  # type: tuple
+                if return_value_tuple[0] in inner_path:
+                    return return_value_tuple[1]
+
+            raise StandardError(u"引数が不正です。")
 
         return isdir
 
