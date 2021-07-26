@@ -39,7 +39,7 @@ RUN unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip && \
     ldconfig
 
 # ---- ユーザーの変更 ----
-#USER docker
+USER docker
 
 ENV TZ="Asia/Tokyo" \
     LANG="ja_JP.UTF-8" \
