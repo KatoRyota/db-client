@@ -21,7 +21,7 @@ setup(
     install_requires=install_requirements,
     entry_points={
         "console_scripts": [
-            "dbclient=dbclient.dbclient:main",
+            "dbclient=dbclient.db_client.DbClient.main",
         ]
     },
 )
