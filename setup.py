@@ -24,7 +24,7 @@ setup(
     # data_files=[
     #     ("", ["requirements.txt", "README.md"]),
     # ],
-    zip_safe=True,
+    # zip_safe=True,
     install_requires=install_requirements,
     entry_points={
         "console_scripts": [
