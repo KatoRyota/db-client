@@ -18,12 +18,12 @@ setup(
     author_email="example@com",
     packages=find_packages(),
     include_package_data=True,
-    package_data={
-        "dbclient.config": ["application.conf", "logging.conf"],
-    },
-    data_files=[
-        ("", ["requirements.txt", "README.md"]),
-    ],
+    # package_data={
+    #     "dbclient.config": ["application.conf", "logging.conf"],
+    # },
+    # data_files=[
+    #     ("", ["requirements.txt", "README.md"]),
+    # ],
     zip_safe=False,
     install_requires=install_requirements,
     tests_require=[],
