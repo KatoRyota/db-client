@@ -26,7 +26,6 @@ setup(
     # ],
     zip_safe=False,
     install_requires=install_requirements,
-    tests_require=[],
     entry_points={
         "console_scripts": [
             "dbclient=dbclient.dbclient:main",
