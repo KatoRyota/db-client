@@ -1,4 +1,4 @@
 # coding: utf-8
-import dbclient
+from db_client import DbClient
 
-dbclient.main()
+DbClient.main()

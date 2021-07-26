@@ -6,6 +6,9 @@ from logging import Logger
 class Context(object):
     __slots__ = (
         "__logger",
+        "root_dir",
+        "profile",
+        "config_dir",
         "subprocesses",
         "display_format",
         "field_delimiter",
@@ -26,6 +29,9 @@ class Context(object):
 
         super(Context, self).__init__()
         self.__logger = logging.getLogger(__name__)  # type: Logger
+        self.root_dir = ""  # type: str
+        self.profile = ""  # type: str
+        self.config_dir = ""  # type: str
         self.subprocesses = []  # type: list
         self.display_format = ""  # type: str
         self.field_delimiter = ""  # type: str
