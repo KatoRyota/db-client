@@ -50,14 +50,6 @@ class DbClient(object):
         logging.config.fileConfig(self.__context.config_dir + "/logging.conf")
         self.__logger = logging.getLogger(__name__)  # type: Logger
 
-    def terminate_subprocess(self):
-        # type: () -> None
-
-        for popen in self.__context.subprocesses:  # type: Popen
-            if isinstance(popen, Popen):
-                if popen.poll() is None:
-                    popen.terminate()
-
     @staticmethod
     def main():
         DbClient().execute()
@@ -192,3 +184,11 @@ class DbClient(object):
             self.__logger.exception(u"想定外のエラーが発生しました。")
             traceback.print_exc()
             sys.exit(1)
+
+    def terminate_subprocess(self):
+        # type: () -> None
+
+        for popen in self.__context.subprocesses:  # type: Popen
+            if isinstance(popen, Popen):
+                if popen.poll() is None:
+                    popen.terminate()
