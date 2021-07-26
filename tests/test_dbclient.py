@@ -13,6 +13,7 @@ from dbclient.db_client import DbClient
 
 class TestDbClient(TestCase):
 
+    # noinspection PyUnresolvedReferences
     def test_execute(self):
         # type: () -> None
 
