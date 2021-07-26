@@ -20,7 +20,6 @@ sys.setdefaultencoding("utf-8")
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 context = Context()
-option_parser = OptionParser()
 
 # ---- 設定ファイルの読み込み ----
 profile = os.environ.get("DBCLIENT_PROFILE")
@@ -54,6 +53,8 @@ def terminate_subprocess():
 
 
 def main():
+    option_parser = OptionParser()
+
     # noinspection PyBroadException
     try:
         logger.info("[Start] " + os.path.abspath(__file__))
