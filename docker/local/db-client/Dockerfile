@@ -47,7 +47,7 @@ ENV TZ="Asia/Tokyo" \
     LC_ALL="ja_JP.UTF-8"
 
 # ---- アプリケーションの配置と起動 ----
-COPY --chown=docker:docker .                             /app/db-client
+COPY --chown=docker:docker . /app/db-client
 
 WORKDIR /app/
 CMD ["/bin/bash"]
