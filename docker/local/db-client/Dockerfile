@@ -51,7 +51,7 @@ ENV TZ="Asia/Tokyo" \
 COPY --chown=docker:docker . /app/db-client
 
 WORKDIR /app/db-client/
-RUN python2.7 setup.py bdist_wheel && \
-    python2.7 -m pip install --user dist/db_client-0.0.1-py2-none-any.whl
+# RUN python2.7 setup.py bdist_wheel && \
+#     python2.7 -m pip install --user dist/db_client-0.0.1-py2-none-any.whl
 
 CMD ["/bin/bash"]
