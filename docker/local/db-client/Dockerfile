@@ -44,10 +44,14 @@ USER docker
 ENV TZ="Asia/Tokyo" \
     LANG="ja_JP.UTF-8" \
     LANGUAGE="ja_JP:ja" \
-    LC_ALL="ja_JP.UTF-8"
+    LC_ALL="ja_JP.UTF-8" \
+    PATH=/home/docker/.local/bin:${PATH}
 
 # ---- アプリケーションの配置と起動 ----
 COPY --chown=docker:docker . /app/db-client
 
 WORKDIR /app/db-client/
+RUN python2.7 setup.py bdist_wheel && \
+    python2.7 -m pip install --user dist/db_client-0.0.1-py2-none-any.whl
+
 CMD ["/bin/bash"]
