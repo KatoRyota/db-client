@@ -39,16 +39,16 @@ class OracleRunner(object):
         os.environ["NLS_TIMESTAMP_FORMAT"] = self.__config.get("oracle_environment_variable", "nls_timestamp_format")
 
         # ---- 環境変数のチェック ----
-        if not os.environ["LD_LIBRARY_PATH"]:
+        if not os.environ.get("LD_LIBRARY_PATH"):
             raise StandardError(u"環境変数[LD_LIBRARY_PATH]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
-        if not os.environ["NLS_LANG"]:
+        if not os.environ.get("NLS_LANG"):
             raise StandardError(u"環境変数[NLS_LANG]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
-        if not os.environ["NLS_DATE_FORMAT"]:
+        if not os.environ.get("NLS_DATE_FORMAT"):
             raise StandardError(u"環境変数[NLS_DATE_FORMAT]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
-        if not os.environ["NLS_TIMESTAMP_FORMAT"]:
+        if not os.environ.get("NLS_TIMESTAMP_FORMAT"):
             raise StandardError(u"環境変数[NLS_TIMESTAMP_FORMAT]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
         # ---- 標準入力を読み込み ----

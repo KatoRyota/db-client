@@ -34,7 +34,7 @@ class MysqlRunner(object):
         os.environ["MYSQL_PWD"] = self.__config.get(self.__context.connection_target, "password")
 
         # ---- 環境変数のチェック ----
-        if not os.environ["MYSQL_PWD"]:
+        if not os.environ.get("MYSQL_PWD"):
             raise StandardError(u"環境変数[MYSQL_PWD]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
         # ---- 標準入力を読み込み ----

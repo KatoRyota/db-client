@@ -72,8 +72,8 @@ class DbClient(object):
             config.read(self.__context.config_dir + "/application.conf")
 
             # ---- 環境変数[PYTHONIOENCODING]のチェック ----
-            if os.getenv("PYTHONIOENCODING"):
-                if not re.match(r"^utf[\-_]?8$", os.getenv("PYTHONIOENCODING"), re.IGNORECASE):
+            if os.environ.get("PYTHONIOENCODING"):
+                if not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
                     raise StandardError(u"環境変数[PYTHONIOENCODING]が不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
             else:
                 raise StandardError(u"環境変数[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
