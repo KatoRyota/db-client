@@ -47,7 +47,6 @@ class DbClient(object):
         if not os.path.isdir("./log"):
             os.makedirs("./log")
 
-        self.__logger.debug("ロギング設定ファイルパス -> " + self.__context.config_dir + "/logging.conf")
         logging.config.fileConfig(self.__context.config_dir + "/logging.conf")
         self.__logger = logging.getLogger(__name__)  # type: Logger
 
@@ -66,7 +65,6 @@ class DbClient(object):
         try:
             self.__logger.info("[Start] " + os.path.abspath(__file__))
 
-            self.__logger.debug("アプリケーション設定ファイルパス -> " + self.__context.config_dir + "/application.conf")
             config = SafeConfigParser()
             config.read(self.__context.config_dir + "/application.conf")
 
@@ -88,6 +86,8 @@ class DbClient(object):
             self.__logger.debug("[encoding] stdout -> " + sys.stdout.encoding)
             # noinspection PyUnresolvedReferences
             self.__logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
+            self.__logger.debug("アプリケーション設定ファイルパス -> " + self.__context.config_dir + "/application.conf")
+            self.__logger.debug("ロギング設定ファイルパス -> " + self.__context.config_dir + "/logging.conf")
 
             # ---- 起動オプションのパース ----
             option_parser.set_usage("python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")
