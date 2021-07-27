@@ -47,6 +47,7 @@ class DbClient(object):
         if not os.path.isdir("./log"):
             os.makedirs("./log")
 
+        self.__logger.debug("ロギング設定ファイルパス -> " + self.__context.config_dir + "/logging.conf")
         logging.config.fileConfig(self.__context.config_dir + "/logging.conf")
         self.__logger = logging.getLogger(__name__)  # type: Logger
 
@@ -65,6 +66,7 @@ class DbClient(object):
         try:
             self.__logger.info("[Start] " + os.path.abspath(__file__))
 
+            self.__logger.debug("アプリケーション設定ファイルパス -> " + self.__context.config_dir + "/application.conf")
             config = SafeConfigParser()
             config.read(self.__context.config_dir + "/application.conf")
 
