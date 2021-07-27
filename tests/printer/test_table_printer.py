@@ -261,7 +261,7 @@ class TestTablePrinter(TestCase):
         else:
             context = self._default_context()
             context.column_max_length = 5
-            expected = u"𠀋𡈽...𣗄"
+            expected = u"𠀋𡈽...𣇄𣗄"
             actual = TablePrinter(context)._display_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
             self.assertEqual(expected, actual)
 
