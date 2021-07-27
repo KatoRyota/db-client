@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import platform
 import unittest
 from io import BytesIO
 from unittest import TestCase
@@ -251,11 +252,18 @@ class TestTablePrinter(TestCase):
         self.assertEqual(expected, actual)
 
         # ---- ケース11 ----
-        context = self._default_context()
-        context.column_max_length = 5
-        expected = u"𠀋...𣗄"
-        actual = TablePrinter(context)._display_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
-        self.assertEqual(expected, actual)
+        if platform.system() == "Windows":
+            context = self._default_context()
+            context.column_max_length = 5
+            expected = u"𠀋...𣗄"
+            actual = TablePrinter(context)._display_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
+            self.assertEqual(expected, actual)
+        else:
+            context = self._default_context()
+            context.column_max_length = 5
+            expected = u"𠀋𡈽...𣗄"
+            actual = TablePrinter(context)._display_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
+            self.assertEqual(expected, actual)
 
     def test__length_of(self):
         # type: () -> None
