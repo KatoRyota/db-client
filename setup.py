@@ -24,4 +24,5 @@ setup(
             "dbclient=dbclient.db_client:DbClient.main",
         ]
     },
+    test_suite="tests",
 )
