@@ -223,6 +223,81 @@ class TestDbClient(TestCase):
 
         # ---- ケース4 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
+                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_initialize_application"
+                           ) as context_check_state_after_initialize_application, \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+            context_check_state_after_initialize_application.return_value = True
+            context_check_state_after_parse_option.return_value = True
+            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", False)))
+
+            os.environ["PYTHONIOENCODING"] = "utf-8"
+            sys.argv = ["db_client.py"]
+
+            with self.assertRaises(StandardError) as e:
+                db_client = DbClient()
+                db_client.execute()
+
+            expected = u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % (
+                    db_client._DbClient__context.root_dir + "/config/")
+            actual = e.exception.message
+            self.assertEqual(expected, actual)
+
+            context_check_state_after_initialize_application.assert_not_called()
+            makedirs.assert_not_called()
+            context_check_state_after_parse_option.assert_not_called()
+            oracle_runner_execute.assert_not_called()
+            mysql_runner_execute.assert_not_called()
+
+        # ---- ケース4 ----
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
+                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_initialize_application"
+                           ) as context_check_state_after_initialize_application, \
+                mock.patch("dbclient.context.context."
+                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+            context_check_state_after_initialize_application.return_value = False
+            context_check_state_after_parse_option.return_value = True
+            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", True)))
+
+            os.environ["PYTHONIOENCODING"] = "utf-8"
+            sys.argv = ["db_client.py"]
+
+            with self.assertRaises(StandardError) as e:
+                db_client = DbClient()
+                db_client.execute()
+
+            expected = u"アプリケーションの初期化処理に失敗しました。"
+            actual = e.exception.message
+            self.assertEqual(expected, actual)
+
+            context_check_state_after_initialize_application.assert_called_once()
+            makedirs.assert_not_called()
+            context_check_state_after_parse_option.assert_not_called()
+            oracle_runner_execute.assert_not_called()
+            mysql_runner_execute.assert_not_called()
+
+        # ---- ケース4 ----
+        with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
