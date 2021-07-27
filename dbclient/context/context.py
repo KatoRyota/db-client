@@ -46,6 +46,26 @@ class Context(object):
         self.result_sets = []  # type: list
         self.result_message = u""  # type: unicode
 
+    def check_state_after_initialize_application(self):
+        # type: () -> bool
+
+        if not self.root_dir:
+            return False
+        if type(self.root_dir) is not str:
+            return False
+
+        if not self.profile:
+            return False
+        if type(self.profile) is not str:
+            return False
+
+        if not self.config_dir:
+            return False
+        if type(self.config_dir) is not str:
+            return False
+
+        return True
+
     def check_state_after_parse_option(self):
         # type: () -> bool
 

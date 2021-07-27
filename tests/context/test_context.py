@@ -10,6 +10,88 @@ from dbclient.context.context import Context
 
 class TestContext(TestCase):
 
+    def test_check_state_after_initialize_application(self):
+        # type: () -> None
+
+        # ---- ケース1 ----
+        context = self._default_context()
+
+        expected = True
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース2 ----
+        context = self._default_context()
+        context.root_dir = None
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3 ----
+        context = self._default_context()
+        context.root_dir = ""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4 ----
+        context = self._default_context()
+        context.root_dir = u""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5 ----
+        context = self._default_context()
+        context.profile = None
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース6 ----
+        context = self._default_context()
+        context.profile = ""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース7 ----
+        context = self._default_context()
+        context.profile = u""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース8 ----
+        context = self._default_context()
+        context.config_dir = None
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース9 ----
+        context = self._default_context()
+        context.config_dir = ""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース10 ----
+        context = self._default_context()
+        context.config_dir = u""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
     def test_check_state_after_parse_option(self):
         # type: () -> None
 
@@ -389,6 +471,9 @@ class TestContext(TestCase):
         # type: () -> Context
 
         context = Context()
+        context.root_dir = "root_dir"
+        context.profile = "profile"
+        context.config_dir = "config_dir"
         context.subprocesses.append(mock.MagicMock())
         context.subprocesses.append(mock.MagicMock())
         context.display_format = "table"

@@ -44,6 +44,9 @@ class DbClient(object):
             raise StandardError(u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" %
                                 (self.__context.root_dir + "/config/"))
 
+        if not self.__context.check_state_after_initialize_application():
+            raise StandardError(u"アプリケーションの初期化処理に失敗しました。")
+
         if not os.path.isdir("./log"):
             os.makedirs("./log")
 
