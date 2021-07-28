@@ -336,7 +336,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース6 ----
+        # ---- ケース7 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
@@ -375,7 +375,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース7 ----
+        # ---- ケース8 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
