@@ -6,9 +6,9 @@ GRANT ALL ON docker.* TO docker@'%';
 USE docker;
 
 CREATE TABLE IF NOT EXISTS customer (
-    id VARCHAR(20),
-    name VARCHAR(20),
-    type VARCHAR(20)
+    id VARCHAR(300),
+    name VARCHAR(300),
+    type VARCHAR(300)
 );
 
 INSERT INTO customer (id, name, type)

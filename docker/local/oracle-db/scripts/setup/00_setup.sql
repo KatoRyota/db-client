@@ -11,9 +11,9 @@ GRANT CONNECT, RESOURCE TO docker;
 CONNECT docker/docker@//localhost:1521/XEPDB1;
 
 CREATE TABLE employee (
-    id VARCHAR2(20),
-    name VARCHAR2(20),
-    type VARCHAR2(20)
+    id VARCHAR2(300),
+    name VARCHAR2(300),
+    type VARCHAR2(300)
 );
 
 INSERT INTO employee (id, name, type)
