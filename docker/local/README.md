@@ -124,7 +124,7 @@ exit
 docker container exec -it db-client /bin/bash
 
 export PYTHONIOENCODING=utf-8
-cd /app/
+cd /app/db-client/
 
 python2.7 -m dbclient 2>&1 <<EOF | less -S
 select * from employee;
