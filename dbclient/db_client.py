@@ -26,6 +26,7 @@ class DbClient(object):
     def __init__(self):
         # type: () -> None
 
+        # ---- アプリケーションの初期化処理 ----
         super(DbClient, self).__init__()
         reload(sys)
         sys.setdefaultencoding("utf-8")
@@ -47,6 +48,7 @@ class DbClient(object):
         if not self.__context.check_state_after_initialize_application():
             raise StandardError(u"アプリケーションの初期化処理に失敗しました。")
 
+        # ---- ロギング設定ファイルの読み込み ----
         if not os.path.isdir("./log"):
             os.makedirs("./log")
 
@@ -68,15 +70,13 @@ class DbClient(object):
         try:
             self.__logger.info("[Start] " + os.path.abspath(__file__))
 
+            # ---- アプリケーション設定ファイルの読み込み ----
             config = SafeConfigParser()
             config.read(self.__context.config_dir + "/application.conf")
 
-            # ---- 環境変数[PYTHONIOENCODING]のチェック ----
-            if os.environ.get("PYTHONIOENCODING"):
-                if not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
-                    raise StandardError(u"環境変数[PYTHONIOENCODING]が不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
-            else:
-                raise StandardError(u"環境変数[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
+            if not os.environ.get("PYTHONIOENCODING") or \
+                    not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
+                raise StandardError(u"環境変数[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
 
             # ---- システム環境情報を出力 ----
             self.__logger.debug("system/OS name -> " + platform.system())

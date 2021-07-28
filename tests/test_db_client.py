@@ -326,7 +326,7 @@ class TestDbClient(TestCase):
                 db_client = DbClient()
                 db_client.execute()
 
-            expected = u"環境変数\\[PYTHONIOENCODING]がセットされていません。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
+            expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
