@@ -37,8 +37,8 @@ INSERT INTO employee (id, name, type)
 INSERT INTO employee (id, name, type)
     VALUES ('ID-999-9999', 'NAME-999-9999', 'TYPE-999-9999');
 INSERT INTO employee (id, name, type)
-    VALUES ('あ\n' || CHR(13) || CHR(10) || 'いうえお',
-            '," ./\\=?!:;' || CHR(92),
+    VALUES (CONCAT('あ\n', CHAR(13), CHAR(10), 'いうえお'),
+            CONCAT('," ./\\=?!:;', CHAR(92)),
             '<<<©©©&&&');
 
 COMMIT;
