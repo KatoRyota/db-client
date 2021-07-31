@@ -117,8 +117,7 @@ class TablePrinter(object):
         # type: (unicode) -> unicode
 
         display_column = column.strip()
-        # TODO: 下記をコメントを外してしてテストする
-        # display_column = re.sub(u'\\\\', u"\\\\\\\\", display_column)
+        display_column = re.sub(u'\\\\', u"\\\\\\\\", display_column)
         display_column = re.sub(u"\n", u"\\\\n", display_column)
         display_column_length = self._length_of(display_column)
 
