@@ -22,7 +22,7 @@ class TestContext(TestCase):
 
         # ---- ケース2 ----
         context = self._default_context()
-        context.root_dir = None
+        context.config = None
 
         expected = False
         actual = context.check_state_after_initialize_application()
@@ -30,7 +30,7 @@ class TestContext(TestCase):
 
         # ---- ケース3 ----
         context = self._default_context()
-        context.root_dir = ""
+        context.config = ""
 
         expected = False
         actual = context.check_state_after_initialize_application()
@@ -38,7 +38,7 @@ class TestContext(TestCase):
 
         # ---- ケース4 ----
         context = self._default_context()
-        context.root_dir = u""
+        context.config = 1
 
         expected = False
         actual = context.check_state_after_initialize_application()
@@ -46,7 +46,7 @@ class TestContext(TestCase):
 
         # ---- ケース5 ----
         context = self._default_context()
-        context.profile = None
+        context.root_dir = None
 
         expected = False
         actual = context.check_state_after_initialize_application()
@@ -54,7 +54,7 @@ class TestContext(TestCase):
 
         # ---- ケース6 ----
         context = self._default_context()
-        context.profile = ""
+        context.root_dir = ""
 
         expected = False
         actual = context.check_state_after_initialize_application()
@@ -62,7 +62,7 @@ class TestContext(TestCase):
 
         # ---- ケース7 ----
         context = self._default_context()
-        context.profile = u""
+        context.root_dir = u""
 
         expected = False
         actual = context.check_state_after_initialize_application()
@@ -70,7 +70,7 @@ class TestContext(TestCase):
 
         # ---- ケース8 ----
         context = self._default_context()
-        context.config_dir = None
+        context.profile = None
 
         expected = False
         actual = context.check_state_after_initialize_application()
@@ -78,13 +78,37 @@ class TestContext(TestCase):
 
         # ---- ケース9 ----
         context = self._default_context()
-        context.config_dir = ""
+        context.profile = ""
 
         expected = False
         actual = context.check_state_after_initialize_application()
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
+        context = self._default_context()
+        context.profile = u""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース11 ----
+        context = self._default_context()
+        context.config_dir = None
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース12 ----
+        context = self._default_context()
+        context.config_dir = ""
+
+        expected = False
+        actual = context.check_state_after_initialize_application()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース13 ----
         context = self._default_context()
         context.config_dir = u""
 

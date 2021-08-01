@@ -1,11 +1,13 @@
 # coding: utf-8
 import logging
+from ConfigParser import SafeConfigParser
 from logging import Logger
 
 
 class Context(object):
     __slots__ = (
         "__logger",
+        "config",
         "root_dir",
         "profile",
         "config_dir",
@@ -29,6 +31,7 @@ class Context(object):
 
         super(Context, self).__init__()
         self.__logger = logging.getLogger(__name__)  # type: Logger
+        self.config = SafeConfigParser()  # type: SafeConfigParser
         self.root_dir = ""  # type: str
         self.profile = ""  # type: str
         self.config_dir = ""  # type: str
@@ -48,6 +51,9 @@ class Context(object):
 
     def check_state_after_initialize_application(self):
         # type: () -> bool
+
+        if not isinstance(self.config, SafeConfigParser):
+            return False
 
         if not self.root_dir:
             return False

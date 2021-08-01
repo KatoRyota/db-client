@@ -7,7 +7,6 @@ import re
 import signal
 import sys
 import traceback
-from ConfigParser import SafeConfigParser
 from logging import Logger
 from optparse import OptionParser, OptParseError
 from subprocess import Popen
@@ -71,7 +70,7 @@ class DbClient(object):
             self.__logger.info("[Start] " + os.path.abspath(__file__))
 
             # ---- アプリケーション設定ファイルの読み込み ----
-            config = SafeConfigParser()
+            config = self.__context.config
             config.read(self.__context.config_dir + "/application.conf")
 
             if not os.environ.get("PYTHONIOENCODING") or \
@@ -180,9 +179,9 @@ class DbClient(object):
             db_type = config.get(self.__context.connection_target, "db_type")
 
             if db_type == Context.DataBase.ORACLE:
-                OracleRunner(config, self.__context).execute()
+                OracleRunner(self.__context).execute()
             elif db_type == Context.DataBase.MYSQL:
-                MysqlRunner(config, self.__context).execute()
+                MysqlRunner(self.__context).execute()
 
             self.__logger.info("[End] " + os.path.abspath(__file__))
 

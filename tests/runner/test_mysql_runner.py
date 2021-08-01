@@ -32,11 +32,11 @@ class TestMysqlRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "table"
 
-            MysqlRunner(config, context).execute()
+            MysqlRunner(context).execute()
 
             expected = "password"
             actual = os.environ.get("MYSQL_PWD")
@@ -63,11 +63,11 @@ class TestMysqlRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "csv"
 
-            MysqlRunner(config, context).execute()
+            MysqlRunner(context).execute()
 
             expected = "password"
             actual = os.environ.get("MYSQL_PWD")
@@ -94,12 +94,12 @@ class TestMysqlRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = False
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
-                MysqlRunner(config, context).execute()
+                MysqlRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
 
@@ -124,12 +124,12 @@ class TestMysqlRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = False
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "csv"
 
             with self.assertRaises(StandardError) as e:
-                MysqlRunner(config, context).execute()
+                MysqlRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
 
@@ -154,12 +154,12 @@ class TestMysqlRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = False
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
-                MysqlRunner(config, context).execute()
+                MysqlRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
 
@@ -184,12 +184,12 @@ class TestMysqlRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = False
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "csv"
 
             with self.assertRaises(StandardError) as e:
-                MysqlRunner(config, context).execute()
+                MysqlRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
 

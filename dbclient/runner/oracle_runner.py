@@ -2,7 +2,6 @@
 import logging
 import os
 import sys
-from ConfigParser import SafeConfigParser
 from logging import Logger
 from subprocess import Popen, PIPE
 
@@ -15,28 +14,28 @@ from ..printer.table_printer import TablePrinter
 class OracleRunner(object):
     __slots__ = (
         "__logger",
-        "__config",
         "__context"
     )
 
-    def __init__(self, config, context):
-        # type: (SafeConfigParser, Context) -> None
+    def __init__(self, context):
+        # type: (Context) -> None
 
         super(OracleRunner, self).__init__()
         self.__logger = logging.getLogger(__name__)  # type: Logger
-        self.__config = config  # type: SafeConfigParser
         self.__context = context  # type: Context
 
     def execute(self):
         # type: () -> None
 
+        config = self.__context.config
+
         # ---- 環境変数の設定 ----
-        os.environ["LD_LIBRARY_PATH"] = self.__config.get("oracle_environment_variable", "ld_library_path")
-        os.environ["PATH"] = self.__config.get("oracle_environment_variable", "sqlplus_path") + ":" + os.environ.get(
+        os.environ["LD_LIBRARY_PATH"] = config.get("oracle_environment_variable", "ld_library_path")
+        os.environ["PATH"] = config.get("oracle_environment_variable", "sqlplus_path") + ":" + os.environ.get(
             "PATH")
-        os.environ["NLS_LANG"] = self.__config.get("oracle_environment_variable", "nls_lang")
-        os.environ["NLS_DATE_FORMAT"] = self.__config.get("oracle_environment_variable", "nls_date_format")
-        os.environ["NLS_TIMESTAMP_FORMAT"] = self.__config.get("oracle_environment_variable", "nls_timestamp_format")
+        os.environ["NLS_LANG"] = config.get("oracle_environment_variable", "nls_lang")
+        os.environ["NLS_DATE_FORMAT"] = config.get("oracle_environment_variable", "nls_date_format")
+        os.environ["NLS_TIMESTAMP_FORMAT"] = config.get("oracle_environment_variable", "nls_timestamp_format")
 
         # ---- 環境変数のチェック ----
         if not os.environ.get("LD_LIBRARY_PATH"):
@@ -61,14 +60,14 @@ class OracleRunner(object):
                           "SET NULL 'NULL'", sql))
 
         dsn = "{user_name}/{password}@{host}:{port}/{sid}".format(
-            user_name=self.__config.get(self.__context.connection_target, "user_name"),
-            password=self.__config.get(self.__context.connection_target, "password"),
-            host=self.__config.get(self.__context.connection_target, "host"),
-            port=self.__config.get(self.__context.connection_target, "port"),
-            sid=self.__config.get(self.__context.connection_target, "sid")
+            user_name=config.get(self.__context.connection_target, "user_name"),
+            password=config.get(self.__context.connection_target, "password"),
+            host=config.get(self.__context.connection_target, "host"),
+            port=config.get(self.__context.connection_target, "port"),
+            sid=config.get(self.__context.connection_target, "sid")
         )
 
-        privilege = self.__config.get(self.__context.connection_target, "privilege")
+        privilege = config.get(self.__context.connection_target, "privilege")
 
         if privilege:
             dsn += " AS " + privilege

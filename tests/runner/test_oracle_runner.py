@@ -32,11 +32,11 @@ class TestOracleRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "table"
 
-            OracleRunner(config, context).execute()
+            OracleRunner(context).execute()
 
             expected = "ld_library_path"
             actual = os.environ.get("LD_LIBRARY_PATH")
@@ -75,11 +75,11 @@ class TestOracleRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "csv"
 
-            OracleRunner(config, context).execute()
+            OracleRunner(context).execute()
 
             expected = "ld_library_path"
             actual = os.environ.get("LD_LIBRARY_PATH")
@@ -118,12 +118,12 @@ class TestOracleRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = False
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
-                OracleRunner(config, context).execute()
+                OracleRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
 
@@ -148,12 +148,12 @@ class TestOracleRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = False
             context_check_state_after_parse_sql_client_result.return_value = True
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "csv"
 
             with self.assertRaises(StandardError) as e:
-                OracleRunner(config, context).execute()
+                OracleRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
 
@@ -178,12 +178,12 @@ class TestOracleRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = False
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "table"
 
             with self.assertRaises(StandardError) as e:
-                OracleRunner(config, context).execute()
+                OracleRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
 
@@ -208,12 +208,12 @@ class TestOracleRunner(TestCase):
             context_check_state_after_execute_sql_client.return_value = True
             context_check_state_after_parse_sql_client_result.return_value = False
 
-            config = self._default_config()
             context = self._default_context()
+            context.config = self._default_config()
             context.display_format = "csv"
 
             with self.assertRaises(StandardError) as e:
-                OracleRunner(config, context).execute()
+                OracleRunner(context).execute()
 
             self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
 

@@ -2,7 +2,6 @@
 import logging
 import os
 import sys
-from ConfigParser import SafeConfigParser
 from logging import Logger
 from subprocess import Popen, PIPE
 
@@ -15,23 +14,23 @@ from ..printer.table_printer import TablePrinter
 class MysqlRunner(object):
     __slots__ = (
         "__logger",
-        "__config",
         "__context"
     )
 
-    def __init__(self, config, context):
-        # type: (SafeConfigParser, Context) -> None
+    def __init__(self, context):
+        # type: (Context) -> None
 
         super(MysqlRunner, self).__init__()
         self.__logger = logging.getLogger(__name__)  # type: Logger
-        self.__config = config  # type: SafeConfigParser
         self.__context = context  # type: Context
 
     def execute(self):
         # type: () -> None
 
+        config = self.__context.config
+
         # ---- 環境変数の設定 ----
-        os.environ["MYSQL_PWD"] = self.__config.get(self.__context.connection_target, "password")
+        os.environ["MYSQL_PWD"] = config.get(self.__context.connection_target, "password")
 
         # ---- 環境変数のチェック ----
         if not os.environ.get("MYSQL_PWD"):
@@ -41,10 +40,10 @@ class MysqlRunner(object):
         sql = sys.stdin.read().decode("utf-8")
 
         # ---- mysqlの呼び出し ----
-        host = self.__config.get(self.__context.connection_target, "host")
-        port = self.__config.get(self.__context.connection_target, "port")
-        database_name = self.__config.get(self.__context.connection_target, "database_name")
-        user_name = self.__config.get(self.__context.connection_target, "user_name")
+        host = config.get(self.__context.connection_target, "host")
+        port = config.get(self.__context.connection_target, "port")
+        database_name = config.get(self.__context.connection_target, "database_name")
+        user_name = config.get(self.__context.connection_target, "user_name")
 
         echo_command = ["echo", sql]
         mysql_command = ["mysql", "-h", host, "-P", port, "-D", database_name, "-u", user_name, "--html"]
