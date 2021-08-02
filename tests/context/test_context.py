@@ -115,14 +115,14 @@ class TestContext(TestCase):
         actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
-    def test_check_state_after_parse_option(self):
+    def test_check_option_parse(self):
         # type: () -> None
 
         # ---- ケース1 ----
         context = self._default_context()
 
         expected = True
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
@@ -130,7 +130,7 @@ class TestContext(TestCase):
         context.display_format = "table"
 
         expected = True
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
@@ -138,7 +138,7 @@ class TestContext(TestCase):
         context.display_format = "TABLE"
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
@@ -147,7 +147,7 @@ class TestContext(TestCase):
         context.field_delimiter = ","
 
         expected = True
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
@@ -156,7 +156,7 @@ class TestContext(TestCase):
         context.field_delimiter = ","
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
@@ -165,7 +165,7 @@ class TestContext(TestCase):
         context.field_delimiter = None
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
@@ -174,7 +174,7 @@ class TestContext(TestCase):
         context.field_delimiter = ""
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース8 ----
@@ -183,7 +183,7 @@ class TestContext(TestCase):
         context.field_delimiter = u""
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース9 ----
@@ -192,7 +192,7 @@ class TestContext(TestCase):
         context.column_max_length = None
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
@@ -201,7 +201,7 @@ class TestContext(TestCase):
         context.column_max_length = ""
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース11 ----
@@ -210,7 +210,7 @@ class TestContext(TestCase):
         context.column_max_length = 0
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース12 ----
@@ -218,7 +218,7 @@ class TestContext(TestCase):
         context.heading = "on"
 
         expected = True
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース13 ----
@@ -226,7 +226,7 @@ class TestContext(TestCase):
         context.heading = "ON"
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース14 ----
@@ -234,7 +234,7 @@ class TestContext(TestCase):
         context.heading = "off"
 
         expected = True
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース15 ----
@@ -242,7 +242,7 @@ class TestContext(TestCase):
         context.heading = "OFF"
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース16 ----
@@ -250,7 +250,7 @@ class TestContext(TestCase):
         context.feedback = "on"
 
         expected = True
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース17 ----
@@ -258,7 +258,7 @@ class TestContext(TestCase):
         context.feedback = "ON"
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース18 ----
@@ -266,7 +266,7 @@ class TestContext(TestCase):
         context.feedback = "off"
 
         expected = True
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース19 ----
@@ -274,7 +274,7 @@ class TestContext(TestCase):
         context.feedback = "OFF"
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース20 ----
@@ -282,7 +282,7 @@ class TestContext(TestCase):
         context.pagesize = None
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース21 ----
@@ -290,7 +290,7 @@ class TestContext(TestCase):
         context.pagesize = ""
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース22 ----
@@ -298,7 +298,7 @@ class TestContext(TestCase):
         context.pagesize = -1
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース23 ----
@@ -306,7 +306,7 @@ class TestContext(TestCase):
         context.connection_target = None
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース24 ----
@@ -314,7 +314,7 @@ class TestContext(TestCase):
         context.connection_target = ""
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース25 ----
@@ -322,7 +322,7 @@ class TestContext(TestCase):
         context.connection_target = u""
 
         expected = False
-        actual = context.check_state_after_parse_option()
+        actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
     def test_check_state_after_execute_sql_client(self):

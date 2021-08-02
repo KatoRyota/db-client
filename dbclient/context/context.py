@@ -72,7 +72,7 @@ class Context(object):
 
         return True
 
-    def check_state_after_parse_option(self):
+    def check_option_parse(self):
         # type: () -> bool
 
         if not (self.display_format == Context.DisplayFormat.TABLE or

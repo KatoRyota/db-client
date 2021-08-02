@@ -40,11 +40,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
-            context_check_state_after_parse_option.return_value = True
+            context_check_option_parse.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self._isdir_side_effect((("./log", False), ("dbclient/config/local", True)))
 
@@ -88,7 +88,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_called_once()
-            context_check_state_after_parse_option.assert_called_once()
+            context_check_option_parse.assert_called_once()
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
@@ -104,11 +104,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
-            context_check_state_after_parse_option.return_value = True
+            context_check_option_parse.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "mysql")
             isdir.side_effect = self._isdir_side_effect((("./log", False), ("dbclient/config/local", True)))
 
@@ -152,7 +152,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_called_once()
-            context_check_state_after_parse_option.assert_called_once()
+            context_check_option_parse.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
 
@@ -168,11 +168,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
-            context_check_state_after_parse_option.return_value = True
+            context_check_option_parse.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self._isdir_side_effect((("./log", False), ("dbclient/config/local", True)))
 
@@ -216,7 +216,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_called_once()
-            context_check_state_after_parse_option.assert_called_once()
+            context_check_option_parse.assert_called_once()
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
@@ -232,11 +232,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
-            context_check_state_after_parse_option.return_value = True
+            context_check_option_parse.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", False)))
 
@@ -254,7 +254,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_not_called()
             makedirs.assert_not_called()
-            context_check_state_after_parse_option.assert_not_called()
+            context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
@@ -270,11 +270,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = False
-            context_check_state_after_parse_option.return_value = True
+            context_check_option_parse.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", True)))
 
@@ -291,7 +291,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_not_called()
-            context_check_state_after_parse_option.assert_not_called()
+            context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
@@ -308,11 +308,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
-            context_check_state_after_parse_option.return_value = True
+            context_check_option_parse.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", True)))
             stderr.encoding = "utf-8"
@@ -331,7 +331,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_not_called()
-            context_check_state_after_parse_option.assert_not_called()
+            context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
@@ -348,11 +348,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
-            context_check_state_after_parse_option.return_value = True
+            context_check_option_parse.return_value = True
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", True)))
             stderr.encoding = "utf-8"
@@ -370,7 +370,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_not_called()
-            context_check_state_after_parse_option.assert_not_called()
+            context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
@@ -387,11 +387,11 @@ class TestDbClient(TestCase):
                            "Context.check_application_initialize"
                            ) as context_check_application_initialize, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_option") as context_check_state_after_parse_option, \
+                           "Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
-            context_check_state_after_parse_option.return_value = False
+            context_check_option_parse.return_value = False
             config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
             isdir.side_effect = self._isdir_side_effect((("./log", True), ("dbclient/config/local", True)))
             stderr.encoding = "utf-8"
@@ -409,7 +409,7 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_not_called()
-            context_check_state_after_parse_option.assert_called_once()
+            context_check_option_parse.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 

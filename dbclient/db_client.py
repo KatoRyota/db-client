@@ -168,7 +168,7 @@ class DbClient(object):
                 context.connection_target = "default"
 
             # ---- 起動オプションをパースした後の、コンテキストオブジェクトの状態チェック ----
-            if not context.check_state_after_parse_option():
+            if not context.check_option_parse():
                 raise OptParseError(u"起動オプションが不正です。")
 
             # ---- シグナルハンドラーの設定 ----
