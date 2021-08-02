@@ -27,6 +27,7 @@ class OracleRunner(object):
     def execute(self):
         # type: () -> None
 
+        logger = self.__logger
         context = self.__context
         config = self.__context.config
 
@@ -76,7 +77,7 @@ class OracleRunner(object):
         echo_command = ["echo", sql]
         sqlplus_command = ["sqlplus", "-s", "-M", "HTML ON", dsn]
 
-        self.__logger.debug(u"echo \"%s\" | sqlplus -s -M HTML ON \"%s\"" % (sql, dsn))
+        logger.debug(u"echo \"%s\" | sqlplus -s -M HTML ON \"%s\"" % (sql, dsn))
 
         echo_process = Popen(echo_command, stdout=PIPE)
         context.subprocesses.append(echo_process)
@@ -86,7 +87,7 @@ class OracleRunner(object):
 
         echo_process.stdout.close()
         result_set_html = sqlplus_process.communicate()[0].decode("utf-8")
-        self.__logger.debug(result_set_html)
+        logger.debug(result_set_html)
         context.sql_client_return_code = sqlplus_process.returncode
         context.result_set_html = result_set_html
 

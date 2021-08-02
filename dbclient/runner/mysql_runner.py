@@ -27,6 +27,7 @@ class MysqlRunner(object):
     def execute(self):
         # type: () -> None
 
+        logger = self.__logger
         context = self.__context
         config = self.__context.config
 
@@ -49,8 +50,8 @@ class MysqlRunner(object):
         echo_command = ["echo", sql]
         mysql_command = ["mysql", "-h", host, "-P", port, "-D", database_name, "-u", user_name, "--html"]
 
-        self.__logger.debug(u"echo \"%s\" | mysql -h %s -P %s -D %s -u %s --html" %
-                            (sql, host, port, database_name, user_name))
+        logger.debug(u"echo \"%s\" | mysql -h %s -P %s -D %s -u %s --html" %
+                     (sql, host, port, database_name, user_name))
 
         echo_process = Popen(echo_command, stdout=PIPE)
         context.subprocesses.append(echo_process)
@@ -60,7 +61,7 @@ class MysqlRunner(object):
 
         echo_process.stdout.close()
         result_set_html = mysql_process.communicate()[0].decode("utf-8")
-        self.__logger.debug(result_set_html)
+        logger.debug(result_set_html)
         context.sql_client_return_code = mysql_process.returncode
         context.result_set_html = result_set_html
 

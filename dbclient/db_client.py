@@ -64,12 +64,13 @@ class DbClient(object):
     def execute(self):
         # type: () -> None
 
+        logger = self.__logger
         context = self.__context
         option_parser = OptionParser()
 
         # noinspection PyBroadException
         try:
-            self.__logger.info("[Start] " + os.path.abspath(__file__))
+            logger.info("[Start] " + os.path.abspath(__file__))
 
             # ---- アプリケーション設定ファイルの読み込み ----
             config = context.config
@@ -80,18 +81,18 @@ class DbClient(object):
                 raise StandardError(u"環境変数[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
 
             # ---- システム環境情報を出力 ----
-            self.__logger.debug("system/OS name -> " + platform.system())
-            self.__logger.debug("[encoding] locale -> " + locale.getpreferredencoding())
-            self.__logger.debug("[encoding] default -> " + sys.getdefaultencoding())
-            self.__logger.debug("[encoding] filesystem -> " + sys.getfilesystemencoding())
+            logger.debug("system/OS name -> " + platform.system())
+            logger.debug("[encoding] locale -> " + locale.getpreferredencoding())
+            logger.debug("[encoding] default -> " + sys.getdefaultencoding())
+            logger.debug("[encoding] filesystem -> " + sys.getfilesystemencoding())
             # noinspection PyUnresolvedReferences
-            self.__logger.debug("[encoding] stdin -> " + sys.stdin.encoding)
+            logger.debug("[encoding] stdin -> " + sys.stdin.encoding)
             # noinspection PyUnresolvedReferences
-            self.__logger.debug("[encoding] stdout -> " + sys.stdout.encoding)
+            logger.debug("[encoding] stdout -> " + sys.stdout.encoding)
             # noinspection PyUnresolvedReferences
-            self.__logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
-            self.__logger.debug("アプリケーション設定ファイルパス -> " + context.config_dir + "/application.conf")
-            self.__logger.debug("ロギング設定ファイルパス -> " + context.config_dir + "/logging.conf")
+            logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
+            logger.debug("アプリケーション設定ファイルパス -> " + context.config_dir + "/application.conf")
+            logger.debug("ロギング設定ファイルパス -> " + context.config_dir + "/logging.conf")
 
             # ---- 起動オプションのパース ----
             option_parser.set_usage("python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")
@@ -185,16 +186,16 @@ class DbClient(object):
             elif db_type == Context.DataBase.MYSQL:
                 MysqlRunner(context).execute()
 
-            self.__logger.info("[End] " + os.path.abspath(__file__))
+            logger.info("[End] " + os.path.abspath(__file__))
 
         except OptParseError:
-            self.__logger.exception(u"起動オプションが不正です。")
+            logger.exception(u"起動オプションが不正です。")
             traceback.print_exc()
             option_parser.print_help()
             sys.exit(1)
 
         except Exception:
-            self.__logger.exception(u"想定外のエラーが発生しました。")
+            logger.exception(u"想定外のエラーが発生しました。")
             traceback.print_exc()
             sys.exit(1)
 
