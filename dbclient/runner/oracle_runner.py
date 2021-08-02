@@ -27,6 +27,7 @@ class OracleRunner(object):
     def execute(self):
         # type: () -> None
 
+        context = self.__context
         config = self.__context.config
 
         # ---- 環境変数の設定 ----
@@ -60,14 +61,14 @@ class OracleRunner(object):
                           "SET NULL 'NULL'", sql))
 
         dsn = "{user_name}/{password}@{host}:{port}/{sid}".format(
-            user_name=config.get(self.__context.connection_target, "user_name"),
-            password=config.get(self.__context.connection_target, "password"),
-            host=config.get(self.__context.connection_target, "host"),
-            port=config.get(self.__context.connection_target, "port"),
-            sid=config.get(self.__context.connection_target, "sid")
+            user_name=config.get(context.connection_target, "user_name"),
+            password=config.get(context.connection_target, "password"),
+            host=config.get(context.connection_target, "host"),
+            port=config.get(context.connection_target, "port"),
+            sid=config.get(context.connection_target, "sid")
         )
 
-        privilege = config.get(self.__context.connection_target, "privilege")
+        privilege = config.get(context.connection_target, "privilege")
 
         if privilege:
             dsn += " AS " + privilege
@@ -78,28 +79,28 @@ class OracleRunner(object):
         self.__logger.debug(u"echo \"%s\" | sqlplus -s -M HTML ON \"%s\"" % (sql, dsn))
 
         echo_process = Popen(echo_command, stdout=PIPE)
-        self.__context.subprocesses.append(echo_process)
+        context.subprocesses.append(echo_process)
 
         sqlplus_process = Popen(sqlplus_command, stdin=echo_process.stdout, stdout=PIPE)
-        self.__context.subprocesses.append(sqlplus_process)
+        context.subprocesses.append(sqlplus_process)
 
         echo_process.stdout.close()
         result_set_html = sqlplus_process.communicate()[0].decode("utf-8")
         self.__logger.debug(result_set_html)
-        self.__context.sql_client_return_code = sqlplus_process.returncode
-        self.__context.result_set_html = result_set_html
+        context.sql_client_return_code = sqlplus_process.returncode
+        context.result_set_html = result_set_html
 
-        if not self.__context.check_state_after_execute_sql_client():
+        if not context.check_state_after_execute_sql_client():
             raise StandardError(u"SQLクライアントの実行結果が不正です。")
 
         # ---- sqlplusの呼び出し結果をパース ----
-        OracleParser(self.__context).execute()
+        OracleParser(context).execute()
 
-        if not self.__context.check_state_after_parse_sql_client_result():
+        if not context.check_state_after_parse_sql_client_result():
             raise StandardError(u"SQLクライアントの実行結果の、パース処理に失敗しました。")
 
         # ---- パースした結果を標準出力に出力 ----
-        if self.__context.display_format == Context.DisplayFormat.TABLE:
-            TablePrinter(self.__context).execute()
-        elif self.__context.display_format == Context.DisplayFormat.CSV:
-            CsvPrinter(self.__context).execute()
+        if context.display_format == Context.DisplayFormat.TABLE:
+            TablePrinter(context).execute()
+        elif context.display_format == Context.DisplayFormat.CSV:
+            CsvPrinter(context).execute()

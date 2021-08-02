@@ -38,7 +38,8 @@ class OracleParser(HTMLParser.HTMLParser, object):
     def execute(self):
         # type: () -> None
 
-        self.feed(self.__context.result_set_html)
+        context = self.__context
+        self.feed(context.result_set_html)
         self.close()
 
     def handle_starttag(self, tag, attrs):
@@ -58,18 +59,20 @@ class OracleParser(HTMLParser.HTMLParser, object):
     def handle_endtag(self, tag):
         # type: (unicode) -> None
 
+        context = self.__context
+
         if tag == "body":
             self.__is_processing_body = False
         if tag == "table":
             self.__is_processing_table = False
         if tag == "tr":
             if self.__processing_record:
-                self.__context.result_sets.append(self.__processing_record)
+                context.result_sets.append(self.__processing_record)
             self.__processing_record = []
         if tag == "th":
             self.__is_processing_heading = False
             if self.__row_count == 1:
-                self.__context.result_headings.append(self.__processing_heading)
+                context.result_headings.append(self.__processing_heading)
             self.__processing_heading = u""
         if tag == "td":
             self.__is_processing_data = False
@@ -79,29 +82,35 @@ class OracleParser(HTMLParser.HTMLParser, object):
     def handle_data(self, data):
         # type: (unicode) -> None
 
+        context = self.__context
+
         if self.__is_processing_heading:
             self.__processing_heading += data
         elif self.__is_processing_data:
             self.__processing_data += data
         elif self.__is_processing_body and not self.__is_processing_table:
-            self.__context.result_message += data
+            context.result_message += data
 
     def handle_entityref(self, name):
         # type: (unicode) -> None
+
+        context = self.__context
 
         if self.__is_processing_heading:
             self.__processing_heading += self.unescape("&%s;" % name)
         elif self.__is_processing_data:
             self.__processing_data += self.unescape("&%s;" % name)
         elif self.__is_processing_body and not self.__is_processing_table:
-            self.__context.result_message += self.unescape("&%s;" % name)
+            context.result_message += self.unescape("&%s;" % name)
 
     def handle_charref(self, name):
         # type: (unicode) -> None
+
+        context = self.__context
 
         if self.__is_processing_heading:
             self.__processing_heading += self.unescape("&#%s;" % name)
         elif self.__is_processing_data:
             self.__processing_data += self.unescape("&#%s;" % name)
         elif self.__is_processing_body and not self.__is_processing_table:
-            self.__context.result_message += self.unescape("&#%s;" % name)
+            context.result_message += self.unescape("&#%s;" % name)

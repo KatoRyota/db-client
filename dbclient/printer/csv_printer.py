@@ -22,35 +22,38 @@ class CsvPrinter(object):
     def execute(self):
         # type: () -> None
 
-        if not self.__context.sql_client_return_code == 0:
-            print self.__context.result_message.strip().encode("utf-8")
+        context = self.__context
+
+        if not context.sql_client_return_code == 0:
+            print context.result_message.strip().encode("utf-8")
             return
 
         # ---- CSV形式で標準出力に出力 ----
-        for index, record in enumerate(self.__context.result_sets):  # type: (int, list)
+        for index, record in enumerate(context.result_sets):  # type: (int, list)
 
             if index == 0:
-                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
-                    self._print_csv_row(self.__context.result_headings)
+                if context.heading == Context.Heading.ON and context.result_headings:
+                    self._print_csv_row(context.result_headings)
 
             if index != 0 and \
-                    self.__context.pagesize != 0 and \
-                    index % self.__context.pagesize == 0:
+                    context.pagesize != 0 and \
+                    index % context.pagesize == 0:
 
                 print
 
-                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
-                    self._print_csv_row(self.__context.result_headings)
+                if context.heading == Context.Heading.ON and context.result_headings:
+                    self._print_csv_row(context.result_headings)
 
             self._print_csv_row(record)
 
-        if self.__context.feedback == Context.Feedback.ON and self.__context.result_message:
+        if context.feedback == Context.Feedback.ON and context.result_message:
             print
-            print self.__context.result_message.strip().encode("utf-8")
+            print context.result_message.strip().encode("utf-8")
 
     def _print_csv_row(self, record):
         # type: (list) -> None
 
+        context = self.__context
         row = u""
 
         for index, column in enumerate(record):  # type: (int, unicode)
@@ -58,7 +61,7 @@ class CsvPrinter(object):
             display_column = re.sub(u"\n", u"\\\\n", display_column)
 
             if index + 1 < len(record):
-                row += display_column + self.__context.field_delimiter
+                row += display_column + context.field_delimiter
             elif index + 1 == len(record):
                 row += display_column
 

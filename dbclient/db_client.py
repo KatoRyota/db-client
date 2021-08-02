@@ -29,29 +29,30 @@ class DbClient(object):
         super(DbClient, self).__init__()
         reload(sys)
         sys.setdefaultencoding("utf-8")
-
         self.__context = Context()  # type: Context
-        self.__context.root_dir = os.path.dirname(os.path.abspath(__file__))
+        context = self.__context
 
-        self.__context.profile = os.environ.get("DBCLIENT_PROFILE")
+        context.root_dir = os.path.dirname(os.path.abspath(__file__))
 
-        if not self.__context.profile:
-            self.__context.profile = "local"
+        context.profile = os.environ.get("DBCLIENT_PROFILE")
 
-        self.__context.config_dir = self.__context.root_dir + "/config/" + self.__context.profile
+        if not context.profile:
+            context.profile = "local"
 
-        if not os.path.isdir(self.__context.config_dir):
+        context.config_dir = context.root_dir + "/config/" + context.profile
+
+        if not os.path.isdir(context.config_dir):
             raise StandardError(u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" %
-                                (self.__context.root_dir + "/config/"))
+                                (context.root_dir + "/config/"))
 
-        if not self.__context.check_state_after_initialize_application():
+        if not context.check_state_after_initialize_application():
             raise StandardError(u"アプリケーションの初期化処理に失敗しました。")
 
         # ---- ロギング設定ファイルの読み込み ----
         if not os.path.isdir("./log"):
             os.makedirs("./log")
 
-        logging.config.fileConfig(self.__context.config_dir + "/logging.conf")
+        logging.config.fileConfig(context.config_dir + "/logging.conf")
         self.__logger = logging.getLogger(__name__)  # type: Logger
 
     @staticmethod
@@ -63,6 +64,7 @@ class DbClient(object):
     def execute(self):
         # type: () -> None
 
+        context = self.__context
         option_parser = OptionParser()
 
         # noinspection PyBroadException
@@ -70,8 +72,8 @@ class DbClient(object):
             self.__logger.info("[Start] " + os.path.abspath(__file__))
 
             # ---- アプリケーション設定ファイルの読み込み ----
-            config = self.__context.config
-            config.read(self.__context.config_dir + "/application.conf")
+            config = context.config
+            config.read(context.config_dir + "/application.conf")
 
             if not os.environ.get("PYTHONIOENCODING") or \
                     not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
@@ -88,8 +90,8 @@ class DbClient(object):
             self.__logger.debug("[encoding] stdout -> " + sys.stdout.encoding)
             # noinspection PyUnresolvedReferences
             self.__logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
-            self.__logger.debug("アプリケーション設定ファイルパス -> " + self.__context.config_dir + "/application.conf")
-            self.__logger.debug("ロギング設定ファイルパス -> " + self.__context.config_dir + "/logging.conf")
+            self.__logger.debug("アプリケーション設定ファイルパス -> " + context.config_dir + "/application.conf")
+            self.__logger.debug("ロギング設定ファイルパス -> " + context.config_dir + "/logging.conf")
 
             # ---- 起動オプションのパース ----
             option_parser.set_usage("python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")
@@ -113,59 +115,59 @@ class DbClient(object):
             # ---- 起動オプションを元に、コンテキストオブジェクトを設定 ----
             # ---- display_format ----
             if options.display_format:
-                self.__context.display_format = options.display_format
+                context.display_format = options.display_format
             else:
-                self.__context.display_format = Context.DisplayFormat.TABLE
+                context.display_format = Context.DisplayFormat.TABLE
 
             # ---- field_delimiter ----
             if options.field_delimiter:
-                self.__context.field_delimiter = options.field_delimiter
+                context.field_delimiter = options.field_delimiter
             else:
-                if self.__context.display_format == Context.DisplayFormat.CSV:
-                    self.__context.field_delimiter = ","
+                if context.display_format == Context.DisplayFormat.CSV:
+                    context.field_delimiter = ","
 
             # ---- column_max_length ----
             if options.column_max_length:
-                self.__context.column_max_length = int(options.column_max_length)
+                context.column_max_length = int(options.column_max_length)
             else:
-                if self.__context.display_format == Context.DisplayFormat.TABLE:
-                    self.__context.column_max_length = 1000
+                if context.display_format == Context.DisplayFormat.TABLE:
+                    context.column_max_length = 1000
 
             # ---- heading ----
             if options.heading:
-                self.__context.heading = options.heading
+                context.heading = options.heading
             else:
-                if self.__context.display_format == Context.DisplayFormat.TABLE:
-                    self.__context.heading = Context.Heading.ON
-                elif self.__context.display_format == Context.DisplayFormat.CSV:
-                    self.__context.heading = Context.Heading.OFF
+                if context.display_format == Context.DisplayFormat.TABLE:
+                    context.heading = Context.Heading.ON
+                elif context.display_format == Context.DisplayFormat.CSV:
+                    context.heading = Context.Heading.OFF
 
             # ---- feedback ----
             if options.feedback:
-                self.__context.feedback = options.feedback
+                context.feedback = options.feedback
             else:
-                if self.__context.display_format == Context.DisplayFormat.TABLE:
-                    self.__context.feedback = Context.Feedback.ON
-                if self.__context.display_format == Context.DisplayFormat.CSV:
-                    self.__context.feedback = Context.Feedback.OFF
+                if context.display_format == Context.DisplayFormat.TABLE:
+                    context.feedback = Context.Feedback.ON
+                if context.display_format == Context.DisplayFormat.CSV:
+                    context.feedback = Context.Feedback.OFF
 
             # ---- pagesize ----
             if options.pagesize:
-                self.__context.pagesize = int(options.pagesize)
+                context.pagesize = int(options.pagesize)
             else:
-                if self.__context.display_format == Context.DisplayFormat.TABLE:
-                    self.__context.pagesize = 10
-                if self.__context.display_format == Context.DisplayFormat.CSV:
-                    self.__context.pagesize = 0
+                if context.display_format == Context.DisplayFormat.TABLE:
+                    context.pagesize = 10
+                if context.display_format == Context.DisplayFormat.CSV:
+                    context.pagesize = 0
 
             # ---- connection_target ----
             if options.connection_target:
-                self.__context.connection_target = options.connection_target
+                context.connection_target = options.connection_target
             else:
-                self.__context.connection_target = "default"
+                context.connection_target = "default"
 
             # ---- 起動オプションをパースした後の、コンテキストオブジェクトの状態チェック ----
-            if not self.__context.check_state_after_parse_option():
+            if not context.check_state_after_parse_option():
                 raise OptParseError(u"起動オプションが不正です。")
 
             # ---- シグナルハンドラーの設定 ----
@@ -176,12 +178,12 @@ class DbClient(object):
                 signal.signal(signal.SIGQUIT, self.terminate_subprocess)
 
             # ---- データベース固有の処理 ----
-            db_type = config.get(self.__context.connection_target, "db_type")
+            db_type = config.get(context.connection_target, "db_type")
 
             if db_type == Context.DataBase.ORACLE:
-                OracleRunner(self.__context).execute()
+                OracleRunner(context).execute()
             elif db_type == Context.DataBase.MYSQL:
-                MysqlRunner(self.__context).execute()
+                MysqlRunner(context).execute()
 
             self.__logger.info("[End] " + os.path.abspath(__file__))
 
@@ -199,7 +201,9 @@ class DbClient(object):
     def terminate_subprocess(self):
         # type: () -> None
 
-        for popen in self.__context.subprocesses:  # type: Popen
+        context = self.__context
+
+        for popen in context.subprocesses:  # type: Popen
             if isinstance(popen, Popen):
                 if popen.poll() is None:
                     popen.terminate()

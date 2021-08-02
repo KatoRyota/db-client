@@ -25,15 +25,17 @@ class TablePrinter(object):
     def execute(self):
         # type: () -> None
 
-        if not self.__context.sql_client_return_code == 0:
-            print self.__context.result_message.strip().encode("utf-8")
+        context = self.__context
+
+        if not context.sql_client_return_code == 0:
+            print context.result_message.strip().encode("utf-8")
             return
 
         # ---- カラム幅を計算 ----
-        if self.__context.result_sets:
-            self.__column_width_list = [0 for _ in range(len(self.__context.result_sets[0]))]
+        if context.result_sets:
+            self.__column_width_list = [0 for _ in range(len(context.result_sets[0]))]
 
-        for record in self.__context.result_sets:  # type: list
+        for record in context.result_sets:  # type: list
             for index, column in enumerate(record):  # type: (int, unicode)
                 display_column = self._display_of(column)
                 display_column_length = self._length_of(display_column)
@@ -41,8 +43,8 @@ class TablePrinter(object):
                 if self.__column_width_list[index] < display_column_length:
                     self.__column_width_list[index] = display_column_length
 
-        if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
-            for index, column in enumerate(self.__context.result_headings):  # type: (int, unicode)
+        if context.heading == Context.Heading.ON and context.result_headings:
+            for index, column in enumerate(context.result_headings):  # type: (int, unicode)
                 display_column = self._display_of(column)
                 display_column_length = self._length_of(display_column)
 
@@ -50,25 +52,25 @@ class TablePrinter(object):
                     self.__column_width_list[index] = display_column_length
 
         # ---- テーブル形式で標準出力に出力 ----
-        for index, record in enumerate(self.__context.result_sets):  # type: (int, list)
+        for index, record in enumerate(context.result_sets):  # type: (int, list)
 
             if index == 0:
-                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
+                if context.heading == Context.Heading.ON and context.result_headings:
                     self._print_table_border()
-                    self._print_table_row(self.__context.result_headings)
+                    self._print_table_row(context.result_headings)
                     self._print_table_border()
                 else:
                     self._print_table_border()
 
             if index != 0 and \
-                    self.__context.pagesize != 0 and \
-                    index % self.__context.pagesize == 0:
+                    context.pagesize != 0 and \
+                    index % context.pagesize == 0:
 
                 print
 
-                if self.__context.heading == Context.Heading.ON and self.__context.result_headings:
+                if context.heading == Context.Heading.ON and context.result_headings:
                     self._print_table_border()
-                    self._print_table_row(self.__context.result_headings)
+                    self._print_table_row(context.result_headings)
                     self._print_table_border()
                 else:
                     self._print_table_border()
@@ -76,9 +78,9 @@ class TablePrinter(object):
             self._print_table_row(record)
             self._print_table_border()
 
-        if self.__context.feedback == Context.Feedback.ON and self.__context.result_message:
+        if context.feedback == Context.Feedback.ON and context.result_message:
             print
-            print self.__context.result_message.strip().encode("utf-8")
+            print context.result_message.strip().encode("utf-8")
 
     def _print_table_row(self, record):
         # type: (list) -> None
@@ -116,16 +118,18 @@ class TablePrinter(object):
     def _display_of(self, column):
         # type: (unicode) -> unicode
 
+        context = self.__context
+
         display_column = column.strip()
         display_column = re.sub(u'\\\\', u"\\\\\\\\", display_column)
         display_column = re.sub(u"\n", u"\\\\n", display_column)
         display_column_length = self._length_of(display_column)
 
-        if self.__context.column_max_length < 1 or display_column_length <= self.__context.column_max_length:
+        if context.column_max_length < 1 or display_column_length <= context.column_max_length:
             return display_column
 
-        elif display_column_length > self.__context.column_max_length:
-            half_length = math.floor(self.__context.column_max_length / 2)
+        elif display_column_length > context.column_max_length:
+            half_length = math.floor(context.column_max_length / 2)
             half_length = int(half_length)
             pattern = r"^(.{%s}).*(.{%s})$".decode("utf-8") % (half_length, half_length)
             display_column = re.sub(pattern, r"\1...\2".decode("utf-8"), display_column)
