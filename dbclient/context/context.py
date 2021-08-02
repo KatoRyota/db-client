@@ -49,7 +49,7 @@ class Context(object):
         self.result_sets = []  # type: list
         self.result_message = u""  # type: unicode
 
-    def check_state_after_initialize_application(self):
+    def check_application_initialize(self):
         # type: () -> bool
 
         if not isinstance(self.config, SafeConfigParser):

@@ -9,14 +9,14 @@ from dbclient.context.context import Context
 
 class TestContext(TestCase):
 
-    def test_check_state_after_initialize_application(self):
+    def test_check_application_initialize(self):
         # type: () -> None
 
         # ---- ケース1 ----
         context = self._default_context()
 
         expected = True
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
@@ -24,7 +24,7 @@ class TestContext(TestCase):
         context.config = None
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
@@ -32,7 +32,7 @@ class TestContext(TestCase):
         context.config = ""
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
@@ -40,7 +40,7 @@ class TestContext(TestCase):
         context.config = 1
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
@@ -48,7 +48,7 @@ class TestContext(TestCase):
         context.root_dir = None
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
@@ -56,7 +56,7 @@ class TestContext(TestCase):
         context.root_dir = ""
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
@@ -64,7 +64,7 @@ class TestContext(TestCase):
         context.root_dir = u""
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース8 ----
@@ -72,7 +72,7 @@ class TestContext(TestCase):
         context.profile = None
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース9 ----
@@ -80,7 +80,7 @@ class TestContext(TestCase):
         context.profile = ""
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
@@ -88,7 +88,7 @@ class TestContext(TestCase):
         context.profile = u""
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース11 ----
@@ -96,7 +96,7 @@ class TestContext(TestCase):
         context.config_dir = None
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース12 ----
@@ -104,7 +104,7 @@ class TestContext(TestCase):
         context.config_dir = ""
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
         # ---- ケース13 ----
@@ -112,7 +112,7 @@ class TestContext(TestCase):
         context.config_dir = u""
 
         expected = False
-        actual = context.check_state_after_initialize_application()
+        actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
     def test_check_state_after_parse_option(self):
