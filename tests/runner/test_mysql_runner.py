@@ -19,12 +19,9 @@ class TestMysqlRunner(TestCase):
         # ---- ケース1 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_sql_execute"
-                           ) as check_sql_execute, \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as check_sql_execute, \
                 mock.patch("dbclient.parser.mysql_parser.MysqlParser.execute") as mysql_parser_execute, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_result_set_parse"
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
@@ -50,12 +47,9 @@ class TestMysqlRunner(TestCase):
         # ---- ケース2 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_sql_execute"
-                           ) as check_sql_execute, \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as check_sql_execute, \
                 mock.patch("dbclient.parser.mysql_parser.MysqlParser.execute") as mysql_parser_execute, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_result_set_parse"
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
@@ -81,12 +75,9 @@ class TestMysqlRunner(TestCase):
         # ---- ケース3 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_sql_execute"
-                           ) as check_sql_execute, \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as check_sql_execute, \
                 mock.patch("dbclient.parser.mysql_parser.MysqlParser.execute") as mysql_parser_execute, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_result_set_parse"
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
@@ -111,12 +102,9 @@ class TestMysqlRunner(TestCase):
         # ---- ケース4 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_sql_execute"
-                           ) as check_sql_execute, \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as check_sql_execute, \
                 mock.patch("dbclient.parser.mysql_parser.MysqlParser.execute") as mysql_parser_execute, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_result_set_parse"
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
@@ -141,12 +129,9 @@ class TestMysqlRunner(TestCase):
         # ---- ケース5 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_sql_execute"
-                           ) as check_sql_execute, \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as check_sql_execute, \
                 mock.patch("dbclient.parser.mysql_parser.MysqlParser.execute") as mysql_parser_execute, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_result_set_parse"
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
@@ -171,12 +156,9 @@ class TestMysqlRunner(TestCase):
         # ---- ケース6 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context."
-                           "Context.check_sql_execute"
-                           ) as check_sql_execute, \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as check_sql_execute, \
                 mock.patch("dbclient.parser.mysql_parser.MysqlParser.execute") as mysql_parser_execute, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_result_set_parse"
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:

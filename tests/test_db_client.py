@@ -36,11 +36,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
@@ -100,11 +98,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
@@ -164,11 +160,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
@@ -228,11 +222,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
@@ -266,11 +258,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = False
@@ -304,11 +294,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
@@ -344,11 +332,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
@@ -383,11 +369,9 @@ class TestDbClient(TestCase):
                 mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_application_initialize"
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
                            ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context."
-                           "Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
