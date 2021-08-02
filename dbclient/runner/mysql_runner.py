@@ -65,7 +65,7 @@ class MysqlRunner(object):
         context.sql_client_return_code = mysql_process.returncode
         context.result_set_html = result_set_html
 
-        if not context.check_state_after_execute_sql_client():
+        if not context.check_sql_execute():
             raise StandardError(u"SQLクライアントの実行結果が不正です。")
 
         # ---- mysqlの呼び出し結果をパース ----

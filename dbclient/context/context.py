@@ -111,7 +111,7 @@ class Context(object):
 
         return True
 
-    def check_state_after_execute_sql_client(self):
+    def check_sql_execute(self):
         # type: () -> bool
 
         if type(self.subprocesses) is not list:

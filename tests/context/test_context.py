@@ -325,14 +325,14 @@ class TestContext(TestCase):
         actual = context.check_option_parse()
         self.assertEqual(expected, actual)
 
-    def test_check_state_after_execute_sql_client(self):
+    def test_check_sql_execute(self):
         # type: () -> None
 
         # ---- ケース1 ----
         context = self._default_context()
 
         expected = True
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
@@ -340,7 +340,7 @@ class TestContext(TestCase):
         context.subprocesses = None
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
@@ -348,7 +348,7 @@ class TestContext(TestCase):
         context.subprocesses = ""
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
@@ -356,7 +356,7 @@ class TestContext(TestCase):
         context.subprocesses = ()
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
@@ -364,7 +364,7 @@ class TestContext(TestCase):
         context.sql_client_return_code = None
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
@@ -372,7 +372,7 @@ class TestContext(TestCase):
         context.sql_client_return_code = ""
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
@@ -380,7 +380,7 @@ class TestContext(TestCase):
         context.sql_client_return_code = "0"
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース8 ----
@@ -388,7 +388,7 @@ class TestContext(TestCase):
         context.result_set_html = None
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース9 ----
@@ -396,7 +396,7 @@ class TestContext(TestCase):
         context.result_set_html = ""
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
@@ -404,7 +404,7 @@ class TestContext(TestCase):
         context.result_set_html = 1
 
         expected = False
-        actual = context.check_state_after_execute_sql_client()
+        actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
     def test_check_state_after_parse_sql_client_result(self):
