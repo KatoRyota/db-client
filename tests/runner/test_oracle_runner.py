@@ -24,12 +24,12 @@ class TestOracleRunner(TestCase):
                            ) as check_sql_execute, \
                 mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_sql_client_result"
-                           ) as context_check_state_after_parse_sql_client_result, \
+                           "Context.check_result_set_parse"
+                           ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
             check_sql_execute.return_value = True
-            context_check_state_after_parse_sql_client_result.return_value = True
+            context_check_result_set_parse.return_value = True
 
             context = self._default_context()
             context.config = self._default_config()
@@ -55,7 +55,7 @@ class TestOracleRunner(TestCase):
 
             check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_called_once()
-            context_check_state_after_parse_sql_client_result.assert_called_once()
+            context_check_result_set_parse.assert_called_once()
             table_printer_execute.assert_called_once()
             csv_printer_execute.assert_not_called()
 
@@ -67,12 +67,12 @@ class TestOracleRunner(TestCase):
                            ) as check_sql_execute, \
                 mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_sql_client_result"
-                           ) as context_check_state_after_parse_sql_client_result, \
+                           "Context.check_result_set_parse"
+                           ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
             check_sql_execute.return_value = True
-            context_check_state_after_parse_sql_client_result.return_value = True
+            context_check_result_set_parse.return_value = True
 
             context = self._default_context()
             context.config = self._default_config()
@@ -98,7 +98,7 @@ class TestOracleRunner(TestCase):
 
             check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_called_once()
-            context_check_state_after_parse_sql_client_result.assert_called_once()
+            context_check_result_set_parse.assert_called_once()
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_called_once()
 
@@ -110,12 +110,12 @@ class TestOracleRunner(TestCase):
                            ) as check_sql_execute, \
                 mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_sql_client_result",
-                           ) as context_check_state_after_parse_sql_client_result, \
+                           "Context.check_result_set_parse",
+                           ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
             check_sql_execute.return_value = False
-            context_check_state_after_parse_sql_client_result.return_value = True
+            context_check_result_set_parse.return_value = True
 
             context = self._default_context()
             context.config = self._default_config()
@@ -128,7 +128,7 @@ class TestOracleRunner(TestCase):
 
             check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_not_called()
-            context_check_state_after_parse_sql_client_result.assert_not_called()
+            context_check_result_set_parse.assert_not_called()
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_not_called()
 
@@ -140,12 +140,12 @@ class TestOracleRunner(TestCase):
                            ) as check_sql_execute, \
                 mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_sql_client_result"
-                           ) as context_check_state_after_parse_sql_client_result, \
+                           "Context.check_result_set_parse"
+                           ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
             check_sql_execute.return_value = False
-            context_check_state_after_parse_sql_client_result.return_value = True
+            context_check_result_set_parse.return_value = True
 
             context = self._default_context()
             context.config = self._default_config()
@@ -158,7 +158,7 @@ class TestOracleRunner(TestCase):
 
             check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_not_called()
-            context_check_state_after_parse_sql_client_result.assert_not_called()
+            context_check_result_set_parse.assert_not_called()
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_not_called()
 
@@ -170,12 +170,12 @@ class TestOracleRunner(TestCase):
                            ) as check_sql_execute, \
                 mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_sql_client_result"
-                           ) as context_check_state_after_parse_sql_client_result, \
+                           "Context.check_result_set_parse"
+                           ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
             check_sql_execute.return_value = True
-            context_check_state_after_parse_sql_client_result.return_value = False
+            context_check_result_set_parse.return_value = False
 
             context = self._default_context()
             context.config = self._default_config()
@@ -188,7 +188,7 @@ class TestOracleRunner(TestCase):
 
             check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_called_once()
-            context_check_state_after_parse_sql_client_result.assert_called_once()
+            context_check_result_set_parse.assert_called_once()
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_not_called()
 
@@ -200,12 +200,12 @@ class TestOracleRunner(TestCase):
                            ) as check_sql_execute, \
                 mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
                 mock.patch("dbclient.context.context."
-                           "Context.check_state_after_parse_sql_client_result"
-                           ) as context_check_state_after_parse_sql_client_result, \
+                           "Context.check_result_set_parse"
+                           ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
             check_sql_execute.return_value = True
-            context_check_state_after_parse_sql_client_result.return_value = False
+            context_check_result_set_parse.return_value = False
 
             context = self._default_context()
             context.config = self._default_config()
@@ -218,7 +218,7 @@ class TestOracleRunner(TestCase):
 
             check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_called_once()
-            context_check_state_after_parse_sql_client_result.assert_called_once()
+            context_check_result_set_parse.assert_called_once()
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_not_called()
 

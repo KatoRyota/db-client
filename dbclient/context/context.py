@@ -125,7 +125,7 @@ class Context(object):
 
         return True
 
-    def check_state_after_parse_sql_client_result(self):
+    def check_result_set_parse(self):
         # type: () -> bool
 
         if type(self.result_headings) is not list:

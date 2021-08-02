@@ -407,14 +407,14 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-    def test_check_state_after_parse_sql_client_result(self):
+    def test_check_result_set_parse(self):
         # type: () -> None
 
         # ---- ケース1 ----
         context = self._default_context()
 
         expected = True
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
@@ -422,7 +422,7 @@ class TestContext(TestCase):
         context.result_headings = None
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
@@ -430,7 +430,7 @@ class TestContext(TestCase):
         context.result_headings = ""
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
@@ -438,7 +438,7 @@ class TestContext(TestCase):
         context.result_headings = ()
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
@@ -446,7 +446,7 @@ class TestContext(TestCase):
         context.result_sets = None
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
@@ -454,7 +454,7 @@ class TestContext(TestCase):
         context.result_sets = ""
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
@@ -462,7 +462,7 @@ class TestContext(TestCase):
         context.result_sets = ()
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース8 ----
@@ -470,7 +470,7 @@ class TestContext(TestCase):
         context.result_message = None
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース9 ----
@@ -478,7 +478,7 @@ class TestContext(TestCase):
         context.result_message = ""
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
@@ -486,7 +486,7 @@ class TestContext(TestCase):
         context.result_message = 1
 
         expected = False
-        actual = context.check_state_after_parse_sql_client_result()
+        actual = context.check_result_set_parse()
         self.assertEqual(expected, actual)
 
     @staticmethod

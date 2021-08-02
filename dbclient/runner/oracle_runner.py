@@ -97,7 +97,7 @@ class OracleRunner(object):
         # ---- sqlplusの呼び出し結果をパース ----
         OracleParser(context).execute()
 
-        if not context.check_state_after_parse_sql_client_result():
+        if not context.check_result_set_parse():
             raise StandardError(u"SQLクライアントの実行結果の、パース処理に失敗しました。")
 
         # ---- パースした結果を標準出力に出力 ----
