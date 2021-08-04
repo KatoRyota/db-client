@@ -32,6 +32,7 @@ class OracleRunner(object):
         config = self.__context.config
 
         # ---- 環境変数の設定 ----
+        os.environ["ORACLE_HOME"] = config.get("oracle_environment_variable", "oracle_home")
         os.environ["LD_LIBRARY_PATH"] = config.get("oracle_environment_variable", "ld_library_path")
         os.environ["PATH"] = config.get("oracle_environment_variable", "sqlplus_path") + ":" + os.environ.get(
             "PATH")
