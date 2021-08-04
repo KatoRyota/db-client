@@ -34,6 +34,10 @@ class TestOracleRunner(TestCase):
 
             OracleRunner(context).execute()
 
+            expected = "oracle_home"
+            actual = os.environ.get("ORACLE_HOME")
+            self.assertEqual(expected, actual)
+
             expected = "ld_library_path"
             actual = os.environ.get("LD_LIBRARY_PATH")
             self.assertEqual(expected, actual)
@@ -73,6 +77,10 @@ class TestOracleRunner(TestCase):
             context.display_format = "csv"
 
             OracleRunner(context).execute()
+
+            expected = "oracle_home"
+            actual = os.environ.get("ORACLE_HOME")
+            self.assertEqual(expected, actual)
 
             expected = "ld_library_path"
             actual = os.environ.get("LD_LIBRARY_PATH")
@@ -210,6 +218,7 @@ class TestOracleRunner(TestCase):
 
         config = SafeConfigParser()
         config.add_section("oracle_environment_variable")
+        config.set("oracle_environment_variable", "oracle_home", "oracle_home")
         config.set("oracle_environment_variable", "ld_library_path", "ld_library_path")
         config.set("oracle_environment_variable", "sqlplus_path", "sqlplus_path")
         config.set("oracle_environment_variable", "nls_lang", "nls_lang")
