@@ -37,7 +37,7 @@ class DbClient(object):
         context.profile = os.environ.get("DBCLIENT_PROFILE")
 
         if not context.profile:
-            context.profile = "local"
+            context.profile = "default"
 
         context.config_dir = context.root_dir + "/config/" + context.profile
 
