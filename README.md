@@ -66,6 +66,16 @@ select * from employee;
 EOF
 ```
 
+上記コマンドがエラーになる場合は、以下を試してみて下さい。
+
+```shell
+cd ${APP_ROOT_DIR}
+
+python -m dbclient.__main__ 2>&1 <<EOF | less -S
+select * from employee;
+EOF
+```
+
 指定可能なオプションは、以下のコマンドでご確認下さい。
 
 ```shell
