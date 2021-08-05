@@ -51,7 +51,12 @@ git clone https://github.com/KatoRyota/db-client.git
 
 # Usage
 
-設定ファイル(`application.conf`)に、DBの接続先情報を設定して下さい。  
+プロファイル毎 (`dbclient/config/${PROFILE}/`) の設定ファイル (`application.conf`) に、  
+DBの接続先情報と、sqlplusの設定 (`oracle_environment_variable`セクション) を記載して下さい。  
+デフォルトで、`dbclient/config/default/`ディレクトリ配下の、設定ファイルを読み込みます。  
+プロファイルは、`dbclient/config/`ディレクトリ直下に、任意の名前を付けて、追加することが可能です。  
+プロファイルは、環境変数[`DBCLIENT_PROFILE`]に、`dbclient/config/`ディレクトリ直下の、ディレクトリ名をセットすることで変更可能です。
+
 ターミナルのエンコーディングに、utf-8を設定して下さい。  
 ターミナルの文字フォントに、MSゴシックなどの等幅フォントを設定して下さい。  
 ターミナルの環境変数[`PYTHONIOENCODING`]に、`utf-8`をセットして下さい。
