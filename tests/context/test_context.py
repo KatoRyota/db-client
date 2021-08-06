@@ -115,6 +115,30 @@ class TestContext(TestCase):
         actual = context.check_application_initialize()
         self.assertEqual(expected, actual)
 
+        # ---- ケース14 ----
+        context = self._default_context()
+        context.log_dir = None
+
+        expected = False
+        actual = context.check_application_initialize()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース15 ----
+        context = self._default_context()
+        context.log_dir = ""
+
+        expected = False
+        actual = context.check_application_initialize()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース16 ----
+        context = self._default_context()
+        context.log_dir = u""
+
+        expected = False
+        actual = context.check_application_initialize()
+        self.assertEqual(expected, actual)
+
     def test_check_option_parse(self):
         # type: () -> None
 
