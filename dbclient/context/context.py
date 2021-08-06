@@ -11,6 +11,7 @@ class Context(object):
         "root_dir",
         "profile",
         "config_dir",
+        "log_dir",
         "subprocesses",
         "display_format",
         "field_delimiter",
@@ -35,6 +36,7 @@ class Context(object):
         self.root_dir = ""  # type: str
         self.profile = ""  # type: str
         self.config_dir = ""  # type: str
+        self.log_dir = ""  # type: str
         self.subprocesses = []  # type: list
         self.display_format = ""  # type: str
         self.field_delimiter = ""  # type: str
@@ -68,6 +70,11 @@ class Context(object):
         if not self.config_dir:
             return False
         if type(self.config_dir) is not str:
+            return False
+
+        if not self.log_dir:
+            return False
+        if type(self.log_dir) is not str:
             return False
 
         return True

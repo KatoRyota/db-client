@@ -45,25 +45,25 @@ class DbClient(object):
             raise StandardError(u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" %
                                 (context.root_dir + "/config/"))
 
-        if not context.check_application_initialize():
-            raise StandardError(u"アプリケーションの初期化処理に失敗しました。")
-
-        # ---- アプリケーション設定ファイルの読み込み ----
+        # アプリケーション設定ファイルの読み込み
         config = context.config
         config.read(context.config_dir + "/application.conf")
 
-        # ---- ロギング設定ファイルの読み込み ----
-        log_dir = config.get("logging", "log_dir")
+        # ロギング設定ファイルの読み込み
+        context.log_dir = config.get("logging", "log_dir")
 
-        if not log_dir:
-            log_dir = context.root_dir + "/log"
+        if not context.log_dir:
+            context.log_dir = context.root_dir + "/log"
 
-        if not os.path.isdir(log_dir):
-            os.makedirs(log_dir)
+        if not os.path.isdir(context.log_dir):
+            os.makedirs(context.log_dir)
 
-        os.environ["LOG_DIR"] = log_dir
+        os.environ["LOG_DIR"] = context.log_dir
         logging.config.fileConfig(context.config_dir + "/logging.conf")
         self.__logger = logging.getLogger(__name__)  # type: Logger
+
+        if not context.check_application_initialize():
+            raise StandardError(u"アプリケーションの初期化処理に失敗しました。")
 
     @staticmethod
     def main():
@@ -100,6 +100,7 @@ class DbClient(object):
             logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
             logger.debug("アプリケーション設定ファイルパス -> " + context.config_dir + "/application.conf")
             logger.debug("ロギング設定ファイルパス -> " + context.config_dir + "/logging.conf")
+            logger.debug("ログディレクトリ -> " + context.log_dir)
 
             # ---- 起動オプションのパース ----
             option_parser.set_usage("python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")

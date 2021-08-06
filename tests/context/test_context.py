@@ -497,6 +497,7 @@ class TestContext(TestCase):
         context.root_dir = "root_dir"
         context.profile = "profile"
         context.config_dir = "config_dir"
+        context.log_dir = "log_dir"
         context.subprocesses.append(mock.MagicMock())
         context.subprocesses.append(mock.MagicMock())
         context.display_format = "table"
