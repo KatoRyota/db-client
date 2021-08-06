@@ -235,10 +235,12 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", False)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", False), ("dbclient/log", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py"]
@@ -273,10 +275,12 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = False
             context_check_option_parse.return_value = True
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py"]
@@ -311,10 +315,13 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", True)))
+
             stderr.encoding = "utf-8"
 
             if os.environ.get("PYTHONIOENCODING"):
@@ -351,10 +358,13 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", True)))
+
             stderr.encoding = "utf-8"
 
             os.environ["PYTHONIOENCODING"] = "euc-jp"
@@ -390,10 +400,13 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = False
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", True)))
+
             stderr.encoding = "utf-8"
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
