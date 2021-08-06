@@ -15,6 +15,8 @@ from context.context import Context
 from runner.mysql_runner import MysqlRunner
 from runner.oracle_runner import OracleRunner
 
+log_dir_path = ""
+
 
 class DbClient(object):
     __slots__ = (
@@ -49,8 +51,11 @@ class DbClient(object):
             raise StandardError(u"アプリケーションの初期化処理に失敗しました。")
 
         # ---- ロギング設定ファイルの読み込み ----
-        if not os.path.isdir("./log"):
-            os.makedirs("./log")
+        global log_dir_path
+        log_dir_path = context.root_dir + "/log"
+
+        if not os.path.isdir(log_dir_path):
+            os.makedirs(log_dir_path)
 
         logging.config.fileConfig(context.config_dir + "/logging.conf")
         self.__logger = logging.getLogger(__name__)  # type: Logger
