@@ -15,8 +15,6 @@ from context.context import Context
 from runner.mysql_runner import MysqlRunner
 from runner.oracle_runner import OracleRunner
 
-log_dir_path = ""
-
 
 class DbClient(object):
     __slots__ = (
@@ -50,13 +48,21 @@ class DbClient(object):
         if not context.check_application_initialize():
             raise StandardError(u"アプリケーションの初期化処理に失敗しました。")
 
+        # ---- アプリケーション設定ファイルの読み込み ----
+        config = context.config
+        config.read(context.config_dir + "/application.conf")
+
         # ---- ロギング設定ファイルの読み込み ----
-        global log_dir_path
-        log_dir_path = context.root_dir + "/log"
+        # log_dir = config.get("logging", "log_dir")
+        log_dir = ""
 
-        if not os.path.isdir(log_dir_path):
-            os.makedirs(log_dir_path)
+        if not log_dir:
+            log_dir = context.root_dir + "/log"
 
+        if not os.path.isdir(log_dir):
+            os.makedirs(log_dir)
+
+        os.environ["LOG_DIR"] = log_dir
         logging.config.fileConfig(context.config_dir + "/logging.conf")
         self.__logger = logging.getLogger(__name__)  # type: Logger
 
@@ -71,15 +77,12 @@ class DbClient(object):
 
         logger = self.__logger
         context = self.__context
+        config = self.__context.config
         option_parser = OptionParser()
 
         # noinspection PyBroadException
         try:
             logger.info("[Start] " + os.path.abspath(__file__))
-
-            # ---- アプリケーション設定ファイルの読み込み ----
-            config = context.config
-            config.read(context.config_dir + "/application.conf")
 
             if not os.environ.get("PYTHONIOENCODING") or \
                     not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
