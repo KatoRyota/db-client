@@ -53,8 +53,7 @@ class DbClient(object):
         config.read(context.config_dir + "/application.conf")
 
         # ---- ロギング設定ファイルの読み込み ----
-        # log_dir = config.get("logging", "log_dir")
-        log_dir = ""
+        log_dir = config.get("logging", "log_dir")
 
         if not log_dir:
             log_dir = context.root_dir + "/log"

@@ -43,7 +43,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", False), ("dbclient/config/default", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -105,7 +107,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "mysql")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "mysql")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", False), ("dbclient/config/default", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -167,7 +171,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", False), ("dbclient/config/default", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -229,7 +235,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", False)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -265,7 +273,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = False
             context_check_option_parse.return_value = True
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -301,7 +311,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
             stderr.encoding = "utf-8"
 
@@ -339,7 +351,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
             stderr.encoding = "utf-8"
 
@@ -376,7 +390,9 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = False
-            config_parser_get.side_effect = self._config_parser_get_side_effect("default", "db_type", "oracle")
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
             isdir.side_effect = self._isdir_side_effect((("dbclient/log", True), ("dbclient/config/default", True)))
             stderr.encoding = "utf-8"
 
@@ -413,16 +429,17 @@ class TestDbClient(TestCase):
         return isdir
 
     @staticmethod
-    def _config_parser_get_side_effect(section, option, return_value):
-        # type: (str, str, str) -> object
+    def _config_parser_get_side_effect(return_values):
+        # type: (tuple) -> object
 
         def config_parser_get(inner_section, inner_option):
             # type: (str, str) -> str
 
-            if inner_section == section and inner_option == option:
-                return return_value
-            else:
-                raise StandardError(u"引数が不正です。")
+            for return_value_tuple in return_values:  # type: tuple
+                if return_value_tuple[0] == inner_section and return_value_tuple[1] == inner_option:
+                    return return_value_tuple[2]
+
+            raise StandardError(u"引数が不正です。")
 
         return config_parser_get
 
