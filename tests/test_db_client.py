@@ -61,60 +61,60 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
-            expected = None
             actual = os.environ.get("DBCLIENT_PROFILE")
+            expected = None
             self.assertEqual(expected, actual)
 
-            expected = "dbclient/log"
             actual = os.environ.get("LOG_DIR")
-            self.assertIn(expected, actual)
-
-            expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient"
-            actual = db_client._DbClient__context.root_dir
-            self.assertIn(expected, actual)
-
-            expected = "default"
-            actual = db_client._DbClient__context.profile
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/config/default"
-            actual = db_client._DbClient__context.config_dir
-            self.assertIn(expected, actual)
-
             expected = "dbclient/log"
-            actual = db_client._DbClient__context.log_dir
             self.assertIn(expected, actual)
 
-            expected = "table"
-            actual = db_client._DbClient__context.display_format
+            actual = os.environ.get("PYTHONIOENCODING")
+            expected = "utf-8"
             self.assertEqual(expected, actual)
 
-            expected = ""
-            actual = db_client._DbClient__context.field_delimiter
-            self.assertEqual(expected, actual)
+            actual = db_client._DbClient__context.root_dir
+            expected = "dbclient"
+            self.assertIn(expected, actual)
 
-            expected = 1000
-            actual = db_client._DbClient__context.column_max_length
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.heading
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.feedback
-            self.assertEqual(expected, actual)
-
-            expected = 10
-            actual = db_client._DbClient__context.pagesize
-            self.assertEqual(expected, actual)
-
+            actual = db_client._DbClient__context.profile
             expected = "default"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.config_dir
+            expected = "dbclient/config/default"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.log_dir
+            expected = "dbclient/log"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.display_format
+            expected = "table"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.field_delimiter
+            expected = ""
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.column_max_length
+            expected = 1000
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.heading
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.feedback
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.pagesize
+            expected = 10
+            self.assertEqual(expected, actual)
+
             actual = db_client._DbClient__context.connection_target
+            expected = "default"
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
@@ -159,8 +159,8 @@ class TestDbClient(TestCase):
                 db_client.execute()
 
             # 検証
-            expected = u"アプリケーションの初期化処理に失敗しました。"
             actual = e.exception.message
+            expected = u"アプリケーションの初期化処理に失敗しました。"
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
@@ -207,8 +207,8 @@ class TestDbClient(TestCase):
                 db_client.execute()
 
             # 検証
-            expected = u"起動オプションが不正です。"
             actual = stderr.getvalue().decode("utf-8")
+            expected = u"起動オプションが不正です。"
             self.assertRegexpMatches(actual, expected)
 
             context_check_application_initialize.assert_called_once()
@@ -252,60 +252,60 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
-            expected = None
             actual = os.environ.get("DBCLIENT_PROFILE")
+            expected = None
             self.assertEqual(expected, actual)
 
-            expected = "log_dir"
             actual = os.environ.get("LOG_DIR")
-            self.assertIn(expected, actual)
-
-            expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient"
-            actual = db_client._DbClient__context.root_dir
-            self.assertIn(expected, actual)
-
-            expected = "default"
-            actual = db_client._DbClient__context.profile
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/config/default"
-            actual = db_client._DbClient__context.config_dir
-            self.assertIn(expected, actual)
-
             expected = "log_dir"
-            actual = db_client._DbClient__context.log_dir
             self.assertIn(expected, actual)
 
-            expected = "table"
-            actual = db_client._DbClient__context.display_format
+            actual = os.environ.get("PYTHONIOENCODING")
+            expected = "utf-8"
             self.assertEqual(expected, actual)
 
-            expected = ""
-            actual = db_client._DbClient__context.field_delimiter
-            self.assertEqual(expected, actual)
+            actual = db_client._DbClient__context.root_dir
+            expected = "dbclient"
+            self.assertIn(expected, actual)
 
-            expected = 1000
-            actual = db_client._DbClient__context.column_max_length
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.heading
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.feedback
-            self.assertEqual(expected, actual)
-
-            expected = 10
-            actual = db_client._DbClient__context.pagesize
-            self.assertEqual(expected, actual)
-
+            actual = db_client._DbClient__context.profile
             expected = "default"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.config_dir
+            expected = "dbclient/config/default"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.log_dir
+            expected = "log_dir"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.display_format
+            expected = "table"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.field_delimiter
+            expected = ""
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.column_max_length
+            expected = 1000
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.heading
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.feedback
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.pagesize
+            expected = 10
+            self.assertEqual(expected, actual)
+
             actual = db_client._DbClient__context.connection_target
+            expected = "default"
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
@@ -349,60 +349,60 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
-            expected = None
             actual = os.environ.get("DBCLIENT_PROFILE")
+            expected = None
             self.assertEqual(expected, actual)
 
-            expected = "dbclient/log"
             actual = os.environ.get("LOG_DIR")
-            self.assertIn(expected, actual)
-
-            expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient"
-            actual = db_client._DbClient__context.root_dir
-            self.assertIn(expected, actual)
-
-            expected = "default"
-            actual = db_client._DbClient__context.profile
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/config/default"
-            actual = db_client._DbClient__context.config_dir
-            self.assertIn(expected, actual)
-
             expected = "dbclient/log"
-            actual = db_client._DbClient__context.log_dir
             self.assertIn(expected, actual)
 
-            expected = "table"
-            actual = db_client._DbClient__context.display_format
+            actual = os.environ.get("PYTHONIOENCODING")
+            expected = "utf-8"
             self.assertEqual(expected, actual)
 
-            expected = ""
-            actual = db_client._DbClient__context.field_delimiter
-            self.assertEqual(expected, actual)
+            actual = db_client._DbClient__context.root_dir
+            expected = "dbclient"
+            self.assertIn(expected, actual)
 
-            expected = 1000
-            actual = db_client._DbClient__context.column_max_length
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.heading
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.feedback
-            self.assertEqual(expected, actual)
-
-            expected = 10
-            actual = db_client._DbClient__context.pagesize
-            self.assertEqual(expected, actual)
-
+            actual = db_client._DbClient__context.profile
             expected = "default"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.config_dir
+            expected = "dbclient/config/default"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.log_dir
+            expected = "dbclient/log"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.display_format
+            expected = "table"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.field_delimiter
+            expected = ""
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.column_max_length
+            expected = 1000
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.heading
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.feedback
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.pagesize
+            expected = 10
+            self.assertEqual(expected, actual)
+
             actual = db_client._DbClient__context.connection_target
+            expected = "default"
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
@@ -447,9 +447,9 @@ class TestDbClient(TestCase):
                 db_client.execute()
 
             # 検証
+            actual = e.exception.message
             expected = u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % (
                     db_client._DbClient__context.root_dir + "/config/")
-            actual = e.exception.message
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_not_called()
@@ -493,60 +493,60 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
-            expected = None
             actual = os.environ.get("DBCLIENT_PROFILE")
+            expected = None
             self.assertEqual(expected, actual)
 
-            expected = "dbclient/log"
             actual = os.environ.get("LOG_DIR")
-            self.assertIn(expected, actual)
-
-            expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient"
-            actual = db_client._DbClient__context.root_dir
-            self.assertIn(expected, actual)
-
-            expected = "default"
-            actual = db_client._DbClient__context.profile
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/config/default"
-            actual = db_client._DbClient__context.config_dir
-            self.assertIn(expected, actual)
-
             expected = "dbclient/log"
-            actual = db_client._DbClient__context.log_dir
             self.assertIn(expected, actual)
 
-            expected = "table"
-            actual = db_client._DbClient__context.display_format
+            actual = os.environ.get("PYTHONIOENCODING")
+            expected = "utf-8"
             self.assertEqual(expected, actual)
 
-            expected = ""
-            actual = db_client._DbClient__context.field_delimiter
-            self.assertEqual(expected, actual)
+            actual = db_client._DbClient__context.root_dir
+            expected = "dbclient"
+            self.assertIn(expected, actual)
 
-            expected = 1000
-            actual = db_client._DbClient__context.column_max_length
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.heading
-            self.assertEqual(expected, actual)
-
-            expected = "on"
-            actual = db_client._DbClient__context.feedback
-            self.assertEqual(expected, actual)
-
-            expected = 10
-            actual = db_client._DbClient__context.pagesize
-            self.assertEqual(expected, actual)
-
+            actual = db_client._DbClient__context.profile
             expected = "default"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.config_dir
+            expected = "dbclient/config/default"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.log_dir
+            expected = "dbclient/log"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.display_format
+            expected = "table"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.field_delimiter
+            expected = ""
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.column_max_length
+            expected = 1000
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.heading
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.feedback
+            expected = "on"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.pagesize
+            expected = 10
+            self.assertEqual(expected, actual)
+
             actual = db_client._DbClient__context.connection_target
+            expected = "default"
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
@@ -588,60 +588,60 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
-            expected = "dbclient_profile"
             actual = os.environ.get("DBCLIENT_PROFILE")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/log"
-            actual = os.environ.get("LOG_DIR")
-            self.assertIn(expected, actual)
-
-            expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient"
-            actual = db_client._DbClient__context.root_dir
-            self.assertIn(expected, actual)
-
             expected = "dbclient_profile"
-            actual = db_client._DbClient__context.profile
             self.assertEqual(expected, actual)
 
-            expected = "dbclient/config/dbclient_profile"
-            actual = db_client._DbClient__context.config_dir
-            self.assertIn(expected, actual)
-
+            actual = os.environ.get("LOG_DIR")
             expected = "dbclient/log"
-            actual = db_client._DbClient__context.log_dir
             self.assertIn(expected, actual)
 
-            expected = "table"
+            actual = os.environ.get("PYTHONIOENCODING")
+            expected = "utf-8"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.root_dir
+            expected = "dbclient"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.profile
+            expected = "dbclient_profile"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.config_dir
+            expected = "dbclient/config/dbclient_profile"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.log_dir
+            expected = "dbclient/log"
+            self.assertIn(expected, actual)
+
             actual = db_client._DbClient__context.display_format
+            expected = "table"
             self.assertEqual(expected, actual)
 
-            expected = ""
             actual = db_client._DbClient__context.field_delimiter
+            expected = ""
             self.assertEqual(expected, actual)
 
-            expected = 1000
             actual = db_client._DbClient__context.column_max_length
+            expected = 1000
             self.assertEqual(expected, actual)
 
-            expected = "on"
             actual = db_client._DbClient__context.heading
-            self.assertEqual(expected, actual)
-
             expected = "on"
+            self.assertEqual(expected, actual)
+
             actual = db_client._DbClient__context.feedback
+            expected = "on"
             self.assertEqual(expected, actual)
 
-            expected = 10
             actual = db_client._DbClient__context.pagesize
+            expected = 10
             self.assertEqual(expected, actual)
 
-            expected = "default"
             actual = db_client._DbClient__context.connection_target
+            expected = "default"
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
@@ -690,8 +690,8 @@ class TestDbClient(TestCase):
                 db_client.execute()
 
             # 検証
-            expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             actual = stderr.getvalue().decode("utf-8")
+            expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             self.assertRegexpMatches(actual, expected)
 
             context_check_application_initialize.assert_called_once()
@@ -738,8 +738,8 @@ class TestDbClient(TestCase):
                 db_client.execute()
 
             # 検証
-            expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             actual = stderr.getvalue().decode("utf-8")
+            expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             self.assertRegexpMatches(actual, expected)
 
             context_check_application_initialize.assert_called_once()
@@ -783,60 +783,60 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
-            expected = None
             actual = os.environ.get("DBCLIENT_PROFILE")
+            expected = None
             self.assertEqual(expected, actual)
 
-            expected = "dbclient/log"
             actual = os.environ.get("LOG_DIR")
-            self.assertIn(expected, actual)
-
-            expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient"
-            actual = db_client._DbClient__context.root_dir
-            self.assertIn(expected, actual)
-
-            expected = "default"
-            actual = db_client._DbClient__context.profile
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/config/default"
-            actual = db_client._DbClient__context.config_dir
-            self.assertIn(expected, actual)
-
             expected = "dbclient/log"
-            actual = db_client._DbClient__context.log_dir
             self.assertIn(expected, actual)
 
-            expected = "csv"
-            actual = db_client._DbClient__context.display_format
+            actual = os.environ.get("PYTHONIOENCODING")
+            expected = "utf-8"
             self.assertEqual(expected, actual)
 
-            expected = ","
-            actual = db_client._DbClient__context.field_delimiter
-            self.assertEqual(expected, actual)
+            actual = db_client._DbClient__context.root_dir
+            expected = "dbclient"
+            self.assertIn(expected, actual)
 
-            expected = 0
-            actual = db_client._DbClient__context.column_max_length
-            self.assertEqual(expected, actual)
-
-            expected = "off"
-            actual = db_client._DbClient__context.heading
-            self.assertEqual(expected, actual)
-
-            expected = "off"
-            actual = db_client._DbClient__context.feedback
-            self.assertEqual(expected, actual)
-
-            expected = 0
-            actual = db_client._DbClient__context.pagesize
-            self.assertEqual(expected, actual)
-
+            actual = db_client._DbClient__context.profile
             expected = "default"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.config_dir
+            expected = "dbclient/config/default"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.log_dir
+            expected = "dbclient/log"
+            self.assertIn(expected, actual)
+
+            actual = db_client._DbClient__context.display_format
+            expected = "csv"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.field_delimiter
+            expected = ","
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.column_max_length
+            expected = 0
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.heading
+            expected = "off"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.feedback
+            expected = "off"
+            self.assertEqual(expected, actual)
+
+            actual = db_client._DbClient__context.pagesize
+            expected = 0
+            self.assertEqual(expected, actual)
+
             actual = db_client._DbClient__context.connection_target
+            expected = "default"
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
