@@ -219,7 +219,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース2.1 ----
+        # ---- ケース4.1 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -316,7 +316,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース2.2 ----
+        # ---- ケース4.2 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -413,7 +413,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
 
-        # ---- ケース3.1 ----
+        # ---- ケース5.1 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -460,7 +460,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース3.2 ----
+        # ---- ケース5.2 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -553,103 +553,6 @@ class TestDbClient(TestCase):
 
             context_check_application_initialize.assert_called_once()
             makedirs.assert_not_called()
-            context_check_option_parse.assert_called_once()
-            oracle_runner_execute.assert_called_once()
-            mysql_runner_execute.assert_not_called()
-
-        # ---- ケース5.1 ----
-        with mock.patch("__builtin__.reload"), \
-                mock.patch("ConfigParser.RawConfigParser.read"), \
-                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
-                mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
-                mock.patch("os.path.isdir") as isdir, \
-                mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context.Context.check_application_initialize"
-                           ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
-                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
-                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
-            # 前提条件
-            context_check_application_initialize.return_value = True
-            context_check_option_parse.return_value = True
-
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
-
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
-
-            if os.environ.get("DBCLIENT_PROFILE"):
-                del os.environ["DBCLIENT_PROFILE"]
-
-            os.environ["PYTHONIOENCODING"] = "utf-8"
-            sys.argv = ["db_client.py", "--display_format", "csv"]
-
-            # 実行
-            db_client = DbClient()
-            db_client.execute()
-
-            # 検証
-            expected = None
-            actual = os.environ.get("DBCLIENT_PROFILE")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/log"
-            actual = os.environ.get("LOG_DIR")
-            self.assertIn(expected, actual)
-
-            expected = "utf-8"
-            actual = os.environ.get("PYTHONIOENCODING")
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient"
-            actual = db_client._DbClient__context.root_dir
-            self.assertIn(expected, actual)
-
-            expected = "default"
-            actual = db_client._DbClient__context.profile
-            self.assertEqual(expected, actual)
-
-            expected = "dbclient/config/default"
-            actual = db_client._DbClient__context.config_dir
-            self.assertIn(expected, actual)
-
-            expected = "dbclient/log"
-            actual = db_client._DbClient__context.log_dir
-            self.assertIn(expected, actual)
-
-            expected = "csv"
-            actual = db_client._DbClient__context.display_format
-            self.assertEqual(expected, actual)
-
-            expected = ","
-            actual = db_client._DbClient__context.field_delimiter
-            self.assertEqual(expected, actual)
-
-            expected = 0
-            actual = db_client._DbClient__context.column_max_length
-            self.assertEqual(expected, actual)
-
-            expected = "off"
-            actual = db_client._DbClient__context.heading
-            self.assertEqual(expected, actual)
-
-            expected = "off"
-            actual = db_client._DbClient__context.feedback
-            self.assertEqual(expected, actual)
-
-            expected = 0
-            actual = db_client._DbClient__context.pagesize
-            self.assertEqual(expected, actual)
-
-            expected = "default"
-            actual = db_client._DbClient__context.connection_target
-            self.assertEqual(expected, actual)
-
-            context_check_application_initialize.assert_called_once()
-            makedirs.assert_called_once()
             context_check_option_parse.assert_called_once()
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
@@ -752,6 +655,103 @@ class TestDbClient(TestCase):
             makedirs.assert_called_once()
             context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
+            mysql_runner_execute.assert_not_called()
+
+        # ---- ケース8.1 ----
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
+                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
+                           ) as context_check_application_initialize, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
+            context_check_application_initialize.return_value = True
+            context_check_option_parse.return_value = True
+
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", False)))
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
+
+            os.environ["PYTHONIOENCODING"] = "utf-8"
+            sys.argv = ["db_client.py", "--display_format", "csv"]
+
+            # 実行
+            db_client = DbClient()
+            db_client.execute()
+
+            # 検証
+            expected = None
+            actual = os.environ.get("DBCLIENT_PROFILE")
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/log"
+            actual = os.environ.get("LOG_DIR")
+            self.assertIn(expected, actual)
+
+            expected = "utf-8"
+            actual = os.environ.get("PYTHONIOENCODING")
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient"
+            actual = db_client._DbClient__context.root_dir
+            self.assertIn(expected, actual)
+
+            expected = "default"
+            actual = db_client._DbClient__context.profile
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/config/default"
+            actual = db_client._DbClient__context.config_dir
+            self.assertIn(expected, actual)
+
+            expected = "dbclient/log"
+            actual = db_client._DbClient__context.log_dir
+            self.assertIn(expected, actual)
+
+            expected = "csv"
+            actual = db_client._DbClient__context.display_format
+            self.assertEqual(expected, actual)
+
+            expected = ","
+            actual = db_client._DbClient__context.field_delimiter
+            self.assertEqual(expected, actual)
+
+            expected = 0
+            actual = db_client._DbClient__context.column_max_length
+            self.assertEqual(expected, actual)
+
+            expected = "off"
+            actual = db_client._DbClient__context.heading
+            self.assertEqual(expected, actual)
+
+            expected = "off"
+            actual = db_client._DbClient__context.feedback
+            self.assertEqual(expected, actual)
+
+            expected = 0
+            actual = db_client._DbClient__context.pagesize
+            self.assertEqual(expected, actual)
+
+            expected = "default"
+            actual = db_client._DbClient__context.connection_target
+            self.assertEqual(expected, actual)
+
+            context_check_application_initialize.assert_called_once()
+            makedirs.assert_called_once()
+            context_check_option_parse.assert_called_once()
+            oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
     @staticmethod
