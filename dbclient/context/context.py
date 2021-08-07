@@ -1,5 +1,6 @@
 # coding: utf-8
 import logging
+import os
 from ConfigParser import SafeConfigParser
 from logging import Logger
 
@@ -61,6 +62,8 @@ class Context(object):
             return False
         if type(self.root_dir) is not str:
             return False
+        if not os.path.isdir(self.root_dir):
+            return False
 
         if not self.profile:
             return False
@@ -71,10 +74,14 @@ class Context(object):
             return False
         if type(self.config_dir) is not str:
             return False
+        if not os.path.isdir(self.config_dir):
+            return False
 
         if not self.log_dir:
             return False
         if type(self.log_dir) is not str:
+            return False
+        if not os.path.isdir(self.log_dir):
             return False
 
         return True

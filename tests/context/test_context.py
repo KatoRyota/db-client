@@ -1,4 +1,5 @@
 # coding: utf-8
+import os
 import unittest
 from unittest import TestCase
 
@@ -11,6 +12,17 @@ class TestContext(TestCase):
 
     def test_check_application_initialize(self):
         # type: () -> None
+
+        context = self._default_context()
+
+        if not os.path.isdir(context.root_dir):
+            os.makedirs(context.root_dir)
+
+        if not os.path.isdir(context.config_dir):
+            os.makedirs(context.config_dir)
+
+        if not os.path.isdir(context.log_dir):
+            os.makedirs(context.log_dir)
 
         # ---- ケース1 ----
         context = self._default_context()
