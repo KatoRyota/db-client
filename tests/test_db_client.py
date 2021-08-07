@@ -786,6 +786,7 @@ class TestDbClient(TestCase):
             # 実行
             db_client = DbClient()
             db_client.execute()
+            context = db_client._DbClient__context
 
             # 検証
             actual = os.environ.get("DBCLIENT_PROFILE")
@@ -800,47 +801,47 @@ class TestDbClient(TestCase):
             expected = "utf-8"
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.root_dir
+            actual = context.root_dir
             expected = "dbclient"
             self.assertIn(expected, actual)
 
-            actual = db_client._DbClient__context.profile
+            actual = context.profile
             expected = "default"
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.config_dir
+            actual = context.config_dir
             expected = "dbclient/config/default"
             self.assertIn(expected, actual)
 
-            actual = db_client._DbClient__context.log_dir
+            actual = context.log_dir
             expected = "dbclient/log"
             self.assertIn(expected, actual)
 
-            actual = db_client._DbClient__context.display_format
+            actual = context.display_format
             expected = "csv"
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.field_delimiter
+            actual = context.field_delimiter
             expected = ","
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.column_max_length
+            actual = context.column_max_length
             expected = 0
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.heading
+            actual = context.heading
             expected = "off"
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.feedback
+            actual = context.feedback
             expected = "off"
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.pagesize
+            actual = context.pagesize
             expected = 0
             self.assertEqual(expected, actual)
 
-            actual = db_client._DbClient__context.connection_target
+            actual = context.connection_target
             expected = "default"
             self.assertEqual(expected, actual)
 
