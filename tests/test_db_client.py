@@ -319,7 +319,54 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_called_once()
 
-        # ---- ケース3 ----
+        # ---- ケース3.1 ----
+        with mock.patch("__builtin__.reload"), \
+                mock.patch("ConfigParser.RawConfigParser.read"), \
+                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
+                mock.patch("logging.config.fileConfig"), \
+                mock.patch("logging.getLogger"), \
+                mock.patch("os.path.isdir") as isdir, \
+                mock.patch("os.makedirs") as makedirs, \
+                mock.patch("dbclient.context.context.Context.check_application_initialize"
+                           ) as context_check_application_initialize, \
+                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
+                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
+                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
+            context_check_application_initialize.return_value = True
+            context_check_option_parse.return_value = True
+
+            config_parser_get.side_effect = self._config_parser_get_side_effect(
+                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", False), ("dbclient/log", False)))
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
+
+            os.environ["PYTHONIOENCODING"] = "utf-8"
+            sys.argv = ["db_client.py"]
+
+            # 実行
+            with self.assertRaises(StandardError) as e:
+                db_client = DbClient()
+                db_client.execute()
+
+            # 検証
+            expected = u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % (
+                    db_client._DbClient__context.root_dir + "/config/")
+            actual = e.exception.message
+            self.assertEqual(expected, actual)
+
+            context_check_application_initialize.assert_not_called()
+            makedirs.assert_not_called()
+            context_check_option_parse.assert_not_called()
+            oracle_runner_execute.assert_not_called()
+            mysql_runner_execute.assert_not_called()
+
+        # ---- ケース5.1 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
@@ -414,53 +461,6 @@ class TestDbClient(TestCase):
             makedirs.assert_called_once()
             context_check_option_parse.assert_called_once()
             oracle_runner_execute.assert_called_once()
-            mysql_runner_execute.assert_not_called()
-
-        # ---- ケース4 ----
-        with mock.patch("__builtin__.reload"), \
-                mock.patch("ConfigParser.RawConfigParser.read"), \
-                mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
-                mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
-                mock.patch("os.path.isdir") as isdir, \
-                mock.patch("os.makedirs") as makedirs, \
-                mock.patch("dbclient.context.context.Context.check_application_initialize"
-                           ) as context_check_application_initialize, \
-                mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
-                mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
-                mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
-
-            # 前提条件
-            context_check_application_initialize.return_value = True
-            context_check_option_parse.return_value = True
-
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
-
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", False), ("dbclient/log", False)))
-
-            if os.environ.get("DBCLIENT_PROFILE"):
-                del os.environ["DBCLIENT_PROFILE"]
-
-            os.environ["PYTHONIOENCODING"] = "utf-8"
-            sys.argv = ["db_client.py"]
-
-            # 実行
-            with self.assertRaises(StandardError) as e:
-                db_client = DbClient()
-                db_client.execute()
-
-            # 検証
-            expected = u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % (
-                    db_client._DbClient__context.root_dir + "/config/")
-            actual = e.exception.message
-            self.assertEqual(expected, actual)
-
-            context_check_application_initialize.assert_not_called()
-            makedirs.assert_not_called()
-            context_check_option_parse.assert_not_called()
-            oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
         # ---- ケース5 ----
