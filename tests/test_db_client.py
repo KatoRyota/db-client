@@ -63,9 +63,33 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
+            expected = None
+            actual = os.environ.get("DBCLIENT_PROFILE")
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/log"
+            actual = os.environ.get("LOG_DIR")
+            self.assertIn(expected, actual)
+
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
+
+            expected = "dbclient"
+            actual = db_client._DbClient__context.root_dir
+            self.assertIn(expected, actual)
+
+            expected = "default"
+            actual = db_client._DbClient__context.profile
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/config/default"
+            actual = db_client._DbClient__context.config_dir
+            self.assertIn(expected, actual)
+
+            expected = "dbclient/log"
+            actual = db_client._DbClient__context.log_dir
+            self.assertIn(expected, actual)
 
             expected = "table"
             actual = db_client._DbClient__context.display_format
@@ -136,9 +160,33 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
+            expected = None
+            actual = os.environ.get("DBCLIENT_PROFILE")
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/log"
+            actual = os.environ.get("LOG_DIR")
+            self.assertIn(expected, actual)
+
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
+
+            expected = "dbclient"
+            actual = db_client._DbClient__context.root_dir
+            self.assertIn(expected, actual)
+
+            expected = "default"
+            actual = db_client._DbClient__context.profile
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/config/default"
+            actual = db_client._DbClient__context.config_dir
+            self.assertIn(expected, actual)
+
+            expected = "dbclient/log"
+            actual = db_client._DbClient__context.log_dir
+            self.assertIn(expected, actual)
 
             expected = "table"
             actual = db_client._DbClient__context.display_format
@@ -209,9 +257,33 @@ class TestDbClient(TestCase):
             db_client.execute()
 
             # 検証
+            expected = None
+            actual = os.environ.get("DBCLIENT_PROFILE")
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/log"
+            actual = os.environ.get("LOG_DIR")
+            self.assertIn(expected, actual)
+
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
+
+            expected = "dbclient"
+            actual = db_client._DbClient__context.root_dir
+            self.assertIn(expected, actual)
+
+            expected = "default"
+            actual = db_client._DbClient__context.profile
+            self.assertEqual(expected, actual)
+
+            expected = "dbclient/config/default"
+            actual = db_client._DbClient__context.config_dir
+            self.assertIn(expected, actual)
+
+            expected = "dbclient/log"
+            actual = db_client._DbClient__context.log_dir
+            self.assertIn(expected, actual)
 
             expected = "csv"
             actual = db_client._DbClient__context.display_format
