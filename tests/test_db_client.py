@@ -41,19 +41,28 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", False), ("dbclient/config/default", True)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", False)))
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py"]
 
+            # 実行
             db_client = DbClient()
             db_client.execute()
 
+            # 検証
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
@@ -105,19 +114,28 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "mysql")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", False), ("dbclient/config/default", True)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", False)))
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py"]
 
+            # 実行
             db_client = DbClient()
             db_client.execute()
 
+            # 検証
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
@@ -169,19 +187,28 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
+
             config_parser_get.side_effect = self._config_parser_get_side_effect(
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect((("dbclient/log", False), ("dbclient/config/default", True)))
+            isdir.side_effect = self._isdir_side_effect(
+                (("dbclient/config/default", True), ("dbclient/log", False)))
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py", "--display_format", "csv"]
 
+            # 実行
             db_client = DbClient()
             db_client.execute()
 
+            # 検証
             expected = "utf-8"
             actual = os.environ.get("PYTHONIOENCODING")
             self.assertEqual(expected, actual)
@@ -233,6 +260,8 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
@@ -240,15 +269,20 @@ class TestDbClient(TestCase):
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", False), ("dbclient/log", True)))
+                (("dbclient/config/default", False), ("dbclient/log", False)))
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py"]
 
+            # 実行
             with self.assertRaises(StandardError) as e:
                 db_client = DbClient()
                 db_client.execute()
 
+            # 検証
             expected = u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % (
                     db_client._DbClient__context.root_dir + "/config/")
             actual = e.exception.message
@@ -273,6 +307,8 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = False
             context_check_option_parse.return_value = True
 
@@ -280,21 +316,26 @@ class TestDbClient(TestCase):
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", True)))
+                (("dbclient/config/default", True), ("dbclient/log", False)))
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py"]
 
+            # 実行
             with self.assertRaises(StandardError) as e:
                 db_client = DbClient()
                 db_client.execute()
 
+            # 検証
             expected = u"アプリケーションの初期化処理に失敗しました。"
             actual = e.exception.message
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_called_once()
-            makedirs.assert_not_called()
+            makedirs.assert_called_once()
             context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
@@ -313,6 +354,8 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
@@ -320,24 +363,30 @@ class TestDbClient(TestCase):
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", True)))
+                (("dbclient/config/default", True), ("dbclient/log", False)))
 
             stderr.encoding = "utf-8"
 
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
+
             if os.environ.get("PYTHONIOENCODING"):
                 del os.environ["PYTHONIOENCODING"]
+
             sys.argv = ["db_client.py"]
 
+            # 実行
             with self.assertRaises(SystemExit):
                 db_client = DbClient()
                 db_client.execute()
 
+            # 検証
             expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
             context_check_application_initialize.assert_called_once()
-            makedirs.assert_not_called()
+            makedirs.assert_called_once()
             context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
@@ -356,6 +405,8 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
@@ -363,23 +414,28 @@ class TestDbClient(TestCase):
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", True)))
+                (("dbclient/config/default", True), ("dbclient/log", False)))
 
             stderr.encoding = "utf-8"
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "euc-jp"
             sys.argv = ["db_client.py"]
 
+            # 実行
             with self.assertRaises(SystemExit):
                 db_client = DbClient()
                 db_client.execute()
 
+            # 検証
             expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
             context_check_application_initialize.assert_called_once()
-            makedirs.assert_not_called()
+            makedirs.assert_called_once()
             context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
@@ -398,6 +454,8 @@ class TestDbClient(TestCase):
                 mock.patch("dbclient.context.context.Context.check_option_parse") as context_check_option_parse, \
                 mock.patch("dbclient.runner.oracle_runner.OracleRunner.execute") as oracle_runner_execute, \
                 mock.patch("dbclient.runner.mysql_runner.MysqlRunner.execute") as mysql_runner_execute:
+
+            # 前提条件
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = False
 
@@ -405,23 +463,28 @@ class TestDbClient(TestCase):
                 (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", True)))
+                (("dbclient/config/default", True), ("dbclient/log", False)))
 
             stderr.encoding = "utf-8"
+
+            if os.environ.get("DBCLIENT_PROFILE"):
+                del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
             sys.argv = ["db_client.py"]
 
+            # 実行
             with self.assertRaises(SystemExit):
                 db_client = DbClient()
                 db_client.execute()
 
+            # 検証
             expected = u"起動オプションが不正です。"
             actual = stderr.getvalue().decode("utf-8")
             self.assertRegexpMatches(actual, expected)
 
             context_check_application_initialize.assert_called_once()
-            makedirs.assert_not_called()
+            makedirs.assert_called_once()
             context_check_option_parse.assert_called_once()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
