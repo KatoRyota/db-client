@@ -448,11 +448,12 @@ class TestDbClient(TestCase):
             with self.assertRaises(StandardError) as e:
                 db_client = DbClient()
                 db_client.execute()
+                context = db_client._DbClient__context
 
             # 検証
             actual = e.exception.message
             expected = u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % (
-                    db_client._DbClient__context.root_dir + "/config/")
+                    context.root_dir + "/config/")
             self.assertEqual(expected, actual)
 
             context_check_application_initialize.assert_not_called()
