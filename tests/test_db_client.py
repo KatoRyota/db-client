@@ -557,7 +557,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_called_once()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース6 ----
+        # ---- ケース7.1 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
@@ -582,8 +582,6 @@ class TestDbClient(TestCase):
             isdir.side_effect = self._isdir_side_effect(
                 (("dbclient/config/default", True), ("dbclient/log", False)))
 
-            stderr.encoding = "utf-8"
-
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
@@ -591,6 +589,7 @@ class TestDbClient(TestCase):
                 del os.environ["PYTHONIOENCODING"]
 
             sys.argv = ["db_client.py"]
+            stderr.encoding = "utf-8"
 
             # 実行
             with self.assertRaises(SystemExit):
@@ -608,7 +607,7 @@ class TestDbClient(TestCase):
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
 
-        # ---- ケース7 ----
+        # ---- ケース7.2 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
@@ -633,13 +632,12 @@ class TestDbClient(TestCase):
             isdir.side_effect = self._isdir_side_effect(
                 (("dbclient/config/default", True), ("dbclient/log", False)))
 
-            stderr.encoding = "utf-8"
-
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "euc-jp"
             sys.argv = ["db_client.py"]
+            stderr.encoding = "utf-8"
 
             # 実行
             with self.assertRaises(SystemExit):
