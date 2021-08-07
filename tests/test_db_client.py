@@ -19,14 +19,12 @@ class TestDbClient(TestCase):
         before_stdin = sys.stdin
         before_stdout = sys.stdout
         before_stderr = sys.stderr
-        before_argv = sys.argv
 
         reload(sys)
         sys.setdefaultencoding("utf-8")
         sys.stdin = before_stdin
         sys.stdout = before_stdout
         sys.stderr = before_stderr
-        sys.argv = before_argv
 
         # ---- ケース1 ----
         with mock.patch("__builtin__.reload"), \
