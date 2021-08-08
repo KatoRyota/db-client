@@ -27,128 +27,128 @@ class TestContext(TestCase):
         # ---- ケース1 ----
         context = self._default_context()
 
-        expected = True
         actual = context.check_application_initialize()
+        expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
         context = self._default_context()
         context.config = None
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
         context = self._default_context()
         context.config = ""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
         context = self._default_context()
         context.config = 1
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
         context = self._default_context()
         context.root_dir = None
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
         context = self._default_context()
         context.root_dir = ""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
         context = self._default_context()
         context.root_dir = u""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース8 ----
         context = self._default_context()
         context.profile = None
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース9 ----
         context = self._default_context()
         context.profile = ""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
         context = self._default_context()
         context.profile = u""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース11 ----
         context = self._default_context()
         context.config_dir = None
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース12 ----
         context = self._default_context()
         context.config_dir = ""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース13 ----
         context = self._default_context()
         context.config_dir = u""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース14 ----
         context = self._default_context()
         context.log_dir = None
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース15 ----
         context = self._default_context()
         context.log_dir = ""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース16 ----
         context = self._default_context()
         context.log_dir = u""
 
-        expected = False
         actual = context.check_application_initialize()
+        expected = False
         self.assertEqual(expected, actual)
 
     def test_check_option_parse(self):
