@@ -161,7 +161,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース2 ----
+        # ---- ケース2.1 ----
         context = self._default_context()
         context.display_format = "table"
 
@@ -169,7 +169,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース3 ----
+        # ---- ケース2.2 ----
         context = self._default_context()
         context.display_format = "TABLE"
 
@@ -177,7 +177,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース4 ----
+        # ---- ケース2.3 ----
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = ","
@@ -186,7 +186,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース2.4 ----
         context = self._default_context()
         context.display_format = "CSV"
         context.field_delimiter = ","
@@ -195,7 +195,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース6 ----
+        # ---- ケース3.1 ----
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = None
@@ -204,7 +204,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース7 ----
+        # ---- ケース3.2 ----
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = ""
@@ -213,7 +213,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース8 ----
+        # ---- ケース3.3 ----
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = u""
@@ -222,7 +222,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース4.1 ----
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = None
@@ -231,7 +231,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース4.2 ----
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = ""
@@ -240,7 +240,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース11 ----
+        # ---- ケース4.3 ----
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = 0
@@ -249,7 +249,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース12 ----
+        # ---- ケース5.1 ----
         context = self._default_context()
         context.heading = "on"
 
@@ -257,7 +257,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース13 ----
+        # ---- ケース5.2 ----
         context = self._default_context()
         context.heading = "ON"
 
@@ -265,7 +265,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース14 ----
+        # ---- ケース5.3 ----
         context = self._default_context()
         context.heading = "off"
 
@@ -273,7 +273,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース15 ----
+        # ---- ケース5.4 ----
         context = self._default_context()
         context.heading = "OFF"
 
@@ -281,7 +281,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース16 ----
+        # ---- ケース6.1 ----
         context = self._default_context()
         context.feedback = "on"
 
@@ -289,7 +289,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース17 ----
+        # ---- ケース6.2 ----
         context = self._default_context()
         context.feedback = "ON"
 
@@ -297,7 +297,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース18 ----
+        # ---- ケース6.3 ----
         context = self._default_context()
         context.feedback = "off"
 
@@ -305,7 +305,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース19 ----
+        # ---- ケース6.4 ----
         context = self._default_context()
         context.feedback = "OFF"
 
@@ -313,7 +313,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース20 ----
+        # ---- ケース7.1 ----
         context = self._default_context()
         context.pagesize = None
 
@@ -321,7 +321,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース21 ----
+        # ---- ケース7.2 ----
         context = self._default_context()
         context.pagesize = ""
 
@@ -329,7 +329,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース22 ----
+        # ---- ケース7.3 ----
         context = self._default_context()
         context.pagesize = -1
 
@@ -337,7 +337,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース23 ----
+        # ---- ケース8.1 ----
         context = self._default_context()
         context.connection_target = None
 
@@ -345,7 +345,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース24 ----
+        # ---- ケース8.2 ----
         context = self._default_context()
         context.connection_target = ""
 
@@ -353,7 +353,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース25 ----
+        # ---- ケース8.3 ----
         context = self._default_context()
         context.connection_target = u""
 
