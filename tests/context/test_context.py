@@ -443,7 +443,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース5.1 ----
         context = self._default_context()
         context.sql_client_return_code = None
 
@@ -451,7 +451,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース6 ----
+        # ---- ケース5.2 ----
         context = self._default_context()
         context.sql_client_return_code = ""
 
@@ -459,7 +459,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース7 ----
+        # ---- ケース5.3 ----
         context = self._default_context()
         context.sql_client_return_code = "0"
 
@@ -467,7 +467,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース8 ----
+        # ---- ケース6.1 ----
         context = self._default_context()
         context.result_set_html = None
 
@@ -475,7 +475,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース6.2 ----
         context = self._default_context()
         context.result_set_html = ""
 
@@ -483,7 +483,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース6.3 ----
         context = self._default_context()
         context.result_set_html = 1
 
