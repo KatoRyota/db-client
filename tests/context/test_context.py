@@ -530,10 +530,10 @@ class TestContext(TestCase):
         # type: () -> Context
 
         context = Context()
-        context.root_dir = "root_dir"
-        context.profile = "profile"
-        context.config_dir = "config_dir"
-        context.log_dir = "log_dir"
+        context.root_dir = os.path.dirname(os.path.abspath(__file__))
+        context.profile = "test"
+        context.config_dir = context.root_dir + "/config/" + context.profile
+        context.log_dir = context.root_dir + "/log"
         context.subprocesses.append(mock.MagicMock())
         context.subprocesses.append(mock.MagicMock())
         context.display_format = "table"
