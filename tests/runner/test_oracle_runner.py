@@ -25,6 +25,7 @@ class TestOracleRunner(TestCase):
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
             context_check_sql_execute.return_value = True
             context_check_result_set_parse.return_value = True
 
@@ -32,8 +33,10 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             context.display_format = "table"
 
+            # 実行
             OracleRunner(context).execute()
 
+            # 検証
             expected = "oracle_home"
             actual = os.environ.get("ORACLE_HOME")
             self.assertEqual(expected, actual)
@@ -69,6 +72,7 @@ class TestOracleRunner(TestCase):
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
             context_check_sql_execute.return_value = True
             context_check_result_set_parse.return_value = True
 
@@ -76,8 +80,10 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             context.display_format = "csv"
 
+            # 実行
             OracleRunner(context).execute()
 
+            # 検証
             expected = "oracle_home"
             actual = os.environ.get("ORACLE_HOME")
             self.assertEqual(expected, actual)
@@ -113,6 +119,7 @@ class TestOracleRunner(TestCase):
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
             context_check_sql_execute.return_value = False
             context_check_result_set_parse.return_value = True
 
@@ -120,9 +127,11 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             context.display_format = "table"
 
+            # 実行
             with self.assertRaises(StandardError) as e:
                 OracleRunner(context).execute()
 
+            # 検証
             self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
 
             context_check_sql_execute.assert_called_once()
@@ -140,6 +149,7 @@ class TestOracleRunner(TestCase):
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
             context_check_sql_execute.return_value = False
             context_check_result_set_parse.return_value = True
 
@@ -147,9 +157,11 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             context.display_format = "csv"
 
+            # 実行
             with self.assertRaises(StandardError) as e:
                 OracleRunner(context).execute()
 
+            # 検証
             self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
 
             context_check_sql_execute.assert_called_once()
@@ -167,6 +179,7 @@ class TestOracleRunner(TestCase):
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
             context_check_sql_execute.return_value = True
             context_check_result_set_parse.return_value = False
 
@@ -174,9 +187,11 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             context.display_format = "table"
 
+            # 実行
             with self.assertRaises(StandardError) as e:
                 OracleRunner(context).execute()
 
+            # 検証
             self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
 
             context_check_sql_execute.assert_called_once()
@@ -194,6 +209,7 @@ class TestOracleRunner(TestCase):
                            ) as context_check_result_set_parse, \
                 mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
                 mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
             context_check_sql_execute.return_value = True
             context_check_result_set_parse.return_value = False
 
@@ -201,9 +217,11 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             context.display_format = "csv"
 
+            # 実行
             with self.assertRaises(StandardError) as e:
                 OracleRunner(context).execute()
 
+            # 検証
             self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
 
             context_check_sql_execute.assert_called_once()
