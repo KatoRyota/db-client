@@ -32,31 +32,33 @@ class TestOracleRunner(TestCase):
             context = self._default_context()
             context.config = self._default_config()
             config = context.config
+
             config.set("test", "privilege", "")
+
             context.display_format = "table"
 
             # 実行
             OracleRunner(context).execute()
 
             # 検証
-            expected = "oracle_home"
             actual = os.environ.get("ORACLE_HOME")
+            expected = "oracle_home"
             self.assertEqual(expected, actual)
 
-            expected = "ld_library_path"
             actual = os.environ.get("LD_LIBRARY_PATH")
+            expected = "ld_library_path"
             self.assertEqual(expected, actual)
 
-            expected = "nls_lang"
             actual = os.environ.get("NLS_LANG")
+            expected = "nls_lang"
             self.assertEqual(expected, actual)
 
-            expected = "nls_date_format"
             actual = os.environ.get("NLS_DATE_FORMAT")
+            expected = "nls_date_format"
             self.assertEqual(expected, actual)
 
-            expected = "nls_timestamp_format"
             actual = os.environ.get("NLS_TIMESTAMP_FORMAT")
+            expected = "nls_timestamp_format"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
@@ -81,7 +83,9 @@ class TestOracleRunner(TestCase):
             context = self._default_context()
             context.config = self._default_config()
             config = context.config
+
             config.set("test", "privilege", "")
+
             context.display_format = "table"
 
             # 実行
@@ -89,7 +93,9 @@ class TestOracleRunner(TestCase):
                 OracleRunner(context).execute()
 
             # 検証
-            self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
+            actual = e.exception.message
+            expected = u"SQLクライアントの実行結果が不正です。"
+            self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_not_called()
@@ -112,6 +118,10 @@ class TestOracleRunner(TestCase):
 
             context = self._default_context()
             context.config = self._default_config()
+            config = context.config
+
+            config.set("test", "privilege", "")
+
             context.display_format = "table"
 
             # 実行
@@ -119,7 +129,9 @@ class TestOracleRunner(TestCase):
                 OracleRunner(context).execute()
 
             # 検証
-            self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
+            actual = u"SQLクライアントの実行結果の、パース処理に失敗しました。"
+            expected = e.exception.message
+            self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_called_once()
@@ -143,31 +155,33 @@ class TestOracleRunner(TestCase):
             context = self._default_context()
             context.config = self._default_config()
             config = context.config
+
             config.set("test", "privilege", "sys")
+
             context.display_format = "table"
 
             # 実行
             OracleRunner(context).execute()
 
             # 検証
-            expected = "oracle_home"
             actual = os.environ.get("ORACLE_HOME")
+            expected = "oracle_home"
             self.assertEqual(expected, actual)
 
-            expected = "ld_library_path"
             actual = os.environ.get("LD_LIBRARY_PATH")
+            expected = "ld_library_path"
             self.assertEqual(expected, actual)
 
-            expected = "nls_lang"
             actual = os.environ.get("NLS_LANG")
+            expected = "nls_lang"
             self.assertEqual(expected, actual)
 
-            expected = "nls_date_format"
             actual = os.environ.get("NLS_DATE_FORMAT")
+            expected = "nls_date_format"
             self.assertEqual(expected, actual)
 
-            expected = "nls_timestamp_format"
             actual = os.environ.get("NLS_TIMESTAMP_FORMAT")
+            expected = "nls_timestamp_format"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
@@ -191,30 +205,34 @@ class TestOracleRunner(TestCase):
 
             context = self._default_context()
             context.config = self._default_config()
+            config = context.config
+
+            config.set("test", "privilege", "")
+
             context.display_format = "csv"
 
             # 実行
             OracleRunner(context).execute()
 
             # 検証
-            expected = "oracle_home"
             actual = os.environ.get("ORACLE_HOME")
+            expected = "oracle_home"
             self.assertEqual(expected, actual)
 
-            expected = "ld_library_path"
             actual = os.environ.get("LD_LIBRARY_PATH")
+            expected = "ld_library_path"
             self.assertEqual(expected, actual)
 
-            expected = "nls_lang"
             actual = os.environ.get("NLS_LANG")
+            expected = "nls_lang"
             self.assertEqual(expected, actual)
 
-            expected = "nls_date_format"
             actual = os.environ.get("NLS_DATE_FORMAT")
+            expected = "nls_date_format"
             self.assertEqual(expected, actual)
 
-            expected = "nls_timestamp_format"
             actual = os.environ.get("NLS_TIMESTAMP_FORMAT")
+            expected = "nls_timestamp_format"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
