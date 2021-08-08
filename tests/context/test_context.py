@@ -405,7 +405,7 @@ class TestContext(TestCase):
 
         # ---- ケース3.2 ----
         context = self._default_context()
-        context.sql = ""
+        context.sql = u""
 
         expected = False
         actual = context.check_sql_execute()
@@ -414,6 +414,30 @@ class TestContext(TestCase):
         # ---- ケース3.3 ----
         context = self._default_context()
         context.sql = 1
+
+        expected = False
+        actual = context.check_sql_execute()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.1 ----
+        context = self._default_context()
+        context.dsn = None
+
+        expected = False
+        actual = context.check_sql_execute()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.2 ----
+        context = self._default_context()
+        context.dsn = ""
+
+        expected = False
+        actual = context.check_sql_execute()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.3 ----
+        context = self._default_context()
+        context.dsn = 1
 
         expected = False
         actual = context.check_sql_execute()
