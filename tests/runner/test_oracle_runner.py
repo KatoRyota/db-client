@@ -97,6 +97,36 @@ class TestOracleRunner(TestCase):
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_not_called()
 
+        # ---- ケース3.1 ----
+        with mock.patch("sys.stdin", new=BytesIO()), \
+                mock.patch("subprocess.Popen.__new__"), \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as context_check_sql_execute, \
+                mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
+                           ) as context_check_result_set_parse, \
+                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
+                mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
+            context_check_sql_execute.return_value = True
+            context_check_result_set_parse.return_value = False
+
+            context = self._default_context()
+            context.config = self._default_config()
+            context.display_format = "table"
+
+            # 実行
+            with self.assertRaises(StandardError) as e:
+                OracleRunner(context).execute()
+
+            # 検証
+            self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
+
+            context_check_sql_execute.assert_called_once()
+            oracle_parser_execute.assert_called_once()
+            context_check_result_set_parse.assert_called_once()
+            table_printer_execute.assert_not_called()
+            csv_printer_execute.assert_not_called()
+
         # ---- ケース6 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
@@ -171,66 +201,6 @@ class TestOracleRunner(TestCase):
             context_check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_not_called()
             context_check_result_set_parse.assert_not_called()
-            table_printer_execute.assert_not_called()
-            csv_printer_execute.assert_not_called()
-
-        # ---- ケース5 ----
-        with mock.patch("sys.stdin", new=BytesIO()), \
-                mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context.Context.check_sql_execute") as context_check_sql_execute, \
-                mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
-                mock.patch("dbclient.context.context.Context.check_result_set_parse"
-                           ) as context_check_result_set_parse, \
-                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
-                mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-            # 前提条件
-            context_check_sql_execute.return_value = True
-            context_check_result_set_parse.return_value = False
-
-            context = self._default_context()
-            context.config = self._default_config()
-            context.display_format = "table"
-
-            # 実行
-            with self.assertRaises(StandardError) as e:
-                OracleRunner(context).execute()
-
-            # 検証
-            self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
-
-            context_check_sql_execute.assert_called_once()
-            oracle_parser_execute.assert_called_once()
-            context_check_result_set_parse.assert_called_once()
-            table_printer_execute.assert_not_called()
-            csv_printer_execute.assert_not_called()
-
-        # ---- ケース6 ----
-        with mock.patch("sys.stdin", new=BytesIO()), \
-                mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context.Context.check_sql_execute") as context_check_sql_execute, \
-                mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
-                mock.patch("dbclient.context.context.Context.check_result_set_parse"
-                           ) as context_check_result_set_parse, \
-                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
-                mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-            # 前提条件
-            context_check_sql_execute.return_value = True
-            context_check_result_set_parse.return_value = False
-
-            context = self._default_context()
-            context.config = self._default_config()
-            context.display_format = "csv"
-
-            # 実行
-            with self.assertRaises(StandardError) as e:
-                OracleRunner(context).execute()
-
-            # 検証
-            self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
-
-            context_check_sql_execute.assert_called_once()
-            oracle_parser_execute.assert_called_once()
-            context_check_result_set_parse.assert_called_once()
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_not_called()
 
