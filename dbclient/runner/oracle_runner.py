@@ -54,15 +54,15 @@ class OracleRunner(object):
             raise StandardError(u"環境変数[NLS_TIMESTAMP_FORMAT]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
         # ---- 標準入力を読み込み ----
-        sql = sys.stdin.read().decode("utf-8")
+        context.sql = sys.stdin.read().decode("utf-8")
 
         # ---- sqlplusの呼び出し ----
-        sql = u"\n".join(("WHENEVER SQLERROR EXIT 1", "WHENEVER OSERROR EXIT 1", "SET WRAP OFF", "SET LINESIZE 32767",
-                          "SET LONG 2000000000", "SET LONGCHUNKSIZE 1000", "SET NUMWIDTH 50", "SET TRIMOUT ON",
-                          "SET PAGESIZE 50000", "SET HEADING ON", " SET FEEDBACK ON", "SET DEFINE OFF",
-                          "SET NULL 'NULL'", sql))
+        context.sql = u"\n".join(("WHENEVER SQLERROR EXIT 1", "WHENEVER OSERROR EXIT 1", "SET WRAP OFF",
+                                  "SET LINESIZE 32767", "SET LONG 2000000000", "SET LONGCHUNKSIZE 1000",
+                                  "SET NUMWIDTH 50", "SET TRIMOUT ON", "SET PAGESIZE 50000", "SET HEADING ON",
+                                  "SET FEEDBACK ON", "SET DEFINE OFF", "SET NULL 'NULL'", context.sql))
 
-        dsn = "{user_name}/{password}@{host}:{port}/{sid}".format(
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}".format(
             user_name=config.get(context.connection_target, "user_name"),
             password=config.get(context.connection_target, "password"),
             host=config.get(context.connection_target, "host"),
@@ -73,12 +73,12 @@ class OracleRunner(object):
         privilege = config.get(context.connection_target, "privilege")
 
         if privilege:
-            dsn += " AS " + privilege
+            context.dsn += " AS " + privilege
 
-        echo_command = ["echo", sql]
-        sqlplus_command = ["sqlplus", "-s", "-M", "HTML ON", dsn]
+        echo_command = ["echo", context.sql]
+        sqlplus_command = ["sqlplus", "-s", "-M", "HTML ON", context.dsn]
 
-        logger.debug(u"echo \"%s\" | sqlplus -s -M HTML ON \"%s\"" % (sql, dsn))
+        logger.debug(u"echo \"%s\" | sqlplus -s -M HTML ON \"%s\"" % (context.sql, context.dsn))
 
         echo_process = Popen(echo_command, stdout=PIPE)
         context.subprocesses.append(echo_process)

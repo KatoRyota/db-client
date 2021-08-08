@@ -21,6 +21,8 @@ class Context(object):
         "feedback",
         "pagesize",
         "connection_target",
+        "sql",
+        "dsn",
         "sql_client_return_code",
         "result_set_html",
         "result_headings",
@@ -45,6 +47,8 @@ class Context(object):
         self.heading = ""  # type: str
         self.feedback = ""  # type: str
         self.pagesize = 0  # type: int
+        self.sql = u""  # type: unicode
+        self.dsn = ""  # type: str
         self.connection_target = ""  # type: str
         self.sql_client_return_code = 0  # type: int
         self.result_set_html = u""  # type: unicode
@@ -129,6 +133,16 @@ class Context(object):
         # type: () -> bool
 
         if type(self.subprocesses) is not list:
+            return False
+
+        if not self.sql:
+            return False
+        if type(self.sql) is not unicode:
+            return False
+
+        if not self.dsn:
+            return False
+        if type(self.dsn) is not str:
             return False
 
         if type(self.sql_client_return_code) is not int:

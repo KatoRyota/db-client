@@ -371,7 +371,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース2 ----
+        # ---- ケース2.1 ----
         context = self._default_context()
         context.subprocesses = None
 
@@ -379,7 +379,7 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース3 ----
+        # ---- ケース2.2 ----
         context = self._default_context()
         context.subprocesses = ""
 
@@ -387,9 +387,33 @@ class TestContext(TestCase):
         actual = context.check_sql_execute()
         self.assertEqual(expected, actual)
 
-        # ---- ケース4 ----
+        # ---- ケース2.3 ----
         context = self._default_context()
         context.subprocesses = ()
+
+        expected = False
+        actual = context.check_sql_execute()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.1 ----
+        context = self._default_context()
+        context.sql = None
+
+        expected = False
+        actual = context.check_sql_execute()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.2 ----
+        context = self._default_context()
+        context.sql = ""
+
+        expected = False
+        actual = context.check_sql_execute()
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.3 ----
+        context = self._default_context()
+        context.sql = 1
 
         expected = False
         actual = context.check_sql_execute()
@@ -543,6 +567,8 @@ class TestContext(TestCase):
         context.feedback = "on"
         context.pagesize = 3
         context.connection_target = "default"
+        context.sql = u"sql"
+        context.dsn = "dsn"
         context.sql_client_return_code = 0
         context.result_set_html = u""
         context.result_headings = ["ID", "NAME", "TYPE"]

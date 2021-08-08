@@ -61,6 +61,28 @@ class TestOracleRunner(TestCase):
             expected = "nls_timestamp_format"
             self.assertEqual(expected, actual)
 
+            actual = context.sql
+            expected = u"""\
+WHENEVER SQLERROR EXIT 1
+WHENEVER OSERROR EXIT 1
+SET WRAP OFF
+SET LINESIZE 32767
+SET LONG 2000000000
+SET LONGCHUNKSIZE 1000
+SET NUMWIDTH 50
+SET TRIMOUT ON
+SET PAGESIZE 50000
+SET HEADING ON
+SET FEEDBACK ON
+SET DEFINE OFF
+SET NULL 'NULL'
+"""
+            self.assertEqual(expected, actual)
+
+            actual = context.dsn
+            expected = "user_name/password@host:port/sid"
+            self.assertEqual(expected, actual)
+
             context_check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_called_once()
             context_check_result_set_parse.assert_called_once()
@@ -184,6 +206,28 @@ class TestOracleRunner(TestCase):
             expected = "nls_timestamp_format"
             self.assertEqual(expected, actual)
 
+            actual = context.sql
+            expected = u"""\
+WHENEVER SQLERROR EXIT 1
+WHENEVER OSERROR EXIT 1
+SET WRAP OFF
+SET LINESIZE 32767
+SET LONG 2000000000
+SET LONGCHUNKSIZE 1000
+SET NUMWIDTH 50
+SET TRIMOUT ON
+SET PAGESIZE 50000
+SET HEADING ON
+SET FEEDBACK ON
+SET DEFINE OFF
+SET NULL 'NULL'
+"""
+            self.assertEqual(expected, actual)
+
+            actual = context.dsn
+            expected = "user_name/password@host:port/sid AS sys"
+            self.assertEqual(expected, actual)
+
             context_check_sql_execute.assert_called_once()
             oracle_parser_execute.assert_called_once()
             context_check_result_set_parse.assert_called_once()
@@ -233,6 +277,28 @@ class TestOracleRunner(TestCase):
 
             actual = os.environ.get("NLS_TIMESTAMP_FORMAT")
             expected = "nls_timestamp_format"
+            self.assertEqual(expected, actual)
+
+            actual = context.sql
+            expected = u"""\
+WHENEVER SQLERROR EXIT 1
+WHENEVER OSERROR EXIT 1
+SET WRAP OFF
+SET LINESIZE 32767
+SET LONG 2000000000
+SET LONGCHUNKSIZE 1000
+SET NUMWIDTH 50
+SET TRIMOUT ON
+SET PAGESIZE 50000
+SET HEADING ON
+SET FEEDBACK ON
+SET DEFINE OFF
+SET NULL 'NULL'
+"""
+            self.assertEqual(expected, actual)
+
+            actual = context.dsn
+            expected = "user_name/password@host:port/sid"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
