@@ -127,7 +127,56 @@ class TestOracleRunner(TestCase):
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_not_called()
 
-        # ---- ケース6 ----
+        # ---- ケース4.1 ----
+        with mock.patch("sys.stdin", new=BytesIO()), \
+                mock.patch("subprocess.Popen.__new__"), \
+                mock.patch("dbclient.context.context.Context.check_sql_execute") as context_check_sql_execute, \
+                mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
+                mock.patch("dbclient.context.context.Context.check_result_set_parse"
+                           ) as context_check_result_set_parse, \
+                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
+                mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
+            # 前提条件
+            context_check_sql_execute.return_value = True
+            context_check_result_set_parse.return_value = True
+
+            context = self._default_context()
+            context.config = self._default_config()
+            config = context.config
+            config.set("test", "privilege", "sys")
+            context.display_format = "table"
+
+            # 実行
+            OracleRunner(context).execute()
+
+            # 検証
+            expected = "oracle_home"
+            actual = os.environ.get("ORACLE_HOME")
+            self.assertEqual(expected, actual)
+
+            expected = "ld_library_path"
+            actual = os.environ.get("LD_LIBRARY_PATH")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_lang"
+            actual = os.environ.get("NLS_LANG")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_date_format"
+            actual = os.environ.get("NLS_DATE_FORMAT")
+            self.assertEqual(expected, actual)
+
+            expected = "nls_timestamp_format"
+            actual = os.environ.get("NLS_TIMESTAMP_FORMAT")
+            self.assertEqual(expected, actual)
+
+            context_check_sql_execute.assert_called_once()
+            oracle_parser_execute.assert_called_once()
+            context_check_result_set_parse.assert_called_once()
+            table_printer_execute.assert_called_once()
+            csv_printer_execute.assert_not_called()
+
+        # ---- ケース5.1 ----
         with mock.patch("sys.stdin", new=BytesIO()), \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context.Context.check_sql_execute") as context_check_sql_execute, \
@@ -173,36 +222,6 @@ class TestOracleRunner(TestCase):
             context_check_result_set_parse.assert_called_once()
             table_printer_execute.assert_not_called()
             csv_printer_execute.assert_called_once()
-
-        # ---- ケース4 ----
-        with mock.patch("sys.stdin", new=BytesIO()), \
-                mock.patch("subprocess.Popen.__new__"), \
-                mock.patch("dbclient.context.context.Context.check_sql_execute") as context_check_sql_execute, \
-                mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
-                mock.patch("dbclient.context.context.Context.check_result_set_parse"
-                           ) as context_check_result_set_parse, \
-                mock.patch("dbclient.printer.table_printer.TablePrinter.execute") as table_printer_execute, \
-                mock.patch("dbclient.printer.csv_printer.CsvPrinter.execute") as csv_printer_execute:
-            # 前提条件
-            context_check_sql_execute.return_value = False
-            context_check_result_set_parse.return_value = True
-
-            context = self._default_context()
-            context.config = self._default_config()
-            context.display_format = "csv"
-
-            # 実行
-            with self.assertRaises(StandardError) as e:
-                OracleRunner(context).execute()
-
-            # 検証
-            self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
-
-            context_check_sql_execute.assert_called_once()
-            oracle_parser_execute.assert_not_called()
-            context_check_result_set_parse.assert_not_called()
-            table_printer_execute.assert_not_called()
-            csv_printer_execute.assert_not_called()
 
     @staticmethod
     def _default_config():
