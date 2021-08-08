@@ -31,7 +31,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース2 ----
+        # ---- ケース2.1 ----
         context = self._default_context()
         context.config = None
 
@@ -39,7 +39,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース3 ----
+        # ---- ケース2.2 ----
         context = self._default_context()
         context.config = ""
 
@@ -47,7 +47,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース4 ----
+        # ---- ケース2.3 ----
         context = self._default_context()
         context.config = 1
 
@@ -55,7 +55,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース3.1 ----
         context = self._default_context()
         context.root_dir = None
 
@@ -63,7 +63,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース6 ----
+        # ---- ケース3.2 ----
         context = self._default_context()
         context.root_dir = ""
 
@@ -71,7 +71,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース7 ----
+        # ---- ケース3.3 ----
         context = self._default_context()
         context.root_dir = u""
 
@@ -79,7 +79,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース8 ----
+        # ---- ケース4.1 ----
         context = self._default_context()
         context.profile = None
 
@@ -87,7 +87,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース4.2 ----
         context = self._default_context()
         context.profile = ""
 
@@ -95,7 +95,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース4.3 ----
         context = self._default_context()
         context.profile = u""
 
@@ -103,7 +103,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース11 ----
+        # ---- ケース5.1 ----
         context = self._default_context()
         context.config_dir = None
 
@@ -111,7 +111,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース12 ----
+        # ---- ケース5.2 ----
         context = self._default_context()
         context.config_dir = ""
 
@@ -119,7 +119,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース13 ----
+        # ---- ケース5.3 ----
         context = self._default_context()
         context.config_dir = u""
 
@@ -127,7 +127,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース14 ----
+        # ---- ケース6.1 ----
         context = self._default_context()
         context.log_dir = None
 
@@ -135,7 +135,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース15 ----
+        # ---- ケース6.2 ----
         context = self._default_context()
         context.log_dir = ""
 
@@ -143,7 +143,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース16 ----
+        # ---- ケース6.3 ----
         context = self._default_context()
         context.log_dir = u""
 
