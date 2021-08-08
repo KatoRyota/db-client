@@ -367,128 +367,128 @@ class TestContext(TestCase):
         # ---- ケース1 ----
         context = self._default_context()
 
-        expected = True
         actual = context.check_sql_execute()
+        expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2.1 ----
         context = self._default_context()
         context.subprocesses = None
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース2.2 ----
         context = self._default_context()
         context.subprocesses = ""
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース2.3 ----
         context = self._default_context()
         context.subprocesses = ()
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.1 ----
         context = self._default_context()
         context.sql = None
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.2 ----
         context = self._default_context()
         context.sql = u""
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.3 ----
         context = self._default_context()
         context.sql = 1
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.1 ----
         context = self._default_context()
         context.dsn = None
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.2 ----
         context = self._default_context()
         context.dsn = ""
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.3 ----
         context = self._default_context()
         context.dsn = 1
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.1 ----
         context = self._default_context()
         context.sql_client_return_code = None
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.2 ----
         context = self._default_context()
         context.sql_client_return_code = ""
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.3 ----
         context = self._default_context()
         context.sql_client_return_code = "0"
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.1 ----
         context = self._default_context()
         context.result_set_html = None
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.2 ----
         context = self._default_context()
         context.result_set_html = ""
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.3 ----
         context = self._default_context()
         context.result_set_html = 1
 
-        expected = False
         actual = context.check_sql_execute()
+        expected = False
         self.assertEqual(expected, actual)
 
     def test_check_result_set_parse(self):
