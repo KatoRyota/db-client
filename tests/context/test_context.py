@@ -501,7 +501,7 @@ class TestContext(TestCase):
         expected = True
         self.assertEqual(expected, actual)
 
-        # ---- ケース2 ----
+        # ---- ケース2.1 ----
         context = self._default_context()
         context.result_headings = None
 
@@ -509,7 +509,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース3 ----
+        # ---- ケース2.2 ----
         context = self._default_context()
         context.result_headings = ""
 
@@ -517,7 +517,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース4 ----
+        # ---- ケース2.3 ----
         context = self._default_context()
         context.result_headings = ()
 
@@ -525,7 +525,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース5 ----
+        # ---- ケース3.1 ----
         context = self._default_context()
         context.result_sets = None
 
@@ -533,7 +533,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース6 ----
+        # ---- ケース3.2 ----
         context = self._default_context()
         context.result_sets = ""
 
@@ -541,7 +541,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース7 ----
+        # ---- ケース3.3 ----
         context = self._default_context()
         context.result_sets = ()
 
@@ -549,7 +549,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース8 ----
+        # ---- ケース4.1 ----
         context = self._default_context()
         context.result_message = None
 
@@ -557,7 +557,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース9 ----
+        # ---- ケース4.2 ----
         context = self._default_context()
         context.result_message = ""
 
@@ -565,7 +565,7 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-        # ---- ケース10 ----
+        # ---- ケース4.3 ----
         context = self._default_context()
         context.result_message = 1
 
