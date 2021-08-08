@@ -497,80 +497,80 @@ class TestContext(TestCase):
         # ---- ケース1 ----
         context = self._default_context()
 
-        expected = True
         actual = context.check_result_set_parse()
+        expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
         context = self._default_context()
         context.result_headings = None
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
         context = self._default_context()
         context.result_headings = ""
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
         context = self._default_context()
         context.result_headings = ()
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
         context = self._default_context()
         context.result_sets = None
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
         context = self._default_context()
         context.result_sets = ""
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
         context = self._default_context()
         context.result_sets = ()
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース8 ----
         context = self._default_context()
         context.result_message = None
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース9 ----
         context = self._default_context()
         context.result_message = ""
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
         context = self._default_context()
         context.result_message = 1
 
-        expected = False
         actual = context.check_result_set_parse()
+        expected = False
         self.assertEqual(expected, actual)
 
     @staticmethod
