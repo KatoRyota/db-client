@@ -247,7 +247,6 @@ select * from test;
         # type: () -> Context
 
         context = Context()
-        context.display_format = "table"
         context.connection_target = "test"
         return context
 
