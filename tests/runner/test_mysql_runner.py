@@ -93,7 +93,9 @@ select * from test;
                 MysqlRunner(context).execute()
 
             # 検証
-            self.assertEqual(u"SQLクライアントの実行結果が不正です。", e.exception.message)
+            actual = e.exception.message
+            expected = u"SQLクライアントの実行結果が不正です。"
+            self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
             mysql_parser_execute.assert_not_called()
@@ -130,7 +132,9 @@ select * from test;
                 MysqlRunner(context).execute()
 
             # 検証
-            self.assertEqual(u"SQLクライアントの実行結果の、パース処理に失敗しました。", e.exception.message)
+            actual = e.exception.message
+            expected = u"SQLクライアントの実行結果の、パース処理に失敗しました。"
+            self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
             mysql_parser_execute.assert_called_once()
@@ -167,7 +171,9 @@ select * from test;
                 MysqlRunner(context).execute()
 
             # 検証
-            self.assertEqual(u"環境変数[MYSQL_PWD]がセットされていません。設定ファイルに、値が設定されてない可能性があります。", e.exception.message)
+            actual = e.exception.message
+            expected = u"環境変数[MYSQL_PWD]がセットされていません。設定ファイルに、値が設定されてない可能性があります。"
+            self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_not_called()
             mysql_parser_execute.assert_not_called()
