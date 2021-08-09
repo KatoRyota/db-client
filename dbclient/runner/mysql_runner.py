@@ -39,7 +39,7 @@ class MysqlRunner(object):
             raise StandardError(u"環境変数[MYSQL_PWD]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
         # ---- 標準入力を読み込み ----
-        sql = sys.stdin.read().decode("utf-8")
+        context.sql = sys.stdin.read().decode("utf-8")
 
         # ---- mysqlの呼び出し ----
         host = config.get(context.connection_target, "host")
@@ -47,11 +47,13 @@ class MysqlRunner(object):
         database_name = config.get(context.connection_target, "database_name")
         user_name = config.get(context.connection_target, "user_name")
 
-        echo_command = ["echo", sql]
+        context.dsn = "-h %s -P %s -D %s -u %s" % (host, port, database_name, user_name)
+
+        echo_command = ["echo", context.sql]
         mysql_command = ["mysql", "-h", host, "-P", port, "-D", database_name, "-u", user_name, "--html"]
 
         logger.debug(u"echo \"%s\" | mysql -h %s -P %s -D %s -u %s --html" %
-                     (sql, host, port, database_name, user_name))
+                     (context.sql, host, port, database_name, user_name))
 
         echo_process = Popen(echo_command, stdout=PIPE)
         context.subprocesses.append(echo_process)
