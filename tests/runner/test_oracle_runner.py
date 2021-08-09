@@ -17,7 +17,7 @@ class TestOracleRunner(TestCase):
         # type: () -> None
 
         # ---- ケース1 ----
-        with mock.patch("sys.stdin", new=BytesIO()), \
+        with mock.patch("sys.stdin", new=BytesIO()) as stdin, \
                 mock.patch("subprocess.Popen.__new__"), \
                 mock.patch("dbclient.context.context.Context.check_sql_execute") as context_check_sql_execute, \
                 mock.patch("dbclient.parser.oracle_parser.OracleParser.execute") as oracle_parser_execute, \
@@ -33,9 +33,13 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             config = context.config
 
+            config.set("test", "ld_library_path", "ld_library_path")
             config.set("test", "privilege", "")
 
             context.display_format = "table"
+
+            stdin.write("select * from test;\n")
+            stdin.seek(0)
 
             # 実行
             OracleRunner(context).execute()
@@ -76,6 +80,7 @@ SET HEADING ON
 SET FEEDBACK ON
 SET DEFINE OFF
 SET NULL 'NULL'
+select * from test;
 """
             self.assertEqual(expected, actual)
 
