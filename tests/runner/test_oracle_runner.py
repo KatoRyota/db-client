@@ -33,7 +33,7 @@ class TestOracleRunner(TestCase):
             context.config = self._default_config()
             config = context.config
 
-            config.set("test", "ld_library_path", "ld_library_path")
+            config.set("oracle_environment_variable", "ld_library_path", "ld_library_path")
             config.set("test", "privilege", "")
 
             context.display_format = "table"
@@ -111,7 +111,7 @@ select * from test;
             context.config = self._default_config()
             config = context.config
 
-            config.set("test", "ld_library_path", "ld_library_path")
+            config.set("oracle_environment_variable", "ld_library_path", "ld_library_path")
             config.set("test", "privilege", "")
 
             context.display_format = "table"
@@ -151,7 +151,7 @@ select * from test;
             context.config = self._default_config()
             config = context.config
 
-            config.set("test", "ld_library_path", "ld_library_path")
+            config.set("oracle_environment_variable", "ld_library_path", "ld_library_path")
             config.set("test", "privilege", "")
 
             context.display_format = "table"
@@ -231,7 +231,7 @@ select * from test;
             context.config = self._default_config()
             config = context.config
 
-            config.set("test", "ld_library_path", "ld_library_path")
+            config.set("oracle_environment_variable", "ld_library_path", "ld_library_path")
             config.set("test", "privilege", "sys")
 
             context.display_format = "table"
@@ -309,7 +309,7 @@ select * from test;
             context.config = self._default_config()
             config = context.config
 
-            config.set("test", "ld_library_path", "ld_library_path")
+            config.set("oracle_environment_variable", "ld_library_path", "ld_library_path")
             config.set("test", "privilege", "")
 
             context.display_format = "csv"
