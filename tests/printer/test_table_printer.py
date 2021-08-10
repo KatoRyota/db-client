@@ -21,6 +21,7 @@ class TestTablePrinter(TestCase):
 
             TablePrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
 |ID         |NAME         |TYPE         |
@@ -40,7 +41,6 @@ class TestTablePrinter(TestCase):
 
 4行が選択されました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
@@ -59,6 +59,7 @@ class TestTablePrinter(TestCase):
 
             TablePrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +------------+---------------------------------------------------------------------------------------+-----------------------------------------------------------+
 |ID          |NAME                                                                                   |TYPE                                                       |
@@ -69,7 +70,6 @@ class TestTablePrinter(TestCase):
 あ
 いうえお," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表<input type="text" value="<font color="red">&lt;&copy;&amp;
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
@@ -80,11 +80,11 @@ class TestTablePrinter(TestCase):
 
             TablePrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 
 4行が選択されました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
@@ -94,6 +94,7 @@ class TestTablePrinter(TestCase):
 
             TablePrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
 |ID         |NAME         |TYPE         |
@@ -111,7 +112,6 @@ class TestTablePrinter(TestCase):
 |ID-333-3333|NAME-333-3333|TYPE-333-3333|
 +-----------+-------------+-------------+
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
@@ -121,6 +121,7 @@ class TestTablePrinter(TestCase):
 
             TablePrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
 |ID-000-0000|NAME-000-0000|TYPE-000-0000|
@@ -136,7 +137,6 @@ class TestTablePrinter(TestCase):
 
 4行が選択されました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
@@ -146,6 +146,7 @@ class TestTablePrinter(TestCase):
 
             TablePrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
 |ID         |NAME         |TYPE         |
@@ -163,7 +164,6 @@ class TestTablePrinter(TestCase):
 |ID-333-3333|NAME-333-3333|TYPE-333-3333|
 +-----------+-------------+-------------+
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
@@ -174,10 +174,10 @@ class TestTablePrinter(TestCase):
 
             TablePrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 予期せぬ例外が発生しました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
     def test__display_of(self):
@@ -185,83 +185,83 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース1 ----
         context = self._default_context()
-        expected = u"\u005c\u005c"
         actual = TablePrinter(context)._display_of(u"\\")
+        expected = u"\u005c\u005c"
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
         context = self._default_context()
-        expected = r"a\nb\nc\nd\ne"
         actual = TablePrinter(context)._display_of(u"a\nb\nc\nd\ne")
+        expected = r"a\nb\nc\nd\ne"
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
         context = self._default_context()
-        expected = r"abcde"
         actual = TablePrinter(context)._display_of(u"\nabcde\n")
+        expected = r"abcde"
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
         context = self._default_context()
         context.column_max_length = 3
-        expected = r"abc"
         actual = TablePrinter(context)._display_of(u"abc")
+        expected = r"abc"
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
         context = self._default_context()
         context.column_max_length = 3
-        expected = r"a...d"
         actual = TablePrinter(context)._display_of(u"abcd")
+        expected = r"a...d"
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
         context = self._default_context()
         context.column_max_length = 3
-        expected = r"a...e"
         actual = TablePrinter(context)._display_of(u"abcde")
+        expected = r"a...e"
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
         context = self._default_context()
         context.column_max_length = 3
-        expected = r"a...f"
         actual = TablePrinter(context)._display_of(u"abcdef")
+        expected = r"a...f"
         self.assertEqual(expected, actual)
 
         # ---- ケース8 ----
         context = self._default_context()
         context.column_max_length = 3
-        expected = r"a...g"
         actual = TablePrinter(context)._display_of(u"abcdefg")
+        expected = r"a...g"
         self.assertEqual(expected, actual)
 
         # ---- ケース9 ----
         context = self._default_context()
         context.column_max_length = 5
-        expected = r"ab...mn"
         actual = TablePrinter(context)._display_of(u"abcdefghijklmn")
+        expected = r"ab...mn"
         self.assertEqual(expected, actual)
 
         # ---- ケース10 ----
         context = self._default_context()
         context.column_max_length = 5
-        expected = u"あい...せそ"
         actual = TablePrinter(context)._display_of(u"あいうえおかきくけこさしすせそ")
+        expected = u"あい...せそ"
         self.assertEqual(expected, actual)
 
         # ---- ケース11 ----
         if platform.system() == "Windows":
             context = self._default_context()
             context.column_max_length = 5
-            expected = u"𠀋...𣗄"
             actual = TablePrinter(context)._display_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
+            expected = u"𠀋...𣗄"
             self.assertEqual(expected, actual)
         else:
             context = self._default_context()
             context.column_max_length = 5
-            expected = u"𠀋𡈽...𣇄𣗄"
             actual = TablePrinter(context)._display_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
+            expected = u"𠀋𡈽...𣇄𣗄"
             self.assertEqual(expected, actual)
 
     def test__length_of(self):
@@ -270,38 +270,38 @@ class TestTablePrinter(TestCase):
         context = mock.MagicMock()
 
         # ---- ケース1 ----
-        expected = 11
         actual = TablePrinter(context)._length_of(u'," ./\\=?!:;')
+        expected = 11
         self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
-        expected = 16
         actual = TablePrinter(context)._length_of(u'ヲンヰヱヴーヾ・')
+        expected = 16
         self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
-        expected = 7
         actual = TablePrinter(context)._length_of(u'ｧｰｭｿﾏﾞﾟ')
+        expected = 7
         self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
-        expected = 16
         actual = TablePrinter(context)._length_of(u'㌶Ⅲ⑳㏾☎㈱髙﨑')
+        expected = 16
         self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
-        expected = 10
         actual = TablePrinter(context)._length_of(u'¢£¬‖−〜―')
+        expected = 10
         self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
-        expected = 20
         actual = TablePrinter(context)._length_of(u'𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄')
+        expected = 20
         self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
-        expected = 6
         actual = TablePrinter(context)._length_of(u'ソ能表')
+        expected = 6
         self.assertEqual(expected, actual)
 
     @staticmethod
