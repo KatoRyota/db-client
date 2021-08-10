@@ -20,6 +20,7 @@ class TestCsvPrinter(TestCase):
 
             CsvPrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 ID,NAME,TYPE
 ID-000-0000,NAME-000-0000,TYPE-000-0000
@@ -31,7 +32,6 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
 
 4行が選択されました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース2 ----
@@ -50,6 +50,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
 
             CsvPrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 ID,NAME,TYPE
 あ\\nいうえお,," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表,<input type="text" value="<font color="red">&lt;&copy;&amp;
@@ -57,7 +58,6 @@ ID,NAME,TYPE
 あ
 いうえお," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表<input type="text" value="<font color="red">&lt;&copy;&amp;
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース3 ----
@@ -68,11 +68,11 @@ ID,NAME,TYPE
 
             CsvPrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 
 4行が選択されました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース4 ----
@@ -82,6 +82,7 @@ ID,NAME,TYPE
 
             CsvPrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 ID,NAME,TYPE
 ID-000-0000,NAME-000-0000,TYPE-000-0000
@@ -91,7 +92,6 @@ ID-222-2222,NAME-222-2222,TYPE-222-2222
 ID,NAME,TYPE
 ID-333-3333,NAME-333-3333,TYPE-333-3333
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース5 ----
@@ -101,6 +101,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
 
             CsvPrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 ID-000-0000,NAME-000-0000,TYPE-000-0000
 ID-111-1111,NAME-111-1111,TYPE-111-1111
@@ -110,7 +111,6 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
 
 4行が選択されました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース6 ----
@@ -120,6 +120,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
 
             CsvPrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 ID,NAME,TYPE
 ID-000-0000,NAME-000-0000,TYPE-000-0000
@@ -129,7 +130,6 @@ ID-222-2222,NAME-222-2222,TYPE-222-2222
 ID,NAME,TYPE
 ID-333-3333,NAME-333-3333,TYPE-333-3333
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
         # ---- ケース7 ----
@@ -140,10 +140,10 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
 
             CsvPrinter(context).execute()
 
+            actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 予期せぬ例外が発生しました。
 '''
-            actual = stdout.getvalue().decode("utf-8")
             self.assertEqual(expected, actual)
 
     @staticmethod
