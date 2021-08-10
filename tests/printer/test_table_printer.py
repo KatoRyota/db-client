@@ -17,10 +17,13 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース1 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            # 前提条件
             context = self._default_context()
 
+            # 実行
             TablePrinter(context).execute()
 
+            # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
@@ -45,7 +48,9 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース2 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            # 前提条件
             context = self._default_context()
+
             context.result_sets = []
             context.result_sets.append([
                 u'あ\nいうえお',
@@ -57,8 +62,10 @@ class TestTablePrinter(TestCase):
                 u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表' \
                 u'<input type="text" value="<font color="red">&lt;&copy;&amp;'
 
+            # 実行
             TablePrinter(context).execute()
 
+            # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +------------+---------------------------------------------------------------------------------------+-----------------------------------------------------------+
@@ -74,12 +81,16 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース3 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            # 前提条件
             context = self._default_context()
+
             context.result_headings = []
             context.result_sets = []
 
+            # 実行
             TablePrinter(context).execute()
 
+            # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 
@@ -89,11 +100,15 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース4 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            # 前提条件
             context = self._default_context()
+
             context.result_message = u''
 
+            # 実行
             TablePrinter(context).execute()
 
+            # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
@@ -116,11 +131,15 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース5 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            # 前提条件
             context = self._default_context()
+
             context.heading = "off"
 
+            # 実行
             TablePrinter(context).execute()
 
+            # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
@@ -141,11 +160,15 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース6 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            # 前提条件
             context = self._default_context()
+
             context.feedback = "off"
 
+            # 実行
             TablePrinter(context).execute()
 
+            # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 +-----------+-------------+-------------+
@@ -168,12 +191,16 @@ class TestTablePrinter(TestCase):
 
         # ---- ケース7 ----
         with mock.patch("sys.stdout", new=BytesIO()) as stdout:
+            # 前提条件
             context = self._default_context()
+
             context.sql_client_return_code = 1
             context.result_message = u"予期せぬ例外が発生しました。"
 
+            # 実行
             TablePrinter(context).execute()
 
+            # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 予期せぬ例外が発生しました。
