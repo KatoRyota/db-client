@@ -14,40 +14,40 @@ class TestMysqlParser(TestCase):
         context = self._default_context()
         MysqlParser(context).execute()
 
-        expected = 3
         actual = len(context.result_headings)
-        self.assertEqual(expected, actual)
-
-        expected = u"id"
-        actual = context.result_headings[0]
-        self.assertEqual(expected, actual)
-
-        expected = u"name"
-        actual = context.result_headings[1]
-        self.assertEqual(expected, actual)
-
-        expected = u"type"
-        actual = context.result_headings[2]
-        self.assertEqual(expected, actual)
-
-        expected = 2
-        actual = len(context.result_sets)
-        self.assertEqual(expected, actual)
-
         expected = 3
+        self.assertEqual(expected, actual)
+
+        actual = context.result_headings[0]
+        expected = u"id"
+        self.assertEqual(expected, actual)
+
+        actual = context.result_headings[1]
+        expected = u"name"
+        self.assertEqual(expected, actual)
+
+        actual = context.result_headings[2]
+        expected = u"type"
+        self.assertEqual(expected, actual)
+
+        actual = len(context.result_sets)
+        expected = 2
+        self.assertEqual(expected, actual)
+
         actual = len(context.result_sets[1])
+        expected = 3
         self.assertEqual(expected, actual)
 
-        expected = u'あ\nいうえお'
         actual = context.result_sets[1][0]
+        expected = u'あ\nいうえお'
         self.assertEqual(expected, actual)
 
-        expected = u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表'
         actual = context.result_sets[1][1]
+        expected = u'," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表'
         self.assertEqual(expected, actual)
 
-        expected = u'<<<©©©&&&'
         actual = context.result_sets[1][2]
+        expected = u'<<<©©©&&&'
         self.assertEqual(expected, actual)
 
     @staticmethod
