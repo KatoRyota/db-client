@@ -59,6 +59,7 @@ class CsvPrinter(object):
         for index, column in enumerate(record):  # type: (int, unicode)
             display_column = column.strip()
             display_column = re.sub(u'\\\\', u"\\\\\\\\", display_column)
+            display_column = re.sub(u"\r", u"\\\\r", display_column)
             display_column = re.sub(u"\n", u"\\\\n", display_column)
 
             if index + 1 < len(record):
