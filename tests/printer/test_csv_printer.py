@@ -60,7 +60,7 @@ ID-333-3333,NAME-333-3333,TYPE-333-3333
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
 ID,NAME,TYPE
-あ\\nいうえお,," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表,<input type="text" value="<font color="red">&lt;&copy;&amp;
+あ\\nいうえお,," ./\\\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表,<input type="text" value="<font color="red">&lt;&copy;&amp;
 
 あ
 いうえお," ./\\=?!:;ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ㌶Ⅲ⑳㏾☎㈱髙﨑¢£¬‖−〜―𠀋𡈽𡌛𡑮𡢽𠮟𡚴𡸴𣇄𣗄ソ能表<input type="text" value="<font color="red">&lt;&copy;&amp;
