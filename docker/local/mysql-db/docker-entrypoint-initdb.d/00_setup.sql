@@ -30,8 +30,10 @@ INSERT INTO customer (id, name, type)
 INSERT INTO customer (id, name, type)
     VALUES ('ID-888-8888', 'NAME-888-8888', 'TYPE-888-8888');
 INSERT INTO customer (id, name, type)
-    VALUES ('ID-999-9999', 'NAME-999-9999', 'TYPE-999-9999');
-INSERT INTO customer (id, name, type)
     VALUES (CONCAT('あ\n', CHAR(13), CHAR(10), 'いうえお'),
             CONCAT('," ./\\=?!:;', CHAR(92)),
             '<<<©©©&&&');
+INSERT INTO customer (id, name, type)
+    VALUES ('ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ',
+            '¢£¬‖−〜―',
+            'ソ能表');

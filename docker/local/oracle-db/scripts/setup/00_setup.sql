@@ -35,11 +35,13 @@ INSERT INTO employee (id, name, type)
 INSERT INTO employee (id, name, type)
     VALUES ('ID-888-8888', 'NAME-888-8888', 'TYPE-888-8888');
 INSERT INTO employee (id, name, type)
-    VALUES ('ID-999-9999', 'NAME-999-9999', 'TYPE-999-9999');
-INSERT INTO employee (id, name, type)
     VALUES ('あ\n' || CHR(13) || CHR(10) || 'いうえお',
             '," ./\\=?!:;' || CHR(92),
             '<<<©©©&&&');
+INSERT INTO employee (id, name, type)
+    VALUES ('ヲンヰヱヴーヾ・ｧｰｭｿﾏﾞﾟ',
+            '¢£¬‖−〜―',
+            'ソ能表');
 
 COMMIT;
 exit;

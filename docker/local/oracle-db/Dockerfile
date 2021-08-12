@@ -1,4 +1,4 @@
-FROM oracle-database-18.4.0-xe
+FROM oracle-db-client-base
 
 RUN \
     # ---- パッケージのインストール ----

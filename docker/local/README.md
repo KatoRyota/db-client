@@ -65,7 +65,7 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
     ~/repo/db-client/docker/local/db-client/sqlplus/
 ```
 
-## oracle-database-18.4.0-xeイメージを作成
+## oracle-db-client-baseイメージを作成
 
 マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。
 
@@ -76,8 +76,11 @@ cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
 
 cd ~/repo/db-client/docker/local/
 
-docker container run --dns=8.8.8.8 --rm \
-    --name=oracle-database-18.4.0-xe --hostname=oracle-database-18.4.0-xe \
+docker container run \
+    --dns=8.8.8.8 \
+    --rm \
+    --name=oracle-db-client-base \
+    --hostname=oracle-db-client-base \
     -p 1521:1521 -p 5500:5500 \
     -e ORACLE_PWD=sys \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
@@ -85,17 +88,42 @@ docker container run --dns=8.8.8.8 --rm \
     -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
     -itd oracle/database:18.4.0-xe
 
-docker container logs -f oracle-database-18.4.0-xe
+docker container logs -f oracle-db-client-base
 
 # 正常起動したことを確認してから、次のコマンドを実行する。
-docker container commit oracle-database-18.4.0-xe oracle-database-18.4.0-xe
+docker container commit oracle-db-client-base oracle-db-client-base
 
-docker container stop oracle-database-18.4.0-xe
+docker container stop oracle-db-client-base
 ```
 
 ここで作成した、Oracle DBのイメージには、Oracle Database本体が含まれている為、  
 イメージの取り扱いにはお気を付けください。  
 Docker Hubなどにアップロードすると、ライセンス違反になる可能性があります。
+
+## mysql-db-client-baseイメージを作成
+
+```shell
+# [Ubuntu]
+cd ~/repo/db-client/docker/local/
+
+docker container run \
+    --dns=8.8.8.8 \
+    --rm \
+    --name=mysql-db-client-base \
+    --hostname=mysql-db-client-base \
+    -p 3306:3306 \
+    -e MYSQL_ROOT_PASSWORD=root \
+    -v ./mysql-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro \
+    -v ./mysql-db/conf.d:/etc/mysql/conf.d:ro \
+    -itd mysql:8.0.25
+    
+docker container logs -f mysql-db-client-base
+
+# 正常起動したことを確認してから、次のコマンドを実行する。
+docker container commit mysql-db-client-base mysql-db-client-base
+
+docker container stop mysql-db-client-base
+```
 
 ## Dockerコンテナの作成/起動
 
@@ -110,7 +138,7 @@ tail -f stdout
 
 ```shell
 # [Ubuntu]
-docker container exec -it oracle-db-18.4.0-xe /bin/bash
+docker container exec -it oracle-db-client /bin/bash
 
 sqlplus -s 'docker/docker@//localhost:1521/XEPDB1' <<EOF
 select * from employee;

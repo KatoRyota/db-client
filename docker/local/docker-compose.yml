@@ -1,12 +1,12 @@
 version: "3"
 services:
-  oracle-db-18.4.0-xe:
+  oracle-db-client:
     build:
       context: ../../
       dockerfile: docker/local/oracle-db/Dockerfile
-    image: oracle-db-18.4.0-xe
-    container_name: oracle-db-18.4.0-xe
-    hostname: oracle-db-18.4.0-xe
+    image: oracle-db-client
+    container_name: oracle-db-client
+    hostname: oracle-db-client
     dns: 8.8.8.8
     tty: true
     stdin_open: true
@@ -18,13 +18,13 @@ services:
       - LANG=ja_JP.utf8
     networks:
       - db-client
-  mysql-db-8.0.25:
+  mysql-db-client:
     build:
       context: ../../
       dockerfile: docker/local/mysql-db/Dockerfile
-    image: mysql-db-8.0.25
-    container_name: mysql-db-8.0.25
-    hostname: mysql-db-8.0.25
+    image: mysql-db-client
+    container_name: mysql-db-client
+    hostname: mysql-db-client
     dns: 8.8.8.8
     tty: true
     stdin_open: true
@@ -33,12 +33,8 @@ services:
     environment:
       - TZ=Asia/Tokyo
       - LANG=ja_JP.utf8
-      - MYSQL_ROOT_PASSWORD=root
     networks:
       - db-client
-    volumes:
-      - ./mysql-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
-      - ./mysql-db/conf.d:/etc/mysql/conf.d:ro
   db-client:
     build:
       context: ../../
