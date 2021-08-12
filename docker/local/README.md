@@ -113,8 +113,8 @@ docker container run \
     --hostname=mysql-db-client-base \
     -p 3306:3306 \
     -e MYSQL_ROOT_PASSWORD=root \
-    -v ./mysql-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro \
-    -v ./mysql-db/conf.d:/etc/mysql/conf.d:ro \
+    -v `pwd`/mysql-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro \
+    -v `pwd`/mysql-db/conf.d:/etc/mysql/conf.d:ro \
     -itd mysql:8.0.25
     
 docker container logs -f mysql-db-client-base
