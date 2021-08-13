@@ -18,6 +18,8 @@ services:
       - LANG=ja_JP.utf8
     networks:
       - db-client
+    volumes:
+      - oracle-db-client:/opt/oracle/oradata
   mysql-db-client:
     build:
       context: ../../
@@ -60,4 +62,5 @@ services:
 networks:
   db-client:
 volumes:
+  oracle-db-client:
   mysql-db-client:
