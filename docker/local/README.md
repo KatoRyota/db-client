@@ -82,6 +82,8 @@ docker container run \
     --name=oracle-db-client-base \
     --hostname=oracle-db-client-base \
     -p 1521:1521 -p 5500:5500 \
+    -e TZ=Asia/Tokyo \
+    -e LANG=ja_JP.utf8 \
     -e ORACLE_PWD=sys \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
     -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
