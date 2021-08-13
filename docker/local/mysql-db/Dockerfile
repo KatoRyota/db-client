@@ -1,4 +1,4 @@
-FROM mysql-db-client-base
+FROM mysql:8.0.25
 
 RUN \
     # ---- パッケージのインストール ----

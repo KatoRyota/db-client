@@ -100,31 +100,6 @@ docker container stop oracle-db-client-base
 イメージの取り扱いにはお気を付けください。  
 Docker Hubなどにアップロードすると、ライセンス違反になる可能性があります。
 
-## mysql-db-client-baseイメージを作成
-
-```shell
-# [Ubuntu]
-cd ~/repo/db-client/docker/local/
-
-docker container run \
-    --dns=8.8.8.8 \
-    --rm \
-    --name=mysql-db-client-base \
-    --hostname=mysql-db-client-base \
-    -p 3306:3306 \
-    -e MYSQL_ROOT_PASSWORD=root \
-    -v `pwd`/mysql-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro \
-    -v `pwd`/mysql-db/conf.d:/etc/mysql/conf.d:ro \
-    -itd mysql:8.0.25
-    
-docker container logs -f mysql-db-client-base
-
-# 正常起動したことを確認してから、次のコマンドを実行する。
-docker container commit mysql-db-client-base mysql-db-client-base
-
-docker container stop mysql-db-client-base
-```
-
 ## Dockerコンテナの作成/起動
 
 ```shell
