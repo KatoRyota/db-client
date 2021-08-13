@@ -84,8 +84,6 @@ docker container run \
     -p 1521:1521 -p 5500:5500 \
     -e TZ="Asia/Tokyo" \
     -e LANG="ja_JP.utf8" \
-    -e LANGUAGE="ja_JP:ja" \
-    -e LC_ALL="ja_JP.utf8" \
     -e ORACLE_PWD=sys \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
     -e NLS_LANG="JAPANESE_JAPAN.AL32UTF8" \
