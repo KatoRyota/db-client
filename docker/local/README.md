@@ -75,8 +75,7 @@ cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
 ./buildContainerImage.sh -x -v 18.4.0
 ```
 
-ここで作成した、Oracle DBのイメージには、Oracle Database本体が含まれている為、  
-イメージの取り扱いにはお気を付けください。  
+作成したOracle Databaseイメージの取り扱いには、お気を付けください。  
 Docker Hubなどにアップロードすると、ライセンス違反になる可能性があります。
 
 ## Dockerコンテナの作成/起動
