@@ -25,5 +25,5 @@ ENV TZ="Asia/Tokyo" \
     LC_ALL="ja_JP.UTF-8"
 
 # ---- アプリケーションの配置と起動 ----
-CMD exec $ORACLE_BASE/$RUN_FILE
-# CMD ["/bin/bash"]
+# CMD exec $ORACLE_BASE/$RUN_FILE
+CMD ["/bin/bash"]
