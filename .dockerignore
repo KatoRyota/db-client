@@ -1,7 +1,9 @@
+.git/
 build/
 db_client.egg-info/
 dist/
 
-docker/local/stdout
-
 *.pyc
+
+.gitignore
+docker/local/stdout
