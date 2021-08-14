@@ -65,7 +65,7 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
     ~/repo/db-client/docker/local/db-client/sqlplus/
 ```
 
-## oracle-db-client-baseイメージを作成
+## Oracle Databaseのイメージを作成
 
 マシンスペックによりますが、Oracle DBのセットアップと起動に、30～40分程度かかります。
 
