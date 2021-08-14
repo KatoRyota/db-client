@@ -16,10 +16,15 @@ services:
     environment:
       - TZ=Asia/Tokyo
       - LANG=ja_JP.utf8
+      - ORACLE_PWD=sys
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - NLS_LANG=JAPANESE_JAPAN.AL32UTF8
     networks:
       - db-client
     volumes:
       - oracle-db-client:/opt/oracle/oradata
+      - ./oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro
+      - ./oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro
   mysql-db-client:
     build:
       context: ../../
