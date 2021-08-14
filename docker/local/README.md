@@ -73,30 +73,6 @@ cp -vip instantclient-sqlplus-linux.x64-19.11.0.0.0dbru.zip \
 # [Ubuntu]
 cd ~/repo/docker-images/OracleDatabase/SingleInstance/dockerfiles/
 ./buildContainerImage.sh -x -v 18.4.0
-
-cd ~/repo/db-client/docker/local/
-
-docker container run \
-    --dns=8.8.8.8 \
-    --rm \
-    --name=oracle-db-client-base \
-    --hostname=oracle-db-client-base \
-    -p 1521:1521 -p 5500:5500 \
-    -e TZ=Asia/Tokyo \
-    -e LANG=ja_JP.utf8 \
-    -e ORACLE_PWD=sys \
-    -e ORACLE_CHARACTERSET=AL32UTF8 \
-    -e NLS_LANG=JAPANESE_JAPAN.AL32UTF8 \
-    -v `pwd`/oracle-db/scripts/setup:/opt/oracle/scripts/setup:ro \
-    -v `pwd`/oracle-db/scripts/startup:/opt/oracle/scripts/startup:ro \
-    -itd oracle/database:18.4.0-xe
-
-docker container logs -f oracle-db-client-base
-
-# 正常起動したことを確認してから、次のコマンドを実行する。
-docker container commit oracle-db-client-base oracle-db-client-base
-
-docker container stop oracle-db-client-base
 ```
 
 ここで作成した、Oracle DBのイメージには、Oracle Database本体が含まれている為、  
