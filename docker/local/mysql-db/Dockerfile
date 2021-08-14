@@ -18,6 +18,9 @@ RUN \
     groupadd -g 61000 docker && \
     useradd -m -g docker -u 61000 docker
 
+# ---- ユーザーの変更 ----
+USER docker
+
 ENV TZ="Asia/Tokyo" \
     LANG="ja_JP.UTF-8" \
     LANGUAGE="ja_JP:ja" \
