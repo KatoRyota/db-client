@@ -32,7 +32,7 @@ https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloa
     -> SQL*Plus Package (ZIP)
 ```
 
-## OracleのDockerツールをダウンロード
+## OracleのDockerイメージ作成ツールをダウンロード
 
 ```shell
 # [Ubuntu]
