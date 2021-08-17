@@ -1,6 +1,6 @@
 .git/
 build/
-db_client.egg-info/
+*.egg-info/
 dist/
 
 *.pyc
