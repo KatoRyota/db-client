@@ -18,7 +18,7 @@ RUN \
     groupadd -g 61000 docker && \
     useradd -m -g docker -u 61000 docker
 
-# ---- ユーザーの変更 ----
+# ---- アプリケーションのデプロイ ----
 USER docker
 
 ENV TZ="Asia/Tokyo" \
@@ -26,6 +26,5 @@ ENV TZ="Asia/Tokyo" \
     LANGUAGE="ja_JP:ja" \
     LC_ALL="ja_JP.UTF-8"
 
-# ---- アプリケーションの配置と起動 ----
 CMD ["mysqld"]
 # CMD ["/bin/bash"]

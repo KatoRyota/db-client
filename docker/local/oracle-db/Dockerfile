@@ -14,11 +14,11 @@ RUN \
     groupadd -g 61000 docker && \
     useradd -m -g docker -u 61000 docker
 
+# ---- アプリケーションのデプロイ ----
 ENV TZ="Asia/Tokyo" \
     LANG="ja_JP.UTF-8" \
     LANGUAGE="ja_JP:ja" \
     LC_ALL="ja_JP.UTF-8"
 
-# ---- アプリケーションの配置と起動 ----
 CMD exec $ORACLE_BASE/$RUN_FILE
 # CMD ["/bin/bash"]
