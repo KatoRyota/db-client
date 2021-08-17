@@ -7,11 +7,11 @@ RUN \
         tzdata \
         locales \
         less \
-        unzip \
         python2.7 \
+        curl \
+        unzip \
         mysql-client \
-        libaio1 \
-        curl && \
+        libaio1 && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     # ---- タイムゾーンとロケールの設定 ----
