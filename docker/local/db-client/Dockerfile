@@ -38,7 +38,7 @@ RUN unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip && \
     echo "/opt/oracle/instantclient_19_11" > /etc/ld.so.conf.d/oracle-instantclient.conf && \
     ldconfig
 
-# ---- ユーザーの変更 ----
+# ---- アプリケーションのデプロイ ----
 USER docker
 
 ENV TZ="Asia/Tokyo" \
@@ -47,7 +47,6 @@ ENV TZ="Asia/Tokyo" \
     LC_ALL="ja_JP.UTF-8" \
     PATH=/home/docker/.local/bin:${PATH}
 
-# ---- アプリケーションの配置と起動 ----
 COPY --chown=docker:docker . /app/db-client
 
 WORKDIR /app/db-client/
