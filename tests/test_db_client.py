@@ -691,17 +691,18 @@ class TestDbClient(TestCase):
             stderr.encoding = "utf-8"
 
             # 実行
-            with self.assertRaises(SystemExit):
+            with self.assertRaises(StandardError) as e:
                 db_client = DbClient()
                 db_client.execute()
 
             # 検証
-            actual = stderr.getvalue().decode("utf-8")
-            expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
-            self.assertRegexpMatches(actual, expected)
+            actual = e.exception.message
+            expected = u"環境変数[PYTHONIOENCODING]が不正です。" \
+                       u"PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
+            self.assertEqual(expected, actual)
 
-            makedirs.assert_called_once()
-            context_check_application_initialize.assert_called_once()
+            makedirs.assert_not_called()
+            context_check_application_initialize.assert_not_called()
             context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
@@ -739,17 +740,18 @@ class TestDbClient(TestCase):
             stderr.encoding = "utf-8"
 
             # 実行
-            with self.assertRaises(SystemExit):
+            with self.assertRaises(StandardError) as e:
                 db_client = DbClient()
                 db_client.execute()
 
             # 検証
-            actual = stderr.getvalue().decode("utf-8")
-            expected = u"環境変数\\[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
-            self.assertRegexpMatches(actual, expected)
+            actual = e.exception.message
+            expected = u"環境変数[PYTHONIOENCODING]が不正です。" \
+                       u"PYTHONIOENCODINGには、utf-8がセットされている必要があります。"
+            self.assertEqual(expected, actual)
 
-            makedirs.assert_called_once()
-            context_check_application_initialize.assert_called_once()
+            makedirs.assert_not_called()
+            context_check_application_initialize.assert_not_called()
             context_check_option_parse.assert_not_called()
             oracle_runner_execute.assert_not_called()
             mysql_runner_execute.assert_not_called()
