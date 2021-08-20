@@ -27,6 +27,12 @@ class DbClient(object):
 
         # ---- アプリケーションの初期化処理 ----
         super(DbClient, self).__init__()
+
+        if not os.environ.get("PYTHONIOENCODING") or \
+                not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
+            raise StandardError(u"環境変数[PYTHONIOENCODING]が不正です。"
+                                u"PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
+
         reload(sys)
         sys.setdefaultencoding("utf-8")
         self.__context = Context()  # type: Context
@@ -85,11 +91,6 @@ class DbClient(object):
         # noinspection PyBroadException
         try:
             logger.info("[Start] " + os.path.abspath(__file__))
-
-            if not os.environ.get("PYTHONIOENCODING") or \
-                    not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
-                raise StandardError(u"環境変数[PYTHONIOENCODING]が不正です。"
-                                    u"PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
 
             # ---- システム環境情報を出力 ----
             logger.debug("system/os name -> " + platform.system())
