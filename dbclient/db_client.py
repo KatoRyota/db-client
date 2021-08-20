@@ -39,27 +39,30 @@ class DbClient(object):
         if not context.profile:
             context.profile = "default"
 
-        context.config_dir = context.root_dir + "/config/" + context.profile
+        context.config_dir = os.path.join(context.root_dir, "config", context.profile)
 
         if not os.path.isdir(context.config_dir):
-            raise StandardError(u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" %
-                                (context.root_dir + "/config/"))
+            raise StandardError(u"環境変数[DBCLIENT_PROFILE]が不正です。"
+                                u"DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" %
+                                (os.path.join(context.root_dir, "config")))
 
         # アプリケーション設定ファイルの読み込み
         config = context.config
-        config.read(context.config_dir + "/application.conf")
+        config.read(os.path.join(context.config_dir, "application.conf"))
 
         # ロギング設定ファイルの読み込み
         context.log_dir = config.get("logging", "log_dir")
 
         if not context.log_dir:
-            context.log_dir = context.root_dir + "/log"
+            context.log_dir = os.path.join(context.root_dir, "log")
+
+        context.log_dir = os.path.abspath(context.log_dir)
 
         if not os.path.isdir(context.log_dir):
             os.makedirs(context.log_dir)
 
         os.environ["LOG_DIR"] = context.log_dir
-        logging.config.fileConfig(context.config_dir + "/logging.conf")
+        logging.config.fileConfig(os.path.join(context.config_dir, "logging.conf"))
         self.__logger = logging.getLogger(__name__)  # type: Logger
 
         if not context.check_application_initialize():
@@ -85,10 +88,11 @@ class DbClient(object):
 
             if not os.environ.get("PYTHONIOENCODING") or \
                     not re.match(r"^utf[\-_]?8$", os.environ.get("PYTHONIOENCODING"), re.IGNORECASE):
-                raise StandardError(u"環境変数[PYTHONIOENCODING]がセットされてない、又は不正です。PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
+                raise StandardError(u"環境変数[PYTHONIOENCODING]が不正です。"
+                                    u"PYTHONIOENCODINGには、utf-8がセットされている必要があります。")
 
             # ---- システム環境情報を出力 ----
-            logger.debug("system/OS name -> " + platform.system())
+            logger.debug("system/os name -> " + platform.system())
             logger.debug("[encoding] locale -> " + locale.getpreferredencoding())
             logger.debug("[encoding] default -> " + sys.getdefaultencoding())
             logger.debug("[encoding] filesystem -> " + sys.getfilesystemencoding())
@@ -98,8 +102,8 @@ class DbClient(object):
             logger.debug("[encoding] stdout -> " + sys.stdout.encoding)
             # noinspection PyUnresolvedReferences
             logger.debug("[encoding] stderr -> " + sys.stderr.encoding)
-            logger.debug("アプリケーション設定ファイルパス -> " + context.config_dir + "/application.conf")
-            logger.debug("ロギング設定ファイルパス -> " + context.config_dir + "/logging.conf")
+            logger.debug("アプリケーション設定ファイルパス -> " + os.path.join(context.config_dir, "application.conf"))
+            logger.debug("ロギング設定ファイルパス -> " + os.path.join(context.config_dir, "logging.conf"))
             logger.debug("ログディレクトリ -> " + context.log_dir)
 
             # ---- 起動オプションのパース ----
