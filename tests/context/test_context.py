@@ -157,208 +157,258 @@ class TestContext(TestCase):
         # type: () -> None
 
         # ---- ケース1 ----
+        # 前提条件
         context = self._default_context()
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2.1 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "table"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2.2 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "TABLE"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース2.3 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = ","
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2.4 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "CSV"
         context.field_delimiter = ","
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.1 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = None
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.2 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = ""
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.3 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "csv"
         context.field_delimiter = u""
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.1 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = None
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.2 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = ""
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.3 ----
+        # 前提条件
         context = self._default_context()
         context.display_format = "table"
         context.column_max_length = 0
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.1 ----
+        # 前提条件
         context = self._default_context()
         context.heading = "on"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース5.2 ----
+        # 前提条件
         context = self._default_context()
         context.heading = "ON"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.3 ----
+        # 前提条件
         context = self._default_context()
         context.heading = "off"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース5.4 ----
+        # 前提条件
         context = self._default_context()
         context.heading = "OFF"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.1 ----
+        # 前提条件
         context = self._default_context()
         context.feedback = "on"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース6.2 ----
+        # 前提条件
         context = self._default_context()
         context.feedback = "ON"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.3 ----
+        # 前提条件
         context = self._default_context()
         context.feedback = "off"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース6.4 ----
+        # 前提条件
         context = self._default_context()
         context.feedback = "OFF"
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース7.1 ----
+        # 前提条件
         context = self._default_context()
         context.pagesize = None
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース7.2 ----
+        # 前提条件
         context = self._default_context()
         context.pagesize = ""
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース7.3 ----
+        # 前提条件
         context = self._default_context()
         context.pagesize = -1
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース8.1 ----
+        # 前提条件
         context = self._default_context()
         context.connection_target = None
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース8.2 ----
+        # 前提条件
         context = self._default_context()
         context.connection_target = ""
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース8.3 ----
+        # 前提条件
         context = self._default_context()
         context.connection_target = u""
 
+        # 実行 & 検証
         actual = context.check_option_parse()
         expected = False
         self.assertEqual(expected, actual)
@@ -367,128 +417,160 @@ class TestContext(TestCase):
         # type: () -> None
 
         # ---- ケース1 ----
+        # 前提条件
         context = self._default_context()
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2.1 ----
+        # 前提条件
         context = self._default_context()
         context.subprocesses = None
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース2.2 ----
+        # 前提条件
         context = self._default_context()
         context.subprocesses = ""
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース2.3 ----
+        # 前提条件
         context = self._default_context()
         context.subprocesses = ()
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.1 ----
+        # 前提条件
         context = self._default_context()
         context.sql = None
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.2 ----
+        # 前提条件
         context = self._default_context()
         context.sql = u""
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.3 ----
+        # 前提条件
         context = self._default_context()
         context.sql = 1
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.1 ----
+        # 前提条件
         context = self._default_context()
         context.dsn = None
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.2 ----
+        # 前提条件
         context = self._default_context()
         context.dsn = ""
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.3 ----
+        # 前提条件
         context = self._default_context()
         context.dsn = 1
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.1 ----
+        # 前提条件
         context = self._default_context()
         context.sql_client_return_code = None
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.2 ----
+        # 前提条件
         context = self._default_context()
         context.sql_client_return_code = ""
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース5.3 ----
+        # 前提条件
         context = self._default_context()
         context.sql_client_return_code = "0"
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.1 ----
+        # 前提条件
         context = self._default_context()
         context.result_set_html = None
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.2 ----
+        # 前提条件
         context = self._default_context()
         context.result_set_html = ""
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース6.3 ----
+        # 前提条件
         context = self._default_context()
         context.result_set_html = 1
 
+        # 実行 & 検証
         actual = context.check_sql_execute()
         expected = False
         self.assertEqual(expected, actual)
@@ -497,80 +579,100 @@ class TestContext(TestCase):
         # type: () -> None
 
         # ---- ケース1 ----
+        # 前提条件
         context = self._default_context()
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = True
         self.assertEqual(expected, actual)
 
         # ---- ケース2.1 ----
+        # 前提条件
         context = self._default_context()
         context.result_headings = None
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース2.2 ----
+        # 前提条件
         context = self._default_context()
         context.result_headings = ""
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース2.3 ----
+        # 前提条件
         context = self._default_context()
         context.result_headings = ()
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.1 ----
+        # 前提条件
         context = self._default_context()
         context.result_sets = None
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.2 ----
+        # 前提条件
         context = self._default_context()
         context.result_sets = ""
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース3.3 ----
+        # 前提条件
         context = self._default_context()
         context.result_sets = ()
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.1 ----
+        # 前提条件
         context = self._default_context()
         context.result_message = None
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.2 ----
+        # 前提条件
         context = self._default_context()
         context.result_message = ""
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
 
         # ---- ケース4.3 ----
+        # 前提条件
         context = self._default_context()
         context.result_message = 1
 
+        # 実行 & 検証
         actual = context.check_result_set_parse()
         expected = False
         self.assertEqual(expected, actual)
