@@ -13,143 +13,145 @@ class TestContext(TestCase):
     def test_check_application_initialize(self):
         # type: () -> None
 
-        context = self._default_context()
-
-        if not os.path.isdir(context.root_dir):
-            os.makedirs(context.root_dir)
-
-        if not os.path.isdir(context.config_dir):
-            os.makedirs(context.config_dir)
-
-        if not os.path.isdir(context.log_dir):
-            os.makedirs(context.log_dir)
-
         # ---- ケース1 ----
-        context = self._default_context()
+        with mock.patch("os.path.isdir") as isdir:
+            # 前提条件
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
 
-        actual = context.check_application_initialize()
-        expected = True
-        self.assertEqual(expected, actual)
+            context = Context()
+            context.profile = "default"
+            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.config_dir = os.path.abspath(
+                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+
+            # 実行 & 検証
+            actual = context.check_application_initialize()
+            expected = True
+            self.assertEqual(expected, actual)
 
         # ---- ケース2.1 ----
-        context = self._default_context()
-        context.config = None
+        with mock.patch("os.path.isdir") as isdir:
+            # 前提条件
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), False),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
 
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
+            context = Context()
+            context.profile = "default"
+            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.config_dir = os.path.abspath(
+                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+
+            # 実行 & 検証
+            actual = context.check_application_initialize()
+            expected = False
+            self.assertEqual(expected, actual)
 
         # ---- ケース2.2 ----
-        context = self._default_context()
-        context.config = ""
+        with mock.patch("os.path.isdir") as isdir:
+            # 前提条件
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), False),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
 
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
+            context = Context()
+            context.profile = "default"
+            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.config_dir = os.path.abspath(
+                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+
+            # 実行 & 検証
+            actual = context.check_application_initialize()
+            expected = False
+            self.assertEqual(expected, actual)
 
         # ---- ケース2.3 ----
-        context = self._default_context()
-        context.config = 1
+        with mock.patch("os.path.isdir") as isdir:
+            # 前提条件
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), False)))
 
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
+            context = Context()
+            context.profile = "default"
+            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.config_dir = os.path.abspath(
+                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+
+            # 実行 & 検証
+            actual = context.check_application_initialize()
+            expected = False
+            self.assertEqual(expected, actual)
 
         # ---- ケース3.1 ----
-        context = self._default_context()
-        context.root_dir = None
+        with mock.patch("os.path.isdir") as isdir:
+            # 前提条件
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
 
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
+            context = Context()
+            context.profile = None
+            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.config_dir = os.path.abspath(
+                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+
+            # 実行 & 検証
+            actual = context.check_application_initialize()
+            expected = False
+            self.assertEqual(expected, actual)
 
         # ---- ケース3.2 ----
-        context = self._default_context()
-        context.root_dir = ""
+        with mock.patch("os.path.isdir") as isdir:
+            # 前提条件
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
 
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
+            context = Context()
+            context.profile = ""
+            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.config_dir = os.path.abspath(
+                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+
+            # 実行 & 検証
+            actual = context.check_application_initialize()
+            expected = False
+            self.assertEqual(expected, actual)
 
         # ---- ケース3.3 ----
-        context = self._default_context()
-        context.root_dir = u""
+        with mock.patch("os.path.isdir") as isdir:
+            # 前提条件
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
+                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
 
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
+            context = Context()
+            context.profile = 1
+            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.config_dir = os.path.abspath(
+                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
 
-        # ---- ケース4.1 ----
-        context = self._default_context()
-        context.profile = None
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.2 ----
-        context = self._default_context()
-        context.profile = ""
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.3 ----
-        context = self._default_context()
-        context.profile = u""
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース5.1 ----
-        context = self._default_context()
-        context.config_dir = None
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース5.2 ----
-        context = self._default_context()
-        context.config_dir = ""
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース5.3 ----
-        context = self._default_context()
-        context.config_dir = u""
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース6.1 ----
-        context = self._default_context()
-        context.log_dir = None
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース6.2 ----
-        context = self._default_context()
-        context.log_dir = ""
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース6.3 ----
-        context = self._default_context()
-        context.log_dir = u""
-
-        actual = context.check_application_initialize()
-        expected = False
-        self.assertEqual(expected, actual)
+            # 実行 & 検証
+            actual = context.check_application_initialize()
+            expected = False
+            self.assertEqual(expected, actual)
 
     def test_check_option_parse(self):
         # type: () -> None
@@ -603,6 +605,21 @@ class TestContext(TestCase):
         context.result_sets.append(["ID-333-3333", "NAME-333-3333", "TYPE-333-3333"])
         context.result_message = u"4行が選択されました。"
         return context
+
+    @staticmethod
+    def _isdir_side_effect(return_values):
+        # type: (tuple) -> object
+
+        def isdir(inner_path):
+            # type: (str) -> bool
+
+            for return_value_tuple in return_values:  # type: tuple
+                if return_value_tuple[0] == inner_path:
+                    return return_value_tuple[1]
+
+            raise StandardError(u"引数が不正です。")
+
+        return isdir
 
 
 if __name__ == "__main__":
