@@ -11,9 +11,13 @@ class TestMysqlParser(TestCase):
     def test_execute(self):
         # type: () -> None
 
+        # 前提条件
         context = self._default_context()
+
+        # 実行
         MysqlParser(context).execute()
 
+        # 検証
         actual = len(context.result_headings)
         expected = 3
         self.assertEqual(expected, actual)
