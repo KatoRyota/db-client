@@ -12,7 +12,6 @@ from dbclient.db_client import DbClient
 
 class TestDbClient(TestCase):
 
-    # noinspection PyUnresolvedReferences
     def test_execute(self):
         # type: () -> None
 
@@ -28,10 +27,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -44,21 +44,28 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             db_client = DbClient()
             db_client.execute()
+            # noinspection PyUnresolvedReferences
             context = db_client._DbClient__context
 
             # 検証
@@ -67,7 +74,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -75,7 +82,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = "dbclient"
+            expected = os.path.join("db-client", "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -83,11 +90,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = "dbclient/config/default"
+            expected = os.path.join("db-client", "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -126,10 +133,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース2.1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -142,17 +150,23 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = False
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             with self.assertRaises(StandardError) as e:
@@ -172,11 +186,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース3.1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -189,17 +203,22 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = False
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
             stderr.encoding = "utf-8"
 
             # 実行
@@ -220,10 +239,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース4.1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -236,21 +256,28 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", "log_dir"), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", "log_dir"),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("log_dir", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("log_dir"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             db_client = DbClient()
             db_client.execute()
+            # noinspection PyUnresolvedReferences
             context = db_client._DbClient__context
 
             # 検証
@@ -259,7 +286,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = "log_dir"
+            expected = os.path.join("log_dir")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -267,7 +294,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = "dbclient"
+            expected = os.path.join("db-client", "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -275,11 +302,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = "dbclient/config/default"
+            expected = os.path.join("db-client", "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = "log_dir"
+            expected = os.path.join("log_dir")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -318,10 +345,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース4.2 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -334,21 +362,28 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "mysql")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "mysql")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             db_client = DbClient()
             db_client.execute()
+            # noinspection PyUnresolvedReferences
             context = db_client._DbClient__context
 
             # 検証
@@ -357,7 +392,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -365,7 +400,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = "dbclient"
+            expected = os.path.join("db-client", "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -373,11 +408,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = "dbclient/config/default"
+            expected = os.path.join("db-client", "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -416,10 +451,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース5.1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -432,28 +468,36 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", False), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), False),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             with self.assertRaises(StandardError) as e:
                 db_client = DbClient()
                 db_client.execute()
+                # noinspection PyUnresolvedReferences
                 context = db_client._DbClient__context
 
             # 検証
             actual = e.exception.message
-            expected = u"環境変数[DBCLIENT_PROFILE]が不正です。DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % (
-                    context.root_dir + "/config/")
+            expected = u"環境変数[DBCLIENT_PROFILE]が不正です。" \
+                       u"DBCLIENT_PROFILEには、`%s`直下のディレクトリ名がセットされている必要があります。" % \
+                       (os.path.join(context.root_dir, "config"))
             self.assertEqual(expected, actual)
 
             makedirs.assert_not_called()
@@ -464,10 +508,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース5.2 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -480,21 +525,28 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", True)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), True)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             db_client = DbClient()
             db_client.execute()
+            # noinspection PyUnresolvedReferences
             context = db_client._DbClient__context
 
             # 検証
@@ -503,7 +555,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -511,7 +563,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = "dbclient"
+            expected = os.path.join("db-client", "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -519,11 +571,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = "dbclient/config/default"
+            expected = os.path.join("db-client", "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -562,10 +614,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース6.1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -578,19 +631,27 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/dbclient_profile", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "dbclient_profile"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             os.environ["DBCLIENT_PROFILE"] = "dbclient_profile"
+
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             db_client = DbClient()
             db_client.execute()
+            # noinspection PyUnresolvedReferences
             context = db_client._DbClient__context
 
             # 検証
@@ -599,7 +660,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -607,7 +668,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = "dbclient"
+            expected = os.path.join("db-client", "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -615,11 +676,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = "dbclient/config/dbclient_profile"
+            expected = os.path.join("db-client", "dbclient", "config", "dbclient_profile")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -658,11 +719,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース7.1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -675,11 +736,13 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -688,6 +751,8 @@ class TestDbClient(TestCase):
                 del os.environ["PYTHONIOENCODING"]
 
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
             stderr.encoding = "utf-8"
 
             # 実行
@@ -709,11 +774,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース7.2 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
                 mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -726,17 +791,22 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "euc-jp"
+
             sys.argv = ["db_client.py"]
+
+            stdout.encoding = "utf-8"
             stderr.encoding = "utf-8"
 
             # 実行
@@ -758,10 +828,11 @@ class TestDbClient(TestCase):
 
         # ---- ケース8.1 ----
         with mock.patch("__builtin__.reload"), \
+                mock.patch("sys.stdout", new=BytesIO()) as stdout, \
+                mock.patch("sys.stderr", new=BytesIO()) as stderr, \
                 mock.patch("ConfigParser.RawConfigParser.read"), \
                 mock.patch("ConfigParser.ConfigParser.get") as config_parser_get, \
                 mock.patch("logging.config.fileConfig"), \
-                mock.patch("logging.getLogger"), \
                 mock.patch("os.path.isdir") as isdir, \
                 mock.patch("os.makedirs") as makedirs, \
                 mock.patch("dbclient.context.context.Context.check_application_initialize"
@@ -774,21 +845,28 @@ class TestDbClient(TestCase):
             context_check_application_initialize.return_value = True
             context_check_option_parse.return_value = True
 
-            config_parser_get.side_effect = self._config_parser_get_side_effect(
-                (("logging", "log_dir", ""), ("default", "db_type", "oracle")))
+            config_parser_get.side_effect = self._config_parser_get_side_effect((
+                ("logging", "log_dir", ""),
+                ("default", "db_type", "oracle")))
 
-            isdir.side_effect = self._isdir_side_effect(
-                (("dbclient/config/default", True), ("dbclient/log", False)))
+            isdir.side_effect = self._isdir_side_effect((
+                (os.path.join("db-client", "dbclient", "config", "default"), True),
+                (os.path.join("db-client", "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
 
             os.environ["PYTHONIOENCODING"] = "utf-8"
+
             sys.argv = ["db_client.py", "--display_format", "csv"]
+
+            stdout.encoding = "utf-8"
+            stderr.encoding = "utf-8"
 
             # 実行
             db_client = DbClient()
             db_client.execute()
+            # noinspection PyUnresolvedReferences
             context = db_client._DbClient__context
 
             # 検証
@@ -797,7 +875,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -805,7 +883,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = "dbclient"
+            expected = os.path.join("db-client", "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -813,11 +891,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = "dbclient/config/default"
+            expected = os.path.join("db-client", "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = "dbclient/log"
+            expected = os.path.join("db-client", "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
