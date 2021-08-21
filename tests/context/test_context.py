@@ -17,16 +17,16 @@ class TestContext(TestCase):
         with mock.patch("os.path.isdir") as isdir:
             # 前提条件
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
+                (os.path.abspath(os.path.join("db-client", "dbclient")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "config", "default")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "log")), True)))
 
             context = Context()
             context.profile = "default"
-            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.root_dir = os.path.abspath(os.path.join("db-client", "dbclient"))
             context.config_dir = os.path.abspath(
-                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
-            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+                os.path.join("db-client", "dbclient", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("db-client", "dbclient", "log"))
 
             # 実行 & 検証
             actual = context.check_application_initialize()
@@ -37,16 +37,16 @@ class TestContext(TestCase):
         with mock.patch("os.path.isdir") as isdir:
             # 前提条件
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), False),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
+                (os.path.abspath(os.path.join("db-client", "dbclient")), False),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "config", "default")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "log")), True)))
 
             context = Context()
             context.profile = "default"
-            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.root_dir = os.path.abspath(os.path.join("db-client", "dbclient"))
             context.config_dir = os.path.abspath(
-                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
-            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+                os.path.join("db-client", "dbclient", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("db-client", "dbclient", "log"))
 
             # 実行 & 検証
             actual = context.check_application_initialize()
@@ -57,16 +57,16 @@ class TestContext(TestCase):
         with mock.patch("os.path.isdir") as isdir:
             # 前提条件
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), False),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
+                (os.path.abspath(os.path.join("db-client", "dbclient")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "config", "default")), False),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "log")), True)))
 
             context = Context()
             context.profile = "default"
-            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.root_dir = os.path.abspath(os.path.join("db-client", "dbclient"))
             context.config_dir = os.path.abspath(
-                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
-            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+                os.path.join("db-client", "dbclient", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("db-client", "dbclient", "log"))
 
             # 実行 & 検証
             actual = context.check_application_initialize()
@@ -77,16 +77,16 @@ class TestContext(TestCase):
         with mock.patch("os.path.isdir") as isdir:
             # 前提条件
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), False)))
+                (os.path.abspath(os.path.join("db-client", "dbclient")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "config", "default")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "log")), False)))
 
             context = Context()
             context.profile = "default"
-            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.root_dir = os.path.abspath(os.path.join("db-client", "dbclient"))
             context.config_dir = os.path.abspath(
-                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
-            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+                os.path.join("db-client", "dbclient", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("db-client", "dbclient", "log"))
 
             # 実行 & 検証
             actual = context.check_application_initialize()
@@ -97,16 +97,16 @@ class TestContext(TestCase):
         with mock.patch("os.path.isdir") as isdir:
             # 前提条件
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
+                (os.path.abspath(os.path.join("db-client", "dbclient")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "config", "default")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "log")), True)))
 
             context = Context()
             context.profile = None
-            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.root_dir = os.path.abspath(os.path.join("db-client", "dbclient"))
             context.config_dir = os.path.abspath(
-                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
-            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+                os.path.join("db-client", "dbclient", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("db-client", "dbclient", "log"))
 
             # 実行 & 検証
             actual = context.check_application_initialize()
@@ -117,16 +117,16 @@ class TestContext(TestCase):
         with mock.patch("os.path.isdir") as isdir:
             # 前提条件
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
+                (os.path.abspath(os.path.join("db-client", "dbclient")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "config", "default")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "log")), True)))
 
             context = Context()
             context.profile = ""
-            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.root_dir = os.path.abspath(os.path.join("db-client", "dbclient"))
             context.config_dir = os.path.abspath(
-                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
-            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+                os.path.join("db-client", "dbclient", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("db-client", "dbclient", "log"))
 
             # 実行 & 検証
             actual = context.check_application_initialize()
@@ -137,16 +137,16 @@ class TestContext(TestCase):
         with mock.patch("os.path.isdir") as isdir:
             # 前提条件
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "config", "default")), True),
-                (os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log")), True)))
+                (os.path.abspath(os.path.join("db-client", "dbclient")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "config", "default")), True),
+                (os.path.abspath(os.path.join("db-client", "dbclient", "log")), True)))
 
             context = Context()
             context.profile = 1
-            context.root_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer"))
+            context.root_dir = os.path.abspath(os.path.join("db-client", "dbclient"))
             context.config_dir = os.path.abspath(
-                os.path.join("git-synchronizer", "gitsynchronizer", "config", "default"))
-            context.log_dir = os.path.abspath(os.path.join("git-synchronizer", "gitsynchronizer", "log"))
+                os.path.join("db-client", "dbclient", "config", "default"))
+            context.log_dir = os.path.abspath(os.path.join("db-client", "dbclient", "log"))
 
             # 実行 & 検証
             actual = context.check_application_initialize()
