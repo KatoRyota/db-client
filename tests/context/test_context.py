@@ -576,6 +576,38 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
+        # ---- ケース5.2 ----
+        # 前提条件
+        context = Context()
+        context.display_format = "table"
+        context.field_delimiter = ""
+        context.column_max_length = 100
+        context.heading = ""
+        context.feedback = "on"
+        context.pagesize = 0
+        context.connection_target = "default"
+
+        # 実行 & 検証
+        actual = context.check_option_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5.3 ----
+        # 前提条件
+        context = Context()
+        context.display_format = "table"
+        context.field_delimiter = ""
+        context.column_max_length = 100
+        context.heading = 1
+        context.feedback = "on"
+        context.pagesize = 0
+        context.connection_target = "default"
+
+        # 実行 & 検証
+        actual = context.check_option_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
     def test_check_sql_execute(self):
         # type: () -> None
 
