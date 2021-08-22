@@ -507,6 +507,34 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
+        # ---- ケース2.2 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = ""
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース2.3 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = 1
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
     def test_check_result_set_parse(self):
         # type: () -> None
 
