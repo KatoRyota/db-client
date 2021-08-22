@@ -535,6 +535,146 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
+        # ---- ケース3.1 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = None
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.2 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u""
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.3 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = 1
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.1 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = None
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.2 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = ""
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.3 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = 1
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5.1 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = None
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース5.2 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = ""
+        context.result_set_html = u"<table>result_set<table>"
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース6.1 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = None
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース6.2 ----
+        # 前提条件
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = 1
+
+        # 実行 & 検証
+        actual = context.check_sql_execute()
+        expected = False
+        self.assertEqual(expected, actual)
+
     def test_check_result_set_parse(self):
         # type: () -> None
 
