@@ -481,7 +481,12 @@ class TestContext(TestCase):
 
         # ---- ケース1 ----
         # 前提条件
-        context = self._default_context()
+        context = Context()
+        context.subprocesses = [mock.MagicMock(), mock.MagicMock()]
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
 
         # 実行 & 検証
         actual = context.check_sql_execute()
@@ -490,148 +495,12 @@ class TestContext(TestCase):
 
         # ---- ケース2.1 ----
         # 前提条件
-        context = self._default_context()
+        context = Context()
         context.subprocesses = None
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース2.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.subprocesses = ""
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース2.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.subprocesses = ()
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース3.1 ----
-        # 前提条件
-        context = self._default_context()
-        context.sql = None
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース3.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.sql = u""
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース3.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.sql = 1
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.1 ----
-        # 前提条件
-        context = self._default_context()
-        context.dsn = None
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.dsn = ""
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.dsn = 1
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース5.1 ----
-        # 前提条件
-        context = self._default_context()
-        context.sql_client_return_code = None
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース5.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.sql_client_return_code = ""
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース5.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.sql_client_return_code = "0"
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース6.1 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_set_html = None
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース6.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_set_html = ""
-
-        # 実行 & 検証
-        actual = context.check_sql_execute()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース6.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_set_html = 1
+        context.sql = u"select * from test;\n"
+        context.dsn = "{user_name}/{password}@{host}:{port}/{sid}"
+        context.sql_client_return_code = 0
+        context.result_set_html = u"<table>result_set<table>"
 
         # 実行 & 検証
         actual = context.check_sql_execute()
