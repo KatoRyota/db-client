@@ -706,6 +706,98 @@ class TestContext(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
+        # ---- ケース2.2 ----
+        # 前提条件
+        context = Context()
+        context.result_headings = ""
+        context.result_sets = [
+            ["ID-000-0000", "NAME-000-0000", "TYPE-000-0000"],
+            ["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"]]
+        context.result_message = u"2行が選択されました。"
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース2.3 ----
+        # 前提条件
+        context = Context()
+        context.result_headings = 1
+        context.result_sets = [
+            ["ID-000-0000", "NAME-000-0000", "TYPE-000-0000"],
+            ["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"]]
+        context.result_message = u"2行が選択されました。"
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.1 ----
+        # 前提条件
+        context = Context()
+        context.result_headings = ["ID", "NAME", "TYPE"]
+        context.result_sets = None
+        context.result_message = u"2行が選択されました。"
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.2 ----
+        # 前提条件
+        context = Context()
+        context.result_headings = ["ID", "NAME", "TYPE"]
+        context.result_sets = ""
+        context.result_message = u"2行が選択されました。"
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース3.3 ----
+        # 前提条件
+        context = Context()
+        context.result_headings = ["ID", "NAME", "TYPE"]
+        context.result_sets = 1
+        context.result_message = u"2行が選択されました。"
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.1 ----
+        # 前提条件
+        context = Context()
+        context.result_headings = ["ID", "NAME", "TYPE"]
+        context.result_sets = [
+            ["ID-000-0000", "NAME-000-0000", "TYPE-000-0000"],
+            ["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"]]
+        context.result_message = None
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
+        # ---- ケース4.2 ----
+        # 前提条件
+        context = Context()
+        context.result_headings = ["ID", "NAME", "TYPE"]
+        context.result_sets = [
+            ["ID-000-0000", "NAME-000-0000", "TYPE-000-0000"],
+            ["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"]]
+        context.result_message = 1
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
+
     @staticmethod
     def _isdir_side_effect(return_values):
         # type: (tuple) -> object
