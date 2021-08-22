@@ -680,7 +680,12 @@ class TestContext(TestCase):
 
         # ---- ケース1 ----
         # 前提条件
-        context = self._default_context()
+        context = Context()
+        context.result_headings = ["ID", "NAME", "TYPE"]
+        context.result_sets = [
+            ["ID-000-0000", "NAME-000-0000", "TYPE-000-0000"],
+            ["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"]]
+        context.result_message = u"2行が選択されました。"
 
         # 実行 & 検証
         actual = context.check_result_set_parse()
@@ -689,124 +694,17 @@ class TestContext(TestCase):
 
         # ---- ケース2.1 ----
         # 前提条件
-        context = self._default_context()
-        context.result_headings = None
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース2.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_headings = ""
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース2.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_headings = ()
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース3.1 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_sets = None
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース3.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_sets = ""
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース3.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_sets = ()
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.1 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_message = None
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.2 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_message = ""
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-        # ---- ケース4.3 ----
-        # 前提条件
-        context = self._default_context()
-        context.result_message = 1
-
-        # 実行 & 検証
-        actual = context.check_result_set_parse()
-        expected = False
-        self.assertEqual(expected, actual)
-
-    @staticmethod
-    def _default_context():
-        # type: () -> Context
-
         context = Context()
-        context.root_dir = os.path.dirname(os.path.abspath(__file__))
-        context.profile = "test"
-        context.config_dir = context.root_dir + "/config/" + context.profile
-        context.log_dir = context.root_dir + "/log"
-        context.subprocesses.append(mock.MagicMock())
-        context.subprocesses.append(mock.MagicMock())
-        context.display_format = "table"
-        context.field_delimiter = ""
-        context.column_max_length = 500
-        context.heading = "on"
-        context.feedback = "on"
-        context.pagesize = 3
-        context.connection_target = "default"
-        context.sql = u"sql"
-        context.dsn = "dsn"
-        context.sql_client_return_code = 0
-        context.result_set_html = u""
-        context.result_headings = ["ID", "NAME", "TYPE"]
-        context.result_sets = []
-        context.result_sets.append(["ID-000-0000", "NAME-000-0000", "TYPE-000-0000"])
-        context.result_sets.append(["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"])
-        context.result_sets.append(["ID-222-2222", "NAME-222-2222", "TYPE-222-2222"])
-        context.result_sets.append(["ID-333-3333", "NAME-333-3333", "TYPE-333-3333"])
-        context.result_message = u"4行が選択されました。"
-        return context
+        context.result_headings = None
+        context.result_sets = [
+            ["ID-000-0000", "NAME-000-0000", "TYPE-000-0000"],
+            ["ID-111-1111", "NAME-111-1111", "TYPE-111-1111"]]
+        context.result_message = u"2行が選択されました。"
+
+        # 実行 & 検証
+        actual = context.check_result_set_parse()
+        expected = False
+        self.assertEqual(expected, actual)
 
     @staticmethod
     def _isdir_side_effect(return_values):
