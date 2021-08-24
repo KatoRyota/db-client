@@ -118,17 +118,31 @@ class DbClient(object):
             option_parser.set_usage("python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")
 
             option_parser.add_option("-t", "--connection_target",
-                                     help="Database connection target name (e.g. employee, customer).", metavar="ARG")
-            option_parser.add_option("-f", "--display_format", help="Display format (e.g. table, csv).", metavar="ARG")
-            option_parser.add_option("-d", "--field_delimiter", help="Delimiter when csv is output (e.g. #&, \\|).",
+                                     help="Database connection target name (e.g. employee, customer).",
                                      metavar="ARG")
+
+            option_parser.add_option("-f", "--display_format",
+                                     help="Display format (e.g. table, csv).",
+                                     metavar="ARG")
+
+            option_parser.add_option("-d", "--field_delimiter",
+                                     help="Delimiter when csv is output (e.g. #&, \\|).",
+                                     metavar="ARG")
+
             option_parser.add_option("-l", "--column_max_length",
-                                     help="Maximum width of column when table is output (e.g. 30).", metavar="ARG")
-            option_parser.add_option("-e", "--heading", help="Whether to display the header (e.g. on, off).",
+                                     help="Maximum width of column when table is output (e.g. 30).",
                                      metavar="ARG")
-            option_parser.add_option("-b", "--feedback", help="Whether to display the result message (e.g. on, off).",
+
+            option_parser.add_option("-e", "--heading",
+                                     help="Whether to display the header (e.g. on, off).",
                                      metavar="ARG")
-            option_parser.add_option("-p", "--pagesize", help="Number of lines to display per page (e.g. 10).",
+
+            option_parser.add_option("-b", "--feedback",
+                                     help="Whether to display the result message (e.g. on, off).",
+                                     metavar="ARG")
+
+            option_parser.add_option("-p", "--pagesize",
+                                     help="Number of lines to display per page (e.g. 10).",
                                      metavar="ARG")
 
             (options, args) = option_parser.parse_args()
