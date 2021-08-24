@@ -133,28 +133,27 @@ class DbClient(object):
 
             (options, args) = option_parser.parse_args()
 
-            # ---- 起動オプションを元に、コンテキストオブジェクトを設定 ----
-            # ---- display_format ----
+            # display_format
             if options.display_format:
                 context.display_format = options.display_format
             else:
                 context.display_format = Context.DisplayFormat.TABLE
 
-            # ---- field_delimiter ----
+            # field_delimiter
             if options.field_delimiter:
                 context.field_delimiter = options.field_delimiter
             else:
                 if context.display_format == Context.DisplayFormat.CSV:
                     context.field_delimiter = ","
 
-            # ---- column_max_length ----
+            # column_max_length
             if options.column_max_length:
                 context.column_max_length = int(options.column_max_length)
             else:
                 if context.display_format == Context.DisplayFormat.TABLE:
                     context.column_max_length = 1000
 
-            # ---- heading ----
+            # heading
             if options.heading:
                 context.heading = options.heading
             else:
@@ -163,7 +162,7 @@ class DbClient(object):
                 elif context.display_format == Context.DisplayFormat.CSV:
                     context.heading = Context.Heading.OFF
 
-            # ---- feedback ----
+            # feedback
             if options.feedback:
                 context.feedback = options.feedback
             else:
@@ -172,7 +171,7 @@ class DbClient(object):
                 if context.display_format == Context.DisplayFormat.CSV:
                     context.feedback = Context.Feedback.OFF
 
-            # ---- pagesize ----
+            # pagesize
             if options.pagesize:
                 context.pagesize = int(options.pagesize)
             else:
@@ -181,13 +180,12 @@ class DbClient(object):
                 if context.display_format == Context.DisplayFormat.CSV:
                     context.pagesize = 0
 
-            # ---- connection_target ----
+            # connection_target
             if options.connection_target:
                 context.connection_target = options.connection_target
             else:
                 context.connection_target = "default"
 
-            # ---- 起動オプションをパースした後の、コンテキストオブジェクトの状態チェック ----
             if not context.check_option_parse():
                 raise OptParseError(u"起動オプションが不正です。")
 

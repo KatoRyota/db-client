@@ -34,14 +34,13 @@ class MysqlRunner(object):
         # ---- 環境変数の設定 ----
         os.environ["MYSQL_PWD"] = config.get(context.connection_target, "password")
 
-        # ---- 環境変数のチェック ----
         if not os.environ.get("MYSQL_PWD"):
             raise StandardError(u"環境変数[MYSQL_PWD]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
-        # ---- 標準入力を読み込み ----
+        # ---- 標準入力の読み込み ----
         context.sql = sys.stdin.read().decode("utf-8")
 
-        # ---- mysqlの呼び出し ----
+        # ---- mysqlの実行 ----
         host = config.get(context.connection_target, "host")
         port = config.get(context.connection_target, "port")
         database_name = config.get(context.connection_target, "database_name")
@@ -70,13 +69,13 @@ class MysqlRunner(object):
         if not context.check_sql_execute():
             raise StandardError(u"SQLクライアントの実行結果が不正です。")
 
-        # ---- mysqlの呼び出し結果をパース ----
+        # ---- mysqlの実行結果をパース ----
         MysqlParser(context).execute()
 
         if not context.check_result_set_parse():
             raise StandardError(u"SQLクライアントの実行結果の、パース処理に失敗しました。")
 
-        # ---- パースした結果を標準出力に出力 ----
+        # ---- mysqlの実行結果を出力 ----
         if context.display_format == Context.DisplayFormat.TABLE:
             TablePrinter(context).execute()
         elif context.display_format == Context.DisplayFormat.CSV:

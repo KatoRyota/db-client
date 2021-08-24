@@ -34,13 +34,11 @@ class OracleRunner(object):
         # ---- 環境変数の設定 ----
         os.environ["ORACLE_HOME"] = config.get("oracle_environment_variable", "oracle_home")
         os.environ["LD_LIBRARY_PATH"] = config.get("oracle_environment_variable", "ld_library_path")
-        os.environ["PATH"] = config.get("oracle_environment_variable", "sqlplus_path") + ":" + os.environ.get(
-            "PATH")
+        os.environ["PATH"] = config.get("oracle_environment_variable", "sqlplus_path") + ":" + os.environ.get("PATH")
         os.environ["NLS_LANG"] = config.get("oracle_environment_variable", "nls_lang")
         os.environ["NLS_DATE_FORMAT"] = config.get("oracle_environment_variable", "nls_date_format")
         os.environ["NLS_TIMESTAMP_FORMAT"] = config.get("oracle_environment_variable", "nls_timestamp_format")
 
-        # ---- 環境変数のチェック ----
         if not os.environ.get("LD_LIBRARY_PATH"):
             raise StandardError(u"環境変数[LD_LIBRARY_PATH]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
@@ -53,10 +51,10 @@ class OracleRunner(object):
         if not os.environ.get("NLS_TIMESTAMP_FORMAT"):
             raise StandardError(u"環境変数[NLS_TIMESTAMP_FORMAT]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
 
-        # ---- 標準入力を読み込み ----
+        # ---- 標準入力の読み込み ----
         context.sql = sys.stdin.read().decode("utf-8")
 
-        # ---- sqlplusの呼び出し ----
+        # ---- sqlplusの実行 ----
         context.sql = u"\n".join(("WHENEVER SQLERROR EXIT 1", "WHENEVER OSERROR EXIT 1", "SET WRAP OFF",
                                   "SET LINESIZE 32767", "SET LONG 2000000000", "SET LONGCHUNKSIZE 1000",
                                   "SET NUMWIDTH 50", "SET TRIMOUT ON", "SET PAGESIZE 50000", "SET HEADING ON",
@@ -95,13 +93,13 @@ class OracleRunner(object):
         if not context.check_sql_execute():
             raise StandardError(u"SQLクライアントの実行結果が不正です。")
 
-        # ---- sqlplusの呼び出し結果をパース ----
+        # ---- sqlplusの実行結果をパース ----
         OracleParser(context).execute()
 
         if not context.check_result_set_parse():
             raise StandardError(u"SQLクライアントの実行結果の、パース処理に失敗しました。")
 
-        # ---- パースした結果を標準出力に出力 ----
+        # ---- sqlplusの実行結果を出力 ----
         if context.display_format == Context.DisplayFormat.TABLE:
             TablePrinter(context).execute()
         elif context.display_format == Context.DisplayFormat.CSV:
