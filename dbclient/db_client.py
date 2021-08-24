@@ -107,6 +107,13 @@ class DbClient(object):
             logger.debug("ロギング設定ファイルパス -> " + os.path.join(context.config_dir, "logging.conf"))
             logger.debug("ログディレクトリ -> " + context.log_dir)
 
+            # ---- シグナルハンドラーの設定 ----
+            signal.signal(signal.SIGINT, self.terminate_subprocess)
+            signal.signal(signal.SIGTERM, self.terminate_subprocess)
+            if not platform.system() == "Windows":
+                signal.signal(signal.SIGHUP, self.terminate_subprocess)
+                signal.signal(signal.SIGQUIT, self.terminate_subprocess)
+
             # ---- 起動オプションのパース ----
             option_parser.set_usage("python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]")
 
@@ -183,13 +190,6 @@ class DbClient(object):
             # ---- 起動オプションをパースした後の、コンテキストオブジェクトの状態チェック ----
             if not context.check_option_parse():
                 raise OptParseError(u"起動オプションが不正です。")
-
-            # ---- シグナルハンドラーの設定 ----
-            signal.signal(signal.SIGINT, self.terminate_subprocess)
-            signal.signal(signal.SIGTERM, self.terminate_subprocess)
-            if not platform.system() == "Windows":
-                signal.signal(signal.SIGHUP, self.terminate_subprocess)
-                signal.signal(signal.SIGQUIT, self.terminate_subprocess)
 
             # ---- データベース固有の処理 ----
             db_type = config.get(context.connection_target, "db_type")
