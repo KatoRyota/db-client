@@ -25,6 +25,8 @@ class TestDbClient(TestCase):
         sys.stdout = before_stdout
         sys.stderr = before_stderr
 
+        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+
         # ---- ケース1 ----
         with mock.patch("__builtin__.reload"), \
                 mock.patch("sys.stdout", new=BytesIO()) as stdout, \
@@ -49,8 +51,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -74,7 +76,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -82,7 +84,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = os.path.join("db-client", "dbclient")
+            expected = os.path.join(root_dir, "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -90,11 +92,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = os.path.join("db-client", "dbclient", "config", "default")
+            expected = os.path.join(root_dir, "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -155,8 +157,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -208,8 +210,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -257,12 +259,12 @@ class TestDbClient(TestCase):
             context_check_option_parse.return_value = True
 
             config_parser_get.side_effect = self._config_parser_get_side_effect((
-                ("logging", "log_dir", "log_dir"),
+                ("logging", "log_dir", os.path.join(root_dir, "log_dir")),
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("log_dir"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "log_dir"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -286,7 +288,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = os.path.join("log_dir")
+            expected = os.path.join(root_dir, "log_dir")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -294,7 +296,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = os.path.join("db-client", "dbclient")
+            expected = os.path.join(root_dir, "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -302,11 +304,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = os.path.join("db-client", "dbclient", "config", "default")
+            expected = os.path.join(root_dir, "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = os.path.join("log_dir")
+            expected = os.path.join(root_dir, "log_dir")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -367,8 +369,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "mysql")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -392,7 +394,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -400,7 +402,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = os.path.join("db-client", "dbclient")
+            expected = os.path.join(root_dir, "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -408,11 +410,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = os.path.join("db-client", "dbclient", "config", "default")
+            expected = os.path.join(root_dir, "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -473,8 +475,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), False),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), False),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -530,8 +532,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), True)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), True)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -555,7 +557,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -563,7 +565,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = os.path.join("db-client", "dbclient")
+            expected = os.path.join(root_dir, "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -571,11 +573,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = os.path.join("db-client", "dbclient", "config", "default")
+            expected = os.path.join(root_dir, "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -636,8 +638,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "dbclient_profile"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "dbclient_profile"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             os.environ["DBCLIENT_PROFILE"] = "dbclient_profile"
 
@@ -660,7 +662,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -668,7 +670,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = os.path.join("db-client", "dbclient")
+            expected = os.path.join(root_dir, "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -676,11 +678,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = os.path.join("db-client", "dbclient", "config", "dbclient_profile")
+            expected = os.path.join(root_dir, "dbclient", "config", "dbclient_profile")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -741,8 +743,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -796,8 +798,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -850,8 +852,8 @@ class TestDbClient(TestCase):
                 ("default", "db_type", "oracle")))
 
             isdir.side_effect = self._isdir_side_effect((
-                (os.path.join("db-client", "dbclient", "config", "default"), True),
-                (os.path.join("db-client", "dbclient", "log"), False)))
+                (os.path.join(root_dir, "dbclient", "config", "default"), True),
+                (os.path.join(root_dir, "dbclient", "log"), False)))
 
             if os.environ.get("DBCLIENT_PROFILE"):
                 del os.environ["DBCLIENT_PROFILE"]
@@ -875,7 +877,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = os.environ.get("LOG_DIR")
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = os.environ.get("PYTHONIOENCODING")
@@ -883,7 +885,7 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.root_dir
-            expected = os.path.join("db-client", "dbclient")
+            expected = os.path.join(root_dir, "dbclient")
             self.assertIn(expected, actual)
 
             actual = context.profile
@@ -891,11 +893,11 @@ class TestDbClient(TestCase):
             self.assertEqual(expected, actual)
 
             actual = context.config_dir
-            expected = os.path.join("db-client", "dbclient", "config", "default")
+            expected = os.path.join(root_dir, "dbclient", "config", "default")
             self.assertIn(expected, actual)
 
             actual = context.log_dir
-            expected = os.path.join("db-client", "dbclient", "log")
+            expected = os.path.join(root_dir, "dbclient", "log")
             self.assertIn(expected, actual)
 
             actual = context.display_format
@@ -940,7 +942,7 @@ class TestDbClient(TestCase):
             # type: (str) -> bool
 
             for return_value_tuple in return_values:  # type: tuple
-                if return_value_tuple[0] in inner_path:
+                if return_value_tuple[0] == inner_path:
                     return return_value_tuple[1]
 
             raise StandardError(u"引数が不正です。")
