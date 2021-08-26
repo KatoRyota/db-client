@@ -55,10 +55,10 @@ class OracleRunner(object):
         context.sql = sys.stdin.read().decode("utf-8")
 
         # ---- sqlplusの実行 ----
-        context.sql = u"\n".join(("WHENEVER SQLERROR EXIT 1", "WHENEVER OSERROR EXIT 1", "SET WRAP OFF",
-                                  "SET LINESIZE 32767", "SET LONG 2000000000", "SET LONGCHUNKSIZE 1000",
-                                  "SET NUMWIDTH 50", "SET TRIMOUT ON", "SET PAGESIZE 50000", "SET HEADING ON",
-                                  "SET FEEDBACK ON", "SET DEFINE OFF", "SET NULL 'NULL'", context.sql))
+        context.sql = u"\n".join((
+            "WHENEVER SQLERROR EXIT 1", "WHENEVER OSERROR EXIT 1", "SET WRAP OFF", "SET LINESIZE 32767",
+            "SET LONG 2000000000", "SET LONGCHUNKSIZE 1000", "SET NUMWIDTH 50", "SET TRIMOUT ON", "SET PAGESIZE 50000",
+            "SET HEADING ON", "SET FEEDBACK ON", "SET DEFINE OFF", "SET NULL 'NULL'", context.sql))
 
         context.dsn = "{user_name}/{password}@{host}:{port}/{sid}".format(
             user_name=config.get(context.connection_target, "user_name"),
