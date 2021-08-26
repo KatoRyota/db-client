@@ -65,8 +65,7 @@ class OracleRunner(object):
             password=config.get(context.connection_target, "password"),
             host=config.get(context.connection_target, "host"),
             port=config.get(context.connection_target, "port"),
-            sid=config.get(context.connection_target, "sid")
-        )
+            sid=config.get(context.connection_target, "sid"))
 
         privilege = config.get(context.connection_target, "privilege")
 
