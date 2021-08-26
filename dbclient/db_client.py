@@ -182,7 +182,7 @@ class DbClient(object):
             else:
                 if context.display_format == Context.DisplayFormat.TABLE:
                     context.feedback = Context.Feedback.ON
-                if context.display_format == Context.DisplayFormat.CSV:
+                elif context.display_format == Context.DisplayFormat.CSV:
                     context.feedback = Context.Feedback.OFF
 
             # pagesize
@@ -191,7 +191,7 @@ class DbClient(object):
             else:
                 if context.display_format == Context.DisplayFormat.TABLE:
                     context.pagesize = 10
-                if context.display_format == Context.DisplayFormat.CSV:
+                elif context.display_format == Context.DisplayFormat.CSV:
                     context.pagesize = 0
 
             # connection_target
