@@ -40,16 +40,16 @@ class OracleRunner(object):
         os.environ["NLS_TIMESTAMP_FORMAT"] = config.get("oracle_environment_variable", "nls_timestamp_format")
 
         if not os.environ.get("LD_LIBRARY_PATH"):
-            raise StandardError(u"環境変数[LD_LIBRARY_PATH]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
+            raise StandardError(u"環境変数[LD_LIBRARY_PATH]が不正です。設定ファイルを確認して下さい。")
 
         if not os.environ.get("NLS_LANG"):
-            raise StandardError(u"環境変数[NLS_LANG]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
+            raise StandardError(u"環境変数[NLS_LANG]が不正です。設定ファイルを確認して下さい。")
 
         if not os.environ.get("NLS_DATE_FORMAT"):
-            raise StandardError(u"環境変数[NLS_DATE_FORMAT]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
+            raise StandardError(u"環境変数[NLS_DATE_FORMAT]が不正です。設定ファイルを確認して下さい。")
 
         if not os.environ.get("NLS_TIMESTAMP_FORMAT"):
-            raise StandardError(u"環境変数[NLS_TIMESTAMP_FORMAT]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
+            raise StandardError(u"環境変数[NLS_TIMESTAMP_FORMAT]が不正です。設定ファイルを確認して下さい。")
 
         # ---- 標準入力の読み込み ----
         context.sql = sys.stdin.read().decode("utf-8")
@@ -90,15 +90,15 @@ class OracleRunner(object):
         context.result_set_html = result_set_html
 
         if not context.check_sql_execute():
-            raise StandardError(u"SQLクライアントの実行結果が不正です。")
+            raise StandardError(u"sqlplusの実行に失敗しました。")
 
-        # ---- sqlplusの実行結果をパース ----
+        # ---- sqlplusの実行結果のパース ----
         OracleParser(context).execute()
 
         if not context.check_result_set_parse():
-            raise StandardError(u"SQLクライアントの実行結果の、パース処理に失敗しました。")
+            raise StandardError(u"sqlplusの実行結果のパースに失敗しました。")
 
-        # ---- sqlplusの実行結果を出力 ----
+        # ---- sqlplusの実行結果の出力 ----
         if context.display_format == Context.DisplayFormat.TABLE:
             TablePrinter(context).execute()
         elif context.display_format == Context.DisplayFormat.CSV:

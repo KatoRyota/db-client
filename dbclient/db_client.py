@@ -92,7 +92,7 @@ class DbClient(object):
         try:
             logger.info("[Start] " + os.path.abspath(__file__))
 
-            # ---- システム環境情報を出力 ----
+            # ---- システム環境情報の出力 ----
             logger.debug("system/os name -> " + platform.system())
             logger.debug("[encoding] locale -> " + locale.getpreferredencoding())
             logger.debug("[encoding] default -> " + sys.getdefaultencoding())
@@ -201,7 +201,7 @@ class DbClient(object):
                 context.connection_target = "default"
 
             if not context.check_option_parse():
-                raise OptParseError(u"起動オプションが不正です。")
+                raise OptParseError(u"起動オプションのパースに失敗しました。")
 
             # ---- データベース固有の処理 ----
             db_type = config.get(context.connection_target, "db_type")
@@ -214,13 +214,13 @@ class DbClient(object):
             logger.info("[End] " + os.path.abspath(__file__))
 
         except OptParseError:
-            logger.exception(u"起動オプションが不正です。")
+            logger.exception(u"起動オプションのパースに失敗しました。")
             traceback.print_exc()
             option_parser.print_help()
             sys.exit(1)
 
         except Exception:
-            logger.exception(u"想定外のエラーが発生しました。")
+            logger.exception(u"エラーが発生しました。")
             traceback.print_exc()
             sys.exit(1)
 

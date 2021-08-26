@@ -125,7 +125,7 @@ select * from test;
 
             # 検証
             actual = e.exception.message
-            expected = u"SQLクライアントの実行結果が不正です。"
+            expected = u"sqlplusの実行に失敗しました。"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
@@ -164,7 +164,7 @@ select * from test;
                 OracleRunner(context).execute()
 
             # 検証
-            actual = u"SQLクライアントの実行結果の、パース処理に失敗しました。"
+            actual = u"sqlplusの実行結果のパースに失敗しました。"
             expected = e.exception.message
             self.assertEqual(expected, actual)
 
@@ -205,7 +205,7 @@ select * from test;
 
             # 検証
             actual = e.exception.message
-            expected = u"環境変数[LD_LIBRARY_PATH]がセットされていません。設定ファイルに、値が設定されてない可能性があります。"
+            expected = u"環境変数[LD_LIBRARY_PATH]が不正です。設定ファイルを確認して下さい。"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_not_called()

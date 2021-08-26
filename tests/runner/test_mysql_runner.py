@@ -94,7 +94,7 @@ select * from test;
 
             # 検証
             actual = e.exception.message
-            expected = u"SQLクライアントの実行結果が不正です。"
+            expected = u"mysqlの実行に失敗しました。"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
@@ -133,7 +133,7 @@ select * from test;
 
             # 検証
             actual = e.exception.message
-            expected = u"SQLクライアントの実行結果の、パース処理に失敗しました。"
+            expected = u"mysqlの実行結果のパースに失敗しました。"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_called_once()
@@ -172,7 +172,7 @@ select * from test;
 
             # 検証
             actual = e.exception.message
-            expected = u"環境変数[MYSQL_PWD]がセットされていません。設定ファイルに、値が設定されてない可能性があります。"
+            expected = u"環境変数[MYSQL_PWD]が不正です。設定ファイルを確認して下さい。"
             self.assertEqual(expected, actual)
 
             context_check_sql_execute.assert_not_called()

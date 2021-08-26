@@ -35,7 +35,7 @@ class MysqlRunner(object):
         os.environ["MYSQL_PWD"] = config.get(context.connection_target, "password")
 
         if not os.environ.get("MYSQL_PWD"):
-            raise StandardError(u"環境変数[MYSQL_PWD]がセットされていません。設定ファイルに、値が設定されてない可能性があります。")
+            raise StandardError(u"環境変数[MYSQL_PWD]が不正です。設定ファイルを確認して下さい。")
 
         # ---- 標準入力の読み込み ----
         context.sql = sys.stdin.read().decode("utf-8")
@@ -67,15 +67,15 @@ class MysqlRunner(object):
         context.result_set_html = result_set_html
 
         if not context.check_sql_execute():
-            raise StandardError(u"SQLクライアントの実行結果が不正です。")
+            raise StandardError(u"mysqlの実行に失敗しました。")
 
-        # ---- mysqlの実行結果をパース ----
+        # ---- mysqlの実行結果のパース ----
         MysqlParser(context).execute()
 
         if not context.check_result_set_parse():
-            raise StandardError(u"SQLクライアントの実行結果の、パース処理に失敗しました。")
+            raise StandardError(u"mysqlの実行結果のパースに失敗しました。")
 
-        # ---- mysqlの実行結果を出力 ----
+        # ---- mysqlの実行結果の出力 ----
         if context.display_format == Context.DisplayFormat.TABLE:
             TablePrinter(context).execute()
         elif context.display_format == Context.DisplayFormat.CSV:
