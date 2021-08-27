@@ -51,7 +51,7 @@ class MysqlRunner(object):
         echo_command = ["echo", context.sql]
         mysql_command = ["mysql", "-h", host, "-P", port, "-D", database_name, "-u", user_name, "--html"]
 
-        logger.debug(u"echo \"%s\" | mysql -h %s -P %s -D %s -u %s --html" %
+        logger.debug(u"echo \"%s\" | mysql -h %s -P %s -D %s -u %s --show-warnings --html" %
                      (context.sql, host, port, database_name, user_name))
 
         echo_process = Popen(echo_command, stdout=PIPE)
