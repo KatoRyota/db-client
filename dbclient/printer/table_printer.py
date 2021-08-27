@@ -28,7 +28,9 @@ class TablePrinter(object):
         context = self.__context
 
         if not context.sql_client_return_code == 0:
-            print context.result_message.strip().encode("utf-8")
+            if context.result_message.strip():
+                print context.result_message.strip().encode("utf-8")
+
             return
 
         # ---- カラム幅を計算 ----
@@ -78,8 +80,10 @@ class TablePrinter(object):
             self._print_table_row(record)
             self._print_table_border()
 
-        if context.feedback == Context.Feedback.ON and context.result_message:
-            print
+        if context.feedback == Context.Feedback.ON and context.result_message.strip():
+            if context.result_sets:
+                print
+
             print context.result_message.strip().encode("utf-8")
 
     def _print_table_row(self, record):
@@ -144,6 +148,7 @@ class TablePrinter(object):
         #   * https://ja.wikipedia.org/wiki/Unicode%E4%B8%80%E8%A6%A7_0000-0FFF
         #   * https://ja.wikipedia.org/wiki/Unicode%E4%B8%80%E8%A6%A7_F000-FFFF
 
+        # noinspection RegExpSingleCharAlternation,RegExpDuplicateAlternationBranch
         chars = re.sub(u"𠀋|𡈽|𡌛|𡑮|𡢽|𠮟|𡚴|𡸴|𣇄|𣗄", u"？", chars)
 
         character_length = 0

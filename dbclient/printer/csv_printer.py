@@ -25,7 +25,9 @@ class CsvPrinter(object):
         context = self.__context
 
         if not context.sql_client_return_code == 0:
-            print context.result_message.strip().encode("utf-8")
+            if context.result_message.strip():
+                print context.result_message.strip().encode("utf-8")
+
             return
 
         # ---- CSV形式で標準出力に出力 ----
@@ -46,8 +48,10 @@ class CsvPrinter(object):
 
             self._print_csv_row(record)
 
-        if context.feedback == Context.Feedback.ON and context.result_message:
-            print
+        if context.feedback == Context.Feedback.ON and context.result_message.strip():
+            if context.result_sets:
+                print
+
             print context.result_message.strip().encode("utf-8")
 
     def _print_csv_row(self, record):

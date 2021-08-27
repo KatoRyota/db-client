@@ -81,7 +81,6 @@ ID,NAME,TYPE
             # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u'''\
-
 4行が選択されました。
 '''
             self.assertEqual(expected, actual)
