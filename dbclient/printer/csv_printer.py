@@ -24,7 +24,7 @@ class CsvPrinter(object):
 
         context = self.__context
 
-        if not context.sql_client_return_code == 0:
+        if context.sql_client_return_code != 0:
             if context.result_message.strip():
                 print context.result_message.strip().encode("utf-8")
 
