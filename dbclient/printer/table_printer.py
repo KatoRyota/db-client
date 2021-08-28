@@ -33,9 +33,14 @@ class TablePrinter(object):
 
             return
 
+        if not context.result_sets:
+            if context.result_message.strip():
+                print context.result_message.strip().encode("utf-8")
+
+            return
+
         # ---- カラム幅を計算 ----
-        if context.result_sets:
-            self.__column_width_list = [0 for _ in range(len(context.result_sets[0]))]
+        self.__column_width_list = [0 for _ in range(len(context.result_sets[0]))]
 
         for record in context.result_sets:  # type: list
             for index, column in enumerate(record):  # type: (int, unicode)
@@ -81,9 +86,7 @@ class TablePrinter(object):
             self._print_table_border()
 
         if context.feedback == Context.Feedback.ON and context.result_message.strip():
-            if context.result_sets:
-                print
-
+            print
             print context.result_message.strip().encode("utf-8")
 
     def _print_table_row(self, record):
