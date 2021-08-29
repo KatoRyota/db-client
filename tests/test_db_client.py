@@ -230,8 +230,12 @@ class TestDbClient(TestCase):
 
             # 検証
             actual = stdout.getvalue().decode("utf-8")
-            expected = u"起動オプションのパースに失敗しました。"
-            self.assertRegexpMatches(actual, expected)
+            expected = u"""\
+OptParseError: 起動オプションのパースに失敗しました。
+
+Usage: python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]
+"""
+            self.assertIn(expected, actual)
 
             makedirs.assert_called_once()
             context_check_application_initialize.assert_called_once()
