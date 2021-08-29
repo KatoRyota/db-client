@@ -39,6 +39,9 @@ class OracleRunner(object):
         os.environ["NLS_DATE_FORMAT"] = config.get("oracle_environment_variable", "nls_date_format")
         os.environ["NLS_TIMESTAMP_FORMAT"] = config.get("oracle_environment_variable", "nls_timestamp_format")
 
+        if not os.environ.get("ORACLE_HOME"):
+            raise StandardError(u"環境変数[ORACLE_HOME]が不正です。設定ファイルを確認して下さい。")
+
         if not os.environ.get("LD_LIBRARY_PATH"):
             raise StandardError(u"環境変数[LD_LIBRARY_PATH]が不正です。設定ファイルを確認して下さい。")
 
