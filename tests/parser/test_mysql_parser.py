@@ -11,6 +11,7 @@ class TestMysqlParser(TestCase):
     def test_execute(self):
         # type: () -> None
 
+        # ---- ケース1 ----
         # 前提条件
         context = self._default_context()
 
@@ -52,6 +53,31 @@ class TestMysqlParser(TestCase):
 
         actual = context.result_sets[1][2]
         expected = u'<<<©©©&&&'
+        self.assertEqual(expected, actual)
+
+        actual = context.result_message.strip()
+        expected = u''
+        self.assertEqual(expected, actual)
+
+        # ---- ケース2 ----
+        # 前提条件
+        context = self._default_context()
+        context.result_set_html = u"エラーが発生しました。"
+
+        # 実行
+        MysqlParser(context).execute()
+
+        # 検証
+        actual = len(context.result_headings)
+        expected = 0
+        self.assertEqual(expected, actual)
+
+        actual = len(context.result_sets)
+        expected = 0
+        self.assertEqual(expected, actual)
+
+        actual = context.result_message.strip()
+        expected = u"エラーが発生しました。"
         self.assertEqual(expected, actual)
 
     @staticmethod

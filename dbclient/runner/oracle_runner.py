@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 from logging import Logger
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 
 from ..context.context import Context
 from ..parser.oracle_parser import OracleParser
@@ -77,10 +77,10 @@ class OracleRunner(object):
 
         logger.debug(u"echo \"%s\" | sqlplus -s -M HTML ON \"%s\"" % (context.sql, context.dsn))
 
-        echo_process = Popen(echo_command, stdout=PIPE)
+        echo_process = Popen(echo_command, stdout=PIPE, stderr=STDOUT)
         context.subprocesses.append(echo_process)
 
-        sqlplus_process = Popen(sqlplus_command, stdin=echo_process.stdout, stdout=PIPE)
+        sqlplus_process = Popen(sqlplus_command, stdin=echo_process.stdout, stdout=PIPE, stderr=STDOUT)
         context.subprocesses.append(sqlplus_process)
 
         echo_process.stdout.close()

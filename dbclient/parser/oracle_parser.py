@@ -40,6 +40,10 @@ class OracleParser(HTMLParser.HTMLParser, object):
 
         context = self.__context
         self.feed(context.result_set_html)
+
+        if not context.result_sets and not context.result_headings and not context.result_message:
+            context.result_message = context.result_set_html
+
         self.close()
 
     def handle_starttag(self, tag, attrs):

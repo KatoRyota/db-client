@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 from logging import Logger
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 
 from ..context.context import Context
 from ..parser.mysql_parser import MysqlParser
@@ -55,10 +55,10 @@ class MysqlRunner(object):
         logger.debug(u"echo \"%s\" | mysql -h %s -P %s -D %s -u %s --show-warnings --html" %
                      (context.sql, host, port, database_name, user_name))
 
-        echo_process = Popen(echo_command, stdout=PIPE)
+        echo_process = Popen(echo_command, stdout=PIPE, stderr=STDOUT)
         context.subprocesses.append(echo_process)
 
-        mysql_process = Popen(mysql_command, stdin=echo_process.stdout, stdout=PIPE)
+        mysql_process = Popen(mysql_command, stdin=echo_process.stdout, stdout=PIPE, stderr=STDOUT)
         context.subprocesses.append(mysql_process)
 
         echo_process.stdout.close()
