@@ -229,7 +229,7 @@ class TestDbClient(TestCase):
                 db_client.execute()
 
             # 検証
-            actual = stderr.getvalue().decode("utf-8")
+            actual = stdout.getvalue().decode("utf-8")
             expected = u"起動オプションのパースに失敗しました。"
             self.assertRegexpMatches(actual, expected)
 
