@@ -66,7 +66,7 @@ DBの接続先情報と、sqlplusの設定 (`oracle_environment_variable`セク�
 ```shell
 cd ${APP_ROOT_DIR}
 
-python -m dbclient 2>&1 <<EOF | less -S
+python -m dbclient <<EOF | less -S
 select * from employee;
 EOF
 ```
@@ -76,7 +76,7 @@ EOF
 ```shell
 cd ${APP_ROOT_DIR}
 
-python -m dbclient.__main__ 2>&1 <<EOF | less -S
+python -m dbclient.__main__ <<EOF | less -S
 select * from employee;
 EOF
 ```

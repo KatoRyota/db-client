@@ -107,11 +107,11 @@ docker container exec -it db-client /bin/bash
 export PYTHONIOENCODING=utf-8
 cd /app/db-client/
 
-python2.7 -m dbclient 2>&1 <<EOF | less -S
+python2.7 -m dbclient <<EOF | less -S
 select * from employee;
 EOF
 
-python2.7 -m dbclient -t customer 2>&1 <<EOF | less -S
+python2.7 -m dbclient -t customer <<EOF | less -S
 select * from customer;
 EOF
 
