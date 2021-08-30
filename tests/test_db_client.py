@@ -231,9 +231,7 @@ class TestDbClient(TestCase):
             # 検証
             actual = stdout.getvalue().decode("utf-8")
             expected = u"""\
-OptParseError: 起動オプションのパースに失敗しました。
-
-Usage: python -m dbclient [-h][-t ARG][-f ARG][-d ARG][-l ARG][-e ARG][-b ARG][-p ARG]
+StandardError: 起動オプションのパースに失敗しました。
 """
             self.assertIn(expected, actual)
 
